@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>和歌山卓球大会カレンダー</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12291f;
+    --court:#163b2c;
+    --court-deep:#0c231a;
+    --paper:#f1f4ee;
+    --paper-2:#e6ebe0;
+    --line:#c9d2bf;
+    --amber:#ffb400;
+    --ember:#e2531f;
+    --ember-2:#c8431a;
+    --white:#fffdf7;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Noto Sans JP', sans-serif;
+    line-height:1.6;
+    padding-bottom:60px;
+  }
+  a{color:inherit;}
+
+  /* ---------- HERO / SCOREBOARD ---------- */
+  .hero{
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255,255,255,0.05), transparent 40%),
+      linear-gradient(180deg, var(--court) 0%, var(--court-deep) 100%);
+    color:var(--white);
+    padding:36px 20px 30px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    right:-60px; top:-60px;
+    width:220px; height:220px;
+    border-radius:50%;
+    border:3px dashed rgba(255,255,255,0.08);
+  }
+  .hero-inner{max-width:920px; margin:0 auto; position:relative; z-index:1;}
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:.18em;
+    color:var(--amber);
+    text-transform:uppercase;
+    margin-bottom:10px;
+  }
+  h1{
+    font-family:'Oswald', sans-serif;
+    font-weight:700;
+    font-size:clamp(28px, 6vw, 44px);
+    letter-spacing:.01em;
+    line-height:1.15;
+    margin-bottom:8px;
+  }
+  .sub{
+    color:#c9d8cd;
+    font-size:14px;
+    max-width:640px;
+    margin-bottom:26px;
+  }
+  .sub b{color:var(--white);}
+
+  .scoreboard{
+    background:var(--court-deep);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:8px;
+    padding:18px 20px;
+    display:flex;
+    align-items:center;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+  .sb-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.15em;
+    color:var(--amber);
+    text-transform:uppercase;
+  }
+  .sb-flip-row{display:flex; gap:6px;}
+  .flip{
+    background:#0a1c14;
+    border:1px solid rgba(255,180,0,0.35);
+    border-radius:4px;
+    padding:6px 10px;
+    font-family:'JetBrains Mono', monospace;
+    font-weight:700;
+    font-size:22px;
+    color:var(--amber);
+    min-width:34px;
+    text-align:center;
+  }
+  .sb-days-label{font-size:11px; color:#9fb3a5; margin-top:4px; font-family:'JetBrains Mono', monospace;}
+  .sb-divider{width:1px; align-self:stretch; background:rgba(255,255,255,0.12); display:none;}
+  .sb-event{flex:1; min-width:220px;}
+  .sb-event-name{font-family:'Oswald', sans-serif; font-size:17px; font-weight:500; color:var(--white); margin-bottom:2px;}
+  .sb-event-meta{font-size:12px; color:#9fb3a5;}
+  @media(min-width:640px){ .sb-divider{display:block;} }
+
+  /* ---------- CONTROLS ---------- */
+  .controls{
+    max-width:920px;
+    margin:26px auto 0;
+    padding:0 20px;
+  }
+  .search-row{
+    display:flex;
+    gap:10px;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+  }
+  #search{
+    flex:1;
+    min-width:180px;
+    border:1px solid var(--line);
+    background:var(--white);
+    padding:11px 14px;
+    border-radius:6px;
+    font-family:'Noto Sans JP', sans-serif;
+    font-size:14px;
+    color:var(--ink);
+  }
+  #search:focus{outline:2px solid var(--ember); outline-offset:1px;}
+  .tabs{display:flex; gap:8px; flex-wrap:wrap;}
+  .tab{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:.03em;
+    border:1px solid var(--line);
+    background:var(--white);
+    color:var(--ink);
+    padding:9px 14px;
+    border-radius:20px;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .tab[aria-pressed="true"]{
+    background:var(--court);
+    border-color:var(--court);
+    color:var(--white);
+  }
+  .tab .dot{display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:6px;}
+  .dot-a{background:var(--ember);}
+  .dot-b{background:#2f7d5c;}
+
+  .count-line{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:#5b6b5f;
+    margin:14px 0 4px;
+  }
+
+  /* ---------- LIST ---------- */
+  .list{max-width:920px; margin:0 auto; padding:0 20px;}
+  .month-heading{
+    font-family:'Oswald', sans-serif;
+    font-size:15px;
+    font-weight:600;
+    letter-spacing:.08em;
+    color:var(--court);
+    text-transform:uppercase;
+    border-bottom:2px solid var(--court);
+    padding-bottom:6px;
+    margin:30px 0 12px;
+  }
+  .month-heading:first-child{margin-top:0;}
+
+  .card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-left:4px solid var(--ember);
+    border-radius:6px;
+    padding:14px 16px;
+    margin-bottom:10px;
+    display:grid;
+    grid-template-columns:64px 1fr;
+    gap:14px;
+    align-items:start;
+  }
+  .card.src-b{border-left-color:#2f7d5c;}
+  .date-block{
+    font-family:'JetBrains Mono', monospace;
+    text-align:center;
+    padding-top:2px;
+  }
+  .date-day{font-size:26px; font-weight:700; color:var(--court); line-height:1;}
+  .date-dow{font-size:11px; color:#7a8a7d; margin-top:2px;}
+  .card-body{min-width:0;}
+  .card-title{
+    font-size:15px;
+    font-weight:700;
+    color:var(--ink);
+    margin-bottom:6px;
+    line-height:1.4;
+  }
+  .card-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 14px;
+    font-size:12.5px;
+    color:#556357;
+    margin-bottom:9px;
+  }
+  .card-meta span{display:inline-flex; align-items:center; gap:4px;}
+  .badge{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:.03em;
+    padding:2px 8px;
+    border-radius:10px;
+    font-weight:600;
+  }
+  .badge-a{background:#fbe6db; color:var(--ember-2);}
+  .badge-b{background:#dcece2; color:#245c41;}
+  .badge-closed{background:#eee; color:#888;}
+  .card-links{display:flex; gap:14px; flex-wrap:wrap;}
+  .card-links a{
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--ember-2);
+    text-decoration:none;
+    border-bottom:1px solid currentColor;
+    padding-bottom:1px;
+  }
+  .src-b .card-links a{color:#245c41;}
+  .card-links a:hover{opacity:.7;}
+
+  .empty{
+    text-align:center;
+    padding:50px 20px;
+    color:#8a988c;
+    font-size:14px;
+  }
+
+  /* ---------- SOURCES / FOOTER ---------- */
+  .sources{
+    max-width:920px;
+    margin:44px auto 0;
+    padding:20px;
+    background:var(--paper-2);
+    border-radius:8px;
+  }
+  .sources h2{
+    font-family:'Oswald', sans-serif;
+    font-size:16px;
+    margin-bottom:10px;
+    color:var(--court);
+  }
+  .sources ul{list-style:none; font-size:13px;}
+  .sources li{margin-bottom:6px;}
+  .sources a{color:var(--ember-2); font-weight:600; text-decoration:none;}
+  .sources a:hover{text-decoration:underline;}
+  .note{
+    max-width:920px;
+    margin:16px auto 0;
+    padding:0 20px;
+    font-size:12px;
+    color:#8a988c;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Wakayama Table Tennis · 大会情報アグリゲーター</div>
+    <h1>和歌山卓球<br>大会カレンダー</h1>
+    <p class="sub"><b>和歌山県卓球協会</b>と<b>和歌山卓球協議会</b>、2つのサイトの大会案内をひとつにまとめました。複数サイトを見比べる手間を減らすためのページです。</p>
+
+    <div class="scoreboard">
+      <div>
+        <div class="sb-label">Next Match In</div>
+        <div class="sb-flip-row" id="countdown">
+          <div class="flip">–</div>
+        </div>
+        <div class="sb-days-label">DAYS</div>
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-event" id="next-event">
+        <div class="sb-event-name">読み込み中…</div>
+        <div class="sb-event-meta"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="search-row">
+    <input id="search" type="text" placeholder="大会名・会場で検索（例：ホープス、河南、ラージボール）">
+  </div>
+  <div class="tabs" id="tabs">
+    <button class="tab" data-filter="all" aria-pressed="true">すべて</button>
+    <button class="tab" data-filter="a" aria-pressed="false"><span class="dot dot-a"></span>和歌山県卓球協会</button>
+    <button class="tab" data-filter="b" aria-pressed="false"><span class="dot dot-b"></span>和歌山卓球協議会</button>
+  </div>
+  <div class="count-line" id="count-line"></div>
+</div>
+
+<main class="list" id="list"></main>
+
+<section class="sources">
+  <h2>情報の出どころ</h2>
+  <ul>
+    <li>🟠 <a href="https://www.watakukyo.com/?page_id=8" target="_blank" rel="noopener">一般社団法人和歌山県卓球協会「大会・事業」</a> — watakukyo.com</li>
+    <li>🟢 <a href="https://sites.google.com/view/njsf-ntta-wakayama/大会案内" target="_blank" rel="noopener">和歌山卓球協議会「大会案内」</a> — sites.google.com</li>
+  </ul>
+</section>
+
+<p class="note">※ このページは 2026年7月31日時点の各サイト掲載情報をもとにした一覧です。大会の延期・中止・変更が発生する場合があるため、参加前には必ず各大会名・詳細リンクから公式の最新要項をご確認ください。</p>
+
+<script>
+const events = [
+  // ---- 和歌山県卓球協会 (source: a) ----
+  {date:"2026-08-04", name:"第65回近畿卓球選手権大会〔高校3年生の部〕〔ジュニアの部(高校2年生以下)〕和歌山県予選会", venue:"県立体", deadline:"7/10（締切済）", closed:true, source:"a", link:"https://www.watakukyo.com/wp-content/uploads/2026/summary/2026kinkichampionshipsjuniorQ.xlsx"},
+  {date:"2026-08-10", name:"2026年度和歌山県卓球選手権大会〔カデットの部〕（兼）2026年全日本卓球選手権大会〔カデットの部〕和歌山県予選会", venue:"県立体", deadline:"7/15（締切済）", closed:true, source:"a", link:"https://www.watakukyo.com/wp-content/uploads/2026/summary/2026alljapancadetQentry.xls"},
+  {date:"2026-08-13", name:"2026年度紀陽銀行杯少年少女卓球大会", venue:"県立体", deadline:"7/16（締切済）", closed:true, source:"a", link:"https://www.watakukyo.com/wp-content/uploads/2026/summary/2025kiyobankcupentry.xlsx"},
+  {date:"2026-09-13", name:"2026年度和歌山県卓球選手権大会〔一般の部〕（兼）天皇杯・皇后杯2027年全日本卓球選手権大会〔一般の部〕和歌山県予選会", venue:"市民体", deadline:"未定（決まり次第表示）", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-09-19", name:"2026年度和歌山県卓球選手権大会〔ジュニアの部〕（兼）天皇杯・皇后杯2027年全日本卓球選手権大会〔ジュニアの部〕和歌山県予選会", venue:"県立体", deadline:"8/24", closed:false, source:"a", link:"https://www.watakukyo.com/wp-content/uploads/2026/summary/2027alljapanjuniorQ.pdf", entry:"https://www.watakukyo.com/wp-content/uploads/2026/summary/2027alljapanjuniorQentry.xlsx"},
+  {date:"2026-09-27", name:"第62回会長杯和歌山県下卓球大会（兼）第66回大阪国際招待卓球選手権大会〔小学6年生以下の部〕和歌山県予選会", venue:"県立体補", deadline:"9/4", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-10-17", name:"第62回会長杯和歌山県下卓球大会〔中学2年生以下の部〕〔小・中学1年生以下の部〕（兼）第66回大阪国際招待卓球選手権大会〔中学2年生以下の部〕和歌山県予選会", venue:"県立体", deadline:"9/25", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-11-01", name:"第1回和歌山支部秋季オープン ラージボール卓球フェスティバル", venue:"市民体", deadline:"10/15", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-11-01", name:"第1回和歌山支部秋季オープン レディース卓球フェスティバル", venue:"市民体", deadline:"10/15", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-11-14", name:"2026年度和歌山県卓球祭（兼）第79回東京卓球選手権大会〔ホープス・カブの部〕和歌山県予選会", venue:"県立体補", deadline:"10/23", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-11-15", name:"第62回和歌山県卓球協会会長杯争奪県下卓球大会〔一般・高校2年生以下の部〕〔ラージボールの部〕（兼）第66回大阪国際招待卓球選手権大会和歌山県予選会", venue:"白浜総合", deadline:"10/19", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-11-29", name:"2026年度和歌山県卓球祭（兼）第79回東京卓球選手権大会〔一般の部〕〔年代別の部〕和歌山県予選会", venue:"市民体", deadline:"11/6", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-12-05", name:"2026年度和歌山県卓球祭〔小学生・中学1年生・中学2年生以下の部〕（兼）東京卓球選手権大会〔中学2年生以下の部〕和歌山県予選会", venue:"市民体", deadline:"11/13", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-12-06", name:"2026年度和歌山県卓球祭・第79回東京卓球選手権大会〔ジュニアの部〕和歌山県予選会", venue:"東公園体", deadline:"11/9", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-12-12", name:"第36回東アジアホープス日本代表選考会 和歌山県予選会", venue:"県立体補", deadline:"11/20", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-12-26", name:"第24回全国ホープス選抜卓球大会 和歌山県予選会", venue:"県立体補", deadline:"12/4", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-12-26", name:"第28回全国中学選抜卓球大会 和歌山県予選会", venue:"河南総合", deadline:"12/4", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2027-01-09", name:"第53回全国高校選抜卓球大会 和歌山県予選会", venue:"河南総合", deadline:"12/14", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2027-01-16", name:"第37回オープン和歌山支部長杯卓球大会", venue:"河南総合", deadline:"12/21", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2027-02-13", name:"2026年度和歌山県少年少女卓球技術講習会", venue:"河南総合", deadline:"2027/1/25", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2027-03-13", name:"第41回オープン和歌山県卓球協会和歌山支部主催卓球大会〔団体戦〕", venue:"県立体", deadline:"2/15", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
+
+  // ---- 和歌山卓球協議会 (source: b) ----
+  {date:"2026-08-16", name:"盆休み卓球大会（オープン大会・どなたでも参加可）", venue:"未定（要項参照）", deadline:"7/31", closed:false, source:"b", link:"https://drive.google.com/file/d/1bIqTj1-S-LmI-EDHh7qODfsOtAZRD1Oo/view", entry:"https://docs.google.com/forms/d/e/1FAIpQLSc8-VC1A97Nzuvxs62crIyovZKGLGuoVy253FgyV5bHyk7oiA/viewform"},
+  {date:"2026-09-22", name:"秋分の日卓球大会（オープン大会・どなたでも参加可）", venue:"未定（要項参照）", deadline:"9/4", closed:false, source:"b", link:"https://drive.google.com/file/d/110DOYKfnyU4bZKhR7yep2qZJ-wXtVwbC/view", entry:"https://docs.google.com/forms/d/e/1FAIpQLSdl0JeU25TfAOxSh3n5TqiIJgmVM3H2AkpvR52kO_X9CpdvsQ/viewform"},
+  {date:"2026-10-11", name:"第4回白浜卓球大会（オープン大会・どなたでも参加可）", venue:"未定（要項参照）", deadline:"9/25", closed:false, source:"b", link:"https://drive.google.com/file/d/1sPrRYECSY2tGqsIz_eMnZosDylfNlyhR/view"},
+];
+
+const TODAY = new Date("2026-07-31T00:00:00");
+const DOW = ["日","月","火","水","木","金","土"];
+const MONTHS = ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"];
+
+events.sort((a,b)=> new Date(a.date) - new Date(b.date));
+
+function daysUntil(dateStr){
+  const d = new Date(dateStr+"T00:00:00");
+  return Math.round((d - TODAY) / 86400000);
+}
+
+// ---- countdown / next event ----
+const upcoming = events.filter(e => daysUntil(e.date) >= 0);
+const nextEvent = upcoming[0];
+const countdownEl = document.getElementById("countdown");
+const nextEventEl = document.getElementById("next-event");
+if(nextEvent){
+  const days = String(daysUntil(nextEvent.date)).padStart(2,"0").split("");
+  countdownEl.innerHTML = days.map(d=>`<div class="flip">${d}</div>`).join("");
+  const d = new Date(nextEvent.date+"T00:00:00");
+  const label = `${d.getMonth()+1}/${d.getDate()}（${DOW[d.getDay()]}） ・ ${nextEvent.source==='a' ? '和歌山県卓球協会' : '和歌山卓球協議会'}`;
+  nextEventEl.innerHTML = `<div class="sb-event-name">${nextEvent.name}</div><div class="sb-event-meta">${label} ・ ${nextEvent.venue}</div>`;
+}else{
+  countdownEl.innerHTML = `<div class="flip">–</div>`;
+  nextEventEl.innerHTML = `<div class="sb-event-name">予定されている大会はありません</div>`;
+}
+
+// ---- render list ----
+const listEl = document.getElementById("list");
+const countLine = document.getElementById("count-line");
+let activeFilter = "all";
+let query = "";
+
+function render(){
+  const filtered = events.filter(e=>{
+    if(activeFilter!=="all" && e.source!==activeFilter) return false;
+    if(query){
+      const q = query.toLowerCase();
+      if(!(e.name.toLowerCase().includes(q) || e.venue.toLowerCase().includes(q))) return false;
+    }
+    return true;
+  });
+
+  countLine.textContent = `${filtered.length}件の大会・行事を表示中`;
+
+  if(filtered.length===0){
+    listEl.innerHTML = `<div class="empty">該当する大会が見つかりませんでした。</div>`;
+    return;
+  }
+
+  let html = "";
+  let currentMonth = "";
+  filtered.forEach(e=>{
+    const d = new Date(e.date+"T00:00:00");
+    const monthKey = `${d.getFullYear()}年 ${MONTHS[d.getMonth()]}`;
+    if(monthKey !== currentMonth){
+      html += `<div class="month-heading">${monthKey}</div>`;
+      currentMonth = monthKey;
+    }
+    const srcClass = e.source==="a" ? "src-a" : "src-b";
+    const badgeClass = e.source==="a" ? "badge-a" : "badge-b";
+    const badgeLabel = e.source==="a" ? "和歌山県卓球協会" : "和歌山卓球協議会";
+    const deadlineBadge = e.closed
+      ? `<span class="badge badge-closed">申込締切: ${e.deadline}</span>`
+      : `<span class="badge ${badgeClass}">申込締切: ${e.deadline}</span>`;
+
+    html += `
+    <div class="card ${e.source==='b' ? 'src-b' : ''}">
+      <div class="date-block">
+        <div class="date-day">${d.getDate()}</div>
+        <div class="date-dow">${d.getMonth()+1}月・${DOW[d.getDay()]}</div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">${e.name}</div>
+        <div class="card-meta">
+          <span class="badge ${badgeClass}">${badgeLabel}</span>
+          ${deadlineBadge}
+          <span>📍 ${e.venue}</span>
+        </div>
+        <div class="card-links">
+          <a href="${e.link}" target="_blank" rel="noopener">大会要項を見る ↗</a>
+          ${e.entry ? `<a href="${e.entry}" target="_blank" rel="noopener">申込フォーム ↗</a>` : ""}
+        </div>
+      </div>
+    </div>`;
+  });
+  listEl.innerHTML = html;
+}
+
+document.querySelectorAll(".tab").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-pressed","false"));
+    btn.setAttribute("aria-pressed","true");
+    activeFilter = btn.dataset.filter;
+    render();
+  });
+});
+document.getElementById("search").addEventListener("input", (e)=>{
+  query = e.target.value.trim();
+  render();
+});
+
+render();
+</script>
+
+</body>
+</html>
