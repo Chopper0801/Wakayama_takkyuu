@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>近畿卓球大会カレンダー（和歌山・大阪）</title>
+<title>近畿卓球大会カレンダー（和歌山・大阪・奈良）</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -22,6 +22,8 @@
     --blue-2:#1f4a86;
     --purple:#7b4fa0;
     --purple-2:#623d80;
+    --teal:#1e8a7a;
+    --teal-2:#166b5f;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
@@ -197,6 +199,7 @@
   .card.src-b{border-left-color:#2f7d5c;}
   .card.src-c{border-left-color:var(--blue);}
   .card.src-d{border-left-color:var(--purple);}
+  .card.src-e{border-left-color:var(--teal);}
   .date-block{
     font-family:'JetBrains Mono', monospace;
     text-align:center;
@@ -233,6 +236,7 @@
   .badge-b{background:#dcece2; color:#245c41;}
   .badge-c{background:#dce6f2; color:var(--blue-2);}
   .badge-d{background:#e9e0f0; color:var(--purple-2);}
+  .badge-e{background:#d9efe9; color:var(--teal-2);}
   .badge-closed{background:#eee; color:#888;}
   .badge-tbd{background:#fff3cd; color:#8a6400;}
   .card-links{display:flex; gap:14px; flex-wrap:wrap;}
@@ -247,6 +251,64 @@
   .src-b .card-links a{color:#245c41;}
   .src-c .card-links a{color:var(--blue-2);}
   .src-d .card-links a{color:var(--purple-2);}
+  .src-e .card-links a{color:var(--teal-2);}
+
+  /* ---------- HIERARCHICAL FILTER (org -> pref) ---------- */
+  .filter-group{margin-bottom:14px;}
+  .filter-group-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.1em;
+    color:#7a8a7d;
+    text-transform:uppercase;
+    margin-bottom:8px;
+  }
+  .org-tabs{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;}
+  .org-tab{
+    flex:1;
+    min-width:150px;
+    font-family:'Oswald', sans-serif;
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:.02em;
+    border:2px solid var(--line);
+    background:var(--white);
+    color:var(--ink);
+    padding:12px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    text-align:left;
+    transition:all .15s ease;
+  }
+  .org-tab small{display:block; font-family:'Noto Sans JP',sans-serif; font-size:11px; font-weight:400; color:#7a8a7d; margin-top:2px;}
+  .org-tab[aria-pressed="true"]{
+    background:var(--court);
+    border-color:var(--court);
+    color:var(--white);
+  }
+  .org-tab[aria-pressed="true"] small{color:#c9d8cd;}
+  .pref-tabs{display:flex; gap:8px; flex-wrap:wrap;}
+  .pref-tab{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    border:1px solid var(--line);
+    background:var(--white);
+    color:var(--ink);
+    padding:8px 16px;
+    border-radius:20px;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .pref-tab[aria-pressed="true"]{
+    background:var(--ember);
+    border-color:var(--ember);
+    color:var(--white);
+  }
+  .pref-tab:disabled{
+    opacity:.35;
+    cursor:not-allowed;
+    text-decoration:line-through;
+  }
   .tbd-section{
     max-width:920px;
     margin:34px auto 0;
@@ -310,7 +372,7 @@
   <div class="hero-inner">
     <div class="eyebrow">Kinki Table Tennis · 大会情報アグリゲーター</div>
     <h1>近畿卓球<br>大会カレンダー</h1>
-    <p class="sub">和歌山・大阪、4つの団体の大会案内をひとつにまとめました。<b>和歌山県卓球協会</b>・<b>和歌山卓球協議会</b>・<b>大阪卓球協会</b>・<b>大阪府卓球協議会</b>のサイトを見比べる手間を減らすためのページです。</p>
+    <p class="sub">和歌山・大阪・奈良、5団体の大会案内をひとつにまとめました。<b>日本卓球協会系</b>（和歌山県卓球協会・大阪卓球協会・奈良県卓球協会）と<b>新体連（新日本スポーツ連盟）系</b>（和歌山卓球協議会・大阪府卓球協議会）を切り替えて、都道府県別に大会を探せます。</p>
 
     <div class="scoreboard">
       <div>
@@ -333,12 +395,22 @@
   <div class="search-row">
     <input id="search" type="text" placeholder="大会名・会場で検索（例：ホープス、河南、ラージボール）">
   </div>
-  <div class="tabs" id="tabs">
-    <button class="tab" data-filter="all" aria-pressed="true">すべて</button>
-    <button class="tab" data-filter="a" aria-pressed="false"><span class="dot dot-a"></span>和歌山県卓球協会</button>
-    <button class="tab" data-filter="b" aria-pressed="false"><span class="dot dot-b"></span>和歌山卓球協議会</button>
-    <button class="tab" data-filter="c" aria-pressed="false"><span class="dot" style="background:#2b5fa8"></span>大阪卓球協会</button>
-    <button class="tab" data-filter="d" aria-pressed="false"><span class="dot" style="background:#7b4fa0"></span>大阪府卓球協議会</button>
+  <div class="filter-group">
+    <div class="filter-group-label">Step 1 — 対象団体を選ぶ</div>
+    <div class="org-tabs" id="org-tabs">
+      <button class="org-tab" data-org="all" aria-pressed="true">すべての団体</button>
+      <button class="org-tab" data-org="jtta" aria-pressed="false">日本卓球協会系<small>県卓球協会・大会本部主催</small></button>
+      <button class="org-tab" data-org="shin" aria-pressed="false">新体連系<small>新日本スポーツ連盟・卓球協議会</small></button>
+    </div>
+  </div>
+  <div class="filter-group">
+    <div class="filter-group-label">Step 2 — 都道府県を選ぶ</div>
+    <div class="pref-tabs" id="pref-tabs">
+      <button class="pref-tab" data-pref="all" aria-pressed="true">すべて</button>
+      <button class="pref-tab" data-pref="wakayama" aria-pressed="false">和歌山</button>
+      <button class="pref-tab" data-pref="osaka" aria-pressed="false">大阪</button>
+      <button class="pref-tab" data-pref="nara" aria-pressed="false">奈良</button>
+    </div>
   </div>
   <div class="count-line" id="count-line"></div>
 </div>
@@ -355,86 +427,118 @@
 <section class="sources">
   <h2>情報の出どころ</h2>
   <ul>
-    <li>🟠 <a href="https://www.watakukyo.com/?page_id=8" target="_blank" rel="noopener">一般社団法人和歌山県卓球協会「大会・事業」</a> — watakukyo.com</li>
-    <li>🟢 <a href="https://sites.google.com/view/njsf-ntta-wakayama/大会案内" target="_blank" rel="noopener">和歌山卓球協議会「大会案内」</a> — sites.google.com</li>
-    <li>🔵 <a href="http://otta-osaka.jp/calendar/calendar.html" target="_blank" rel="noopener">NPO法人大阪卓球協会「事業計画表」</a> — otta-osaka.jp</li>
-    <li>🟣 <a href="https://shinspo-osakatakkyu.net/info-sub/" target="_blank" rel="noopener">大阪府卓球協議会（新日本スポーツ連盟）「大会案内・申込用紙」</a> — shinspo-osakatakkyu.net</li>
+    <li>🟠 <a href="https://www.watakukyo.com/?page_id=8" target="_blank" rel="noopener">一般社団法人和歌山県卓球協会「大会・事業」</a> — watakukyo.com <span style="color:#8a988c">（日本卓球協会系・和歌山）</span></li>
+    <li>🟢 <a href="https://sites.google.com/view/njsf-ntta-wakayama/大会案内" target="_blank" rel="noopener">和歌山卓球協議会「大会案内」</a> — sites.google.com <span style="color:#8a988c">（新体連系・和歌山）</span></li>
+    <li>🔵 <a href="http://otta-osaka.jp/calendar/calendar.html" target="_blank" rel="noopener">NPO法人大阪卓球協会「事業計画表」</a> — otta-osaka.jp <span style="color:#8a988c">（日本卓球協会系・大阪）</span></li>
+    <li>🟣 <a href="https://shinspo-osakatakkyu.net/info-sub/" target="_blank" rel="noopener">大阪府卓球協議会（新日本スポーツ連盟）「大会案内・申込用紙」</a> — shinspo-osakatakkyu.net <span style="color:#8a988c">（新体連系・大阪）</span></li>
+    <li>🟦 <a href="https://nara-ktta.com/games/" target="_blank" rel="noopener">一般社団法人奈良県卓球協会「GAMES 試合情報」</a> — nara-ktta.com <span style="color:#8a988c">（日本卓球協会系・奈良）</span></li>
   </ul>
 </section>
 
-<p class="note">※ このページは 2026年8月1日時点の各サイト掲載情報をもとにした一覧です。大会の延期・中止・変更が発生する場合があるため、参加前には必ず各大会名・詳細リンクから公式の最新要項をご確認ください。大阪卓球協会の一部の大会（内部リーグ戦「大卓リーグ」等）は掲載を省略しています。</p>
+<p class="note">※ このページは 2026年8月1日時点の各サイト掲載情報をもとにした一覧です。大会の延期・中止・変更が発生する場合があるため、参加前には必ず各大会名・詳細リンクから公式の最新要項をご確認ください。大阪卓球協会の一部の大会（内部リーグ戦「大卓リーグ」等）は掲載を省略しています。<br>※ 新日本スポーツ連盟（新体連）の奈良県卓球協議会・県連盟は、全国組織の公式サイト上で都道府県一覧に掲載が確認できなかったため、本ページには含めていません。存在が確認でき次第、追加します。</p>
 
 <script>
 const events = [
   // ---- 和歌山県卓球協会 (source: a) ----
-  {date:"2026-08-04", name:"第65回近畿卓球選手権大会〔高校3年生の部〕〔ジュニアの部(高校2年生以下)〕和歌山県予選会", venue:"県立体", deadline:"7/10（締切済）", deadlineDate:"2026-07-10", closed:true, source:"a", link:"https://www.watakukyo.com/wp-content/uploads/2026/summary/2026kinkichampionshipsjuniorQ.xlsx"},
-  {date:"2026-08-10", name:"2026年度和歌山県卓球選手権大会〔カデットの部〕（兼）2026年全日本卓球選手権大会〔カデットの部〕和歌山県予選会", venue:"県立体", deadline:"7/15（締切済）", deadlineDate:"2026-07-15", closed:true, source:"a", link:"https://www.watakukyo.com/wp-content/uploads/2026/summary/2026alljapancadetQentry.xls"},
-  {date:"2026-08-13", name:"2026年度紀陽銀行杯少年少女卓球大会", venue:"県立体", deadline:"7/16（締切済）", deadlineDate:"2026-07-16", closed:true, source:"a", link:"https://www.watakukyo.com/wp-content/uploads/2026/summary/2025kiyobankcupentry.xlsx"},
-  {date:"2026-09-13", name:"2026年度和歌山県卓球選手権大会〔一般の部〕（兼）天皇杯・皇后杯2027年全日本卓球選手権大会〔一般の部〕和歌山県予選会", venue:"市民体", deadline:"未定（決まり次第表示）", deadlineDate:null, closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
-  {date:"2026-09-19", name:"2026年度和歌山県卓球選手権大会〔ジュニアの部〕（兼）天皇杯・皇后杯2027年全日本卓球選手権大会〔ジュニアの部〕和歌山県予選会", venue:"県立体", deadline:"8/24", deadlineDate:"2026-08-24", closed:false, source:"a", link:"https://www.watakukyo.com/wp-content/uploads/2026/summary/2027alljapanjuniorQ.pdf", entry:"https://www.watakukyo.com/wp-content/uploads/2026/summary/2027alljapanjuniorQentry.xlsx"},
-  {date:"2026-09-27", name:"第62回会長杯和歌山県下卓球大会（兼）第66回大阪国際招待卓球選手権大会〔小学6年生以下の部〕和歌山県予選会", venue:"県立体補", deadline:"9/4", deadlineDate:"2026-09-04", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
-  {date:"2026-10-17", name:"第62回会長杯和歌山県下卓球大会〔中学2年生以下の部〕〔小・中学1年生以下の部〕（兼）第66回大阪国際招待卓球選手権大会〔中学2年生以下の部〕和歌山県予選会", venue:"県立体", deadline:"9/25", deadlineDate:"2026-09-25", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
-  {date:"2026-11-01", name:"第1回和歌山支部秋季オープン ラージボール卓球フェスティバル", venue:"市民体", deadline:"10/15", deadlineDate:"2026-10-15", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
-  {date:"2026-11-01", name:"第1回和歌山支部秋季オープン レディース卓球フェスティバル", venue:"市民体", deadline:"10/15", deadlineDate:"2026-10-15", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
-  {date:"2026-11-14", name:"2026年度和歌山県卓球祭（兼）第79回東京卓球選手権大会〔ホープス・カブの部〕和歌山県予選会", venue:"県立体補", deadline:"10/23", deadlineDate:"2026-10-23", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
-  {date:"2026-11-15", name:"第62回和歌山県卓球協会会長杯争奪県下卓球大会〔一般・高校2年生以下の部〕〔ラージボールの部〕（兼）第66回大阪国際招待卓球選手権大会和歌山県予選会", venue:"白浜総合", deadline:"10/19", deadlineDate:"2026-10-19", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
-  {date:"2026-11-29", name:"2026年度和歌山県卓球祭（兼）第79回東京卓球選手権大会〔一般の部〕〔年代別の部〕和歌山県予選会", venue:"市民体", deadline:"11/6", deadlineDate:"2026-11-06", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
-  {date:"2026-12-05", name:"2026年度和歌山県卓球祭〔小学生・中学1年生・中学2年生以下の部〕（兼）東京卓球選手権大会〔中学2年生以下の部〕和歌山県予選会", venue:"市民体", deadline:"11/13", deadlineDate:"2026-11-13", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
-  {date:"2026-12-06", name:"2026年度和歌山県卓球祭・第79回東京卓球選手権大会〔ジュニアの部〕和歌山県予選会", venue:"東公園体", deadline:"11/9", deadlineDate:"2026-11-09", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
-  {date:"2026-12-12", name:"第36回東アジアホープス日本代表選考会 和歌山県予選会", venue:"県立体補", deadline:"11/20", deadlineDate:"2026-11-20", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
-  {date:"2026-12-26", name:"第24回全国ホープス選抜卓球大会 和歌山県予選会", venue:"県立体補", deadline:"12/4", deadlineDate:"2026-12-04", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
-  {date:"2026-12-26", name:"第28回全国中学選抜卓球大会 和歌山県予選会", venue:"河南総合", deadline:"12/4", deadlineDate:"2026-12-04", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
-  {date:"2027-01-09", name:"第53回全国高校選抜卓球大会 和歌山県予選会", venue:"河南総合", deadline:"12/14", deadlineDate:"2026-12-14", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
-  {date:"2027-01-16", name:"第37回オープン和歌山支部長杯卓球大会", venue:"河南総合", deadline:"12/21", deadlineDate:"2026-12-21", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
-  {date:"2027-02-13", name:"2026年度和歌山県少年少女卓球技術講習会", venue:"河南総合", deadline:"2027/1/25", deadlineDate:"2027-01-25", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
-  {date:"2027-03-13", name:"第41回オープン和歌山県卓球協会和歌山支部主催卓球大会〔団体戦〕", venue:"県立体", deadline:"2/15", deadlineDate:"2027-02-15", closed:false, source:"a", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-08-04", name:"第65回近畿卓球選手権大会〔高校3年生の部〕〔ジュニアの部(高校2年生以下)〕和歌山県予選会", venue:"県立体", deadline:"7/10（締切済）", deadlineDate:"2026-07-10", closed:true, source:"a", org:"jtta", pref:"wakayama", link:"https://www.watakukyo.com/wp-content/uploads/2026/summary/2026kinkichampionshipsjuniorQ.xlsx"},
+  {date:"2026-08-10", name:"2026年度和歌山県卓球選手権大会〔カデットの部〕（兼）2026年全日本卓球選手権大会〔カデットの部〕和歌山県予選会", venue:"県立体", deadline:"7/15（締切済）", deadlineDate:"2026-07-15", closed:true, source:"a", org:"jtta", pref:"wakayama", link:"https://www.watakukyo.com/wp-content/uploads/2026/summary/2026alljapancadetQentry.xls"},
+  {date:"2026-08-13", name:"2026年度紀陽銀行杯少年少女卓球大会", venue:"県立体", deadline:"7/16（締切済）", deadlineDate:"2026-07-16", closed:true, source:"a", org:"jtta", pref:"wakayama", link:"https://www.watakukyo.com/wp-content/uploads/2026/summary/2025kiyobankcupentry.xlsx"},
+  {date:"2026-09-13", name:"2026年度和歌山県卓球選手権大会〔一般の部〕（兼）天皇杯・皇后杯2027年全日本卓球選手権大会〔一般の部〕和歌山県予選会", venue:"市民体", deadline:"未定（決まり次第表示）", deadlineDate:null, closed:false, source:"a", org:"jtta", pref:"wakayama", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-09-19", name:"2026年度和歌山県卓球選手権大会〔ジュニアの部〕（兼）天皇杯・皇后杯2027年全日本卓球選手権大会〔ジュニアの部〕和歌山県予選会", venue:"県立体", deadline:"8/24", deadlineDate:"2026-08-24", closed:false, source:"a", org:"jtta", pref:"wakayama", link:"https://www.watakukyo.com/wp-content/uploads/2026/summary/2027alljapanjuniorQ.pdf", entry:"https://www.watakukyo.com/wp-content/uploads/2026/summary/2027alljapanjuniorQentry.xlsx"},
+  {date:"2026-09-27", name:"第62回会長杯和歌山県下卓球大会（兼）第66回大阪国際招待卓球選手権大会〔小学6年生以下の部〕和歌山県予選会", venue:"県立体補", deadline:"9/4", deadlineDate:"2026-09-04", closed:false, source:"a", org:"jtta", pref:"wakayama", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-10-17", name:"第62回会長杯和歌山県下卓球大会〔中学2年生以下の部〕〔小・中学1年生以下の部〕（兼）第66回大阪国際招待卓球選手権大会〔中学2年生以下の部〕和歌山県予選会", venue:"県立体", deadline:"9/25", deadlineDate:"2026-09-25", closed:false, source:"a", org:"jtta", pref:"wakayama", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-11-01", name:"第1回和歌山支部秋季オープン ラージボール卓球フェスティバル", venue:"市民体", deadline:"10/15", deadlineDate:"2026-10-15", closed:false, source:"a", org:"jtta", pref:"wakayama", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-11-01", name:"第1回和歌山支部秋季オープン レディース卓球フェスティバル", venue:"市民体", deadline:"10/15", deadlineDate:"2026-10-15", closed:false, source:"a", org:"jtta", pref:"wakayama", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-11-14", name:"2026年度和歌山県卓球祭（兼）第79回東京卓球選手権大会〔ホープス・カブの部〕和歌山県予選会", venue:"県立体補", deadline:"10/23", deadlineDate:"2026-10-23", closed:false, source:"a", org:"jtta", pref:"wakayama", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-11-15", name:"第62回和歌山県卓球協会会長杯争奪県下卓球大会〔一般・高校2年生以下の部〕〔ラージボールの部〕（兼）第66回大阪国際招待卓球選手権大会和歌山県予選会", venue:"白浜総合", deadline:"10/19", deadlineDate:"2026-10-19", closed:false, source:"a", org:"jtta", pref:"wakayama", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-11-29", name:"2026年度和歌山県卓球祭（兼）第79回東京卓球選手権大会〔一般の部〕〔年代別の部〕和歌山県予選会", venue:"市民体", deadline:"11/6", deadlineDate:"2026-11-06", closed:false, source:"a", org:"jtta", pref:"wakayama", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-12-05", name:"2026年度和歌山県卓球祭〔小学生・中学1年生・中学2年生以下の部〕（兼）東京卓球選手権大会〔中学2年生以下の部〕和歌山県予選会", venue:"市民体", deadline:"11/13", deadlineDate:"2026-11-13", closed:false, source:"a", org:"jtta", pref:"wakayama", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-12-06", name:"2026年度和歌山県卓球祭・第79回東京卓球選手権大会〔ジュニアの部〕和歌山県予選会", venue:"東公園体", deadline:"11/9", deadlineDate:"2026-11-09", closed:false, source:"a", org:"jtta", pref:"wakayama", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-12-12", name:"第36回東アジアホープス日本代表選考会 和歌山県予選会", venue:"県立体補", deadline:"11/20", deadlineDate:"2026-11-20", closed:false, source:"a", org:"jtta", pref:"wakayama", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-12-26", name:"第24回全国ホープス選抜卓球大会 和歌山県予選会", venue:"県立体補", deadline:"12/4", deadlineDate:"2026-12-04", closed:false, source:"a", org:"jtta", pref:"wakayama", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2026-12-26", name:"第28回全国中学選抜卓球大会 和歌山県予選会", venue:"河南総合", deadline:"12/4", deadlineDate:"2026-12-04", closed:false, source:"a", org:"jtta", pref:"wakayama", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2027-01-09", name:"第53回全国高校選抜卓球大会 和歌山県予選会", venue:"河南総合", deadline:"12/14", deadlineDate:"2026-12-14", closed:false, source:"a", org:"jtta", pref:"wakayama", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2027-01-16", name:"第37回オープン和歌山支部長杯卓球大会", venue:"河南総合", deadline:"12/21", deadlineDate:"2026-12-21", closed:false, source:"a", org:"jtta", pref:"wakayama", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2027-02-13", name:"2026年度和歌山県少年少女卓球技術講習会", venue:"河南総合", deadline:"2027/1/25", deadlineDate:"2027-01-25", closed:false, source:"a", org:"jtta", pref:"wakayama", link:"https://www.watakukyo.com/?page_id=8"},
+  {date:"2027-03-13", name:"第41回オープン和歌山県卓球協会和歌山支部主催卓球大会〔団体戦〕", venue:"県立体", deadline:"2/15", deadlineDate:"2027-02-15", closed:false, source:"a", org:"jtta", pref:"wakayama", link:"https://www.watakukyo.com/?page_id=8"},
 
   // ---- 和歌山卓球協議会 (source: b) ----
-  {date:"2026-08-16", name:"盆休み卓球大会（オープン大会・どなたでも参加可）", venue:"未定（要項参照）", deadline:"7/31", deadlineDate:"2026-07-31", closed:false, source:"b", link:"https://drive.google.com/file/d/1bIqTj1-S-LmI-EDHh7qODfsOtAZRD1Oo/view", entry:"https://docs.google.com/forms/d/e/1FAIpQLSc8-VC1A97Nzuvxs62crIyovZKGLGuoVy253FgyV5bHyk7oiA/viewform"},
-  {date:"2026-09-22", name:"秋分の日卓球大会（オープン大会・どなたでも参加可）", venue:"未定（要項参照）", deadline:"9/4", deadlineDate:"2026-09-04", closed:false, source:"b", link:"https://drive.google.com/file/d/110DOYKfnyU4bZKhR7yep2qZJ-wXtVwbC/view", entry:"https://docs.google.com/forms/d/e/1FAIpQLSdl0JeU25TfAOxSh3n5TqiIJgmVM3H2AkpvR52kO_X9CpdvsQ/viewform"},
-  {date:"2026-10-11", name:"第4回白浜卓球大会（オープン大会・どなたでも参加可）", venue:"未定（要項参照）", deadline:"9/25", deadlineDate:"2026-09-25", closed:false, source:"b", link:"https://drive.google.com/file/d/1sPrRYECSY2tGqsIz_eMnZosDylfNlyhR/view"},
+  {date:"2026-08-16", name:"盆休み卓球大会（オープン大会・どなたでも参加可）", venue:"未定（要項参照）", deadline:"7/31", deadlineDate:"2026-07-31", closed:false, source:"b", org:"shin", pref:"wakayama", link:"https://drive.google.com/file/d/1bIqTj1-S-LmI-EDHh7qODfsOtAZRD1Oo/view", entry:"https://docs.google.com/forms/d/e/1FAIpQLSc8-VC1A97Nzuvxs62crIyovZKGLGuoVy253FgyV5bHyk7oiA/viewform"},
+  {date:"2026-09-22", name:"秋分の日卓球大会（オープン大会・どなたでも参加可）", venue:"未定（要項参照）", deadline:"9/4", deadlineDate:"2026-09-04", closed:false, source:"b", org:"shin", pref:"wakayama", link:"https://drive.google.com/file/d/110DOYKfnyU4bZKhR7yep2qZJ-wXtVwbC/view", entry:"https://docs.google.com/forms/d/e/1FAIpQLSdl0JeU25TfAOxSh3n5TqiIJgmVM3H2AkpvR52kO_X9CpdvsQ/viewform"},
+  {date:"2026-10-11", name:"第4回白浜卓球大会（オープン大会・どなたでも参加可）", venue:"未定（要項参照）", deadline:"9/25", deadlineDate:"2026-09-25", closed:false, source:"b", org:"shin", pref:"wakayama", link:"https://drive.google.com/file/d/1sPrRYECSY2tGqsIz_eMnZosDylfNlyhR/view"},
 
   // ---- 大阪卓球協会 / NPO法人大阪卓球協会 (source: c) ----
-  {date:"2026-08-09", name:"全日本マスターズ卓球選手権大会〔50才以下の部〕大阪府予選会", venue:"池田市五月山体", deadline:"7/3（締切済）", deadlineDate:"2026-07-03", closed:true, source:"c", link:"http://otta-osaka.jp/guide/2026_guide/2026guide.html#Mas"},
-  {date:"2026-08-13", name:"全国高等学校卓球選手権大会（インターハイ・8/13〜17）", venue:"Ａｓｕｅアリーナ大阪", deadline:"—（大阪府予選ではなく全国大会本戦）", deadlineDate:null, closed:false, source:"c", link:"http://otta-osaka.jp/pdf/Schedule/2026年度事業計画7.2修正.pdf"},
-  {date:"2026-08-29", name:"全日本卓球選手権大会〔カデットの部〕大阪府予選会", venue:"西成区スポーツセンター", deadline:"8/14", deadlineDate:"2026-08-14", closed:false, source:"c", link:"http://otta-osaka.jp/guide/guide.html"},
-  {date:"2026-09-03", name:"全国レディース卓球フェスティバル 大阪府予選会（9/3〜4）", venue:"中央体育館メイン・サブ", deadline:"5/20（締切済）", deadlineDate:"2026-05-20", closed:true, source:"c", link:"http://otta-osaka.jp/guide/guide.html"},
-  {date:"2026-09-06", name:"全日本卓球選手権大会〔ジュニアの部〕二次予選", venue:"初芝体育館", deadline:"—", deadlineDate:null, closed:false, source:"c", link:"http://otta-osaka.jp/guide/2026_guide/2026guide.html#Juni"},
-  {date:"2026-09-12", name:"全日本卓球選手権大会〔ジュニア女子の部〕予選決勝リーグ", venue:"大浜体育館サブ", deadline:"—", deadlineDate:null, closed:false, source:"c", link:"http://otta-osaka.jp/guide/2026_guide/2026guide.html#Juni"},
-  {date:"2026-09-13", name:"全日本卓球選手権大会〔ジュニア男子の部〕予選決勝リーグ", venue:"大浜体育館サブ", deadline:"—", deadlineDate:null, closed:false, source:"c", link:"http://otta-osaka.jp/guide/2026_guide/2026guide.html#Juni"},
-  {date:"2026-09-18", name:"第40回大阪マスターズ卓球選手権大会（全国オープン・9/18〜19）", venue:"大浜体育館", deadline:"7/31（締切済）", deadlineDate:"2026-07-31", closed:true, source:"c", link:"http://otta-osaka.jp/guide/2026_guide/2026guide.html#OsakaMas"},
-  {date:"2026-10-03", name:"全日本卓球選手権大会〔一般シングルスの部〕大阪府予選会", venue:"八尾ウイング", deadline:"—", deadlineDate:null, closed:false, source:"c", link:"http://otta-osaka.jp/guide/guide.html"},
-  {date:"2026-10-04", name:"全日本卓球選手権大会〔一般混合ダブルス・男女ダブルスの部〕大阪府予選会", venue:"西成区スポーツセンター", deadline:"—", deadlineDate:null, closed:false, source:"c", link:"http://otta-osaka.jp/guide/guide.html"},
-  {date:"2026-10-11", name:"東京選手権兼後藤杯〔ホープス・カブの部〕予選会・後藤杯〔カデットの部〕予選会", venue:"中央体育館サブ", deadline:"9/25", deadlineDate:"2026-09-25", closed:false, source:"c", link:"http://otta-osaka.jp/guide/guide.html"},
-  {date:"2026-11-02", name:"牛乳石鹸レディースシングルス大会", venue:"中央体育館メイン", deadline:"10/2", deadlineDate:"2026-10-02", closed:false, source:"c", link:"http://otta-osaka.jp/guide/guide.html"},
-  {date:"2026-11-03", name:"後藤杯卓球選手権大会〔一般・ジュニアの部〕大阪府予選会", venue:"はびきのコロセアム", deadline:"10/16", deadlineDate:"2026-10-16", closed:false, source:"c", link:"http://otta-osaka.jp/guide/guide.html"},
-  {date:"2026-11-07", name:"（仮称）バタフライ・ダブルスチームカップ", venue:"西成区スポーツセンター", deadline:"—", deadlineDate:null, closed:false, source:"c", link:"http://otta-osaka.jp/guide/guide.html"},
-  {date:"2026-11-14", name:"東京選手権〔カデットの部〕予選会", venue:"西成区スポーツセンター", deadline:"10/30", deadlineDate:"2026-10-30", closed:false, source:"c", link:"http://otta-osaka.jp/guide/guide.html"},
-  {date:"2026-11-21", name:"VICTAS少年少女チーム卓球大会（近県オープン）", venue:"千島体育館", deadline:"11/6", deadlineDate:"2026-11-06", closed:false, source:"c", link:"http://otta-osaka.jp/guide/guide.html"},
-  {date:"2026-11-22", name:"東京選手権〔一般・ダブルスの部〕予選会", venue:"池田市五月山体育館", deadline:"11/6", deadlineDate:"2026-11-06", closed:false, source:"c", link:"http://otta-osaka.jp/guide/guide.html"},
-  {date:"2026-11-29", name:"大阪国際招待卓球選手権大会〔一般・ダブルスの部〕予選会", venue:"大浜体育館", deadline:"11/13", deadlineDate:"2026-11-13", closed:false, source:"c", link:"http://otta-osaka.jp/guide/guide.html"},
-  {date:"2026-12-05", name:"東京選手権〔ジュニア男子の部〕予選会", venue:"未定（要項参照）", deadline:"—", deadlineDate:null, closed:false, source:"c", link:"http://otta-osaka.jp/guide/guide.html"},
-  {date:"2026-12-06", name:"東京選手権〔ジュニア女子の部／男子残り〕予選会", venue:"未定（要項参照）", deadline:"—", deadlineDate:null, closed:false, source:"c", link:"http://otta-osaka.jp/guide/guide.html"},
-  {date:"2026-12-12", name:"全国ホープス選抜卓球大会 大阪府予選会", venue:"長居北練習室", deadline:"11/27", deadlineDate:"2026-11-27", closed:false, source:"c", link:"http://otta-osaka.jp/guide/guide.html"},
-  {date:"2026-12-19", name:"東アジアホープス選手権大会 日本代表選考 大阪府予選会", venue:"東淀川体育館", deadline:"12/4", deadlineDate:"2026-12-04", closed:false, source:"c", link:"http://otta-osaka.jp/guide/guide.html"},
-  {date:"2027-01-11", name:"大阪中学校選抜卓球大会", venue:"茨木市民体育館", deadline:"—", deadlineDate:null, closed:false, source:"c", link:"http://otta-osaka.jp/pdf/Schedule/2026年度事業計画7.2修正.pdf"},
-  {date:"2027-01-22", name:"第40回大阪ガバナーズカップ卓球大会（1/22〜24）", venue:"浪速スポーツセンター", deadline:"11/27", deadlineDate:"2026-11-27", closed:false, source:"c", link:"http://otta-osaka.jp/guide/guide.html"},
-  {date:"2027-02-19", name:"第66回大阪国際招待卓球選手権大会（全国オープン・2/19〜21）", venue:"府立体育館①・浪速スポーツセンター", deadline:"—（詳細は要項参照）", deadlineDate:null, closed:false, source:"c", link:"http://otta-osaka.jp/guide/guide.html"},
-  {date:"2027-03-20", name:"ヤサカ杯個人リーグ卓球大会", venue:"臨海スポーツセンター", deadline:"3/5", deadlineDate:"2027-03-05", closed:false, source:"c", link:"http://otta-osaka.jp/guide/guide.html"},
+  {date:"2026-08-09", name:"全日本マスターズ卓球選手権大会〔50才以下の部〕大阪府予選会", venue:"池田市五月山体", deadline:"7/3（締切済）", deadlineDate:"2026-07-03", closed:true, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/2026_guide/2026guide.html#Mas"},
+  {date:"2026-08-13", name:"全国高等学校卓球選手権大会（インターハイ・8/13〜17）", venue:"Ａｓｕｅアリーナ大阪", deadline:"—（大阪府予選ではなく全国大会本戦）", deadlineDate:null, closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/pdf/Schedule/2026年度事業計画7.2修正.pdf"},
+  {date:"2026-08-29", name:"全日本卓球選手権大会〔カデットの部〕大阪府予選会", venue:"西成区スポーツセンター", deadline:"8/14", deadlineDate:"2026-08-14", closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/guide.html"},
+  {date:"2026-09-03", name:"全国レディース卓球フェスティバル 大阪府予選会（9/3〜4）", venue:"中央体育館メイン・サブ", deadline:"5/20（締切済）", deadlineDate:"2026-05-20", closed:true, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/guide.html"},
+  {date:"2026-09-06", name:"全日本卓球選手権大会〔ジュニアの部〕二次予選", venue:"初芝体育館", deadline:"—", deadlineDate:null, closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/2026_guide/2026guide.html#Juni"},
+  {date:"2026-09-12", name:"全日本卓球選手権大会〔ジュニア女子の部〕予選決勝リーグ", venue:"大浜体育館サブ", deadline:"—", deadlineDate:null, closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/2026_guide/2026guide.html#Juni"},
+  {date:"2026-09-13", name:"全日本卓球選手権大会〔ジュニア男子の部〕予選決勝リーグ", venue:"大浜体育館サブ", deadline:"—", deadlineDate:null, closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/2026_guide/2026guide.html#Juni"},
+  {date:"2026-09-18", name:"第40回大阪マスターズ卓球選手権大会（全国オープン・9/18〜19）", venue:"大浜体育館", deadline:"7/31（締切済）", deadlineDate:"2026-07-31", closed:true, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/2026_guide/2026guide.html#OsakaMas"},
+  {date:"2026-10-03", name:"全日本卓球選手権大会〔一般シングルスの部〕大阪府予選会", venue:"八尾ウイング", deadline:"—", deadlineDate:null, closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/guide.html"},
+  {date:"2026-10-04", name:"全日本卓球選手権大会〔一般混合ダブルス・男女ダブルスの部〕大阪府予選会", venue:"西成区スポーツセンター", deadline:"—", deadlineDate:null, closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/guide.html"},
+  {date:"2026-10-11", name:"東京選手権兼後藤杯〔ホープス・カブの部〕予選会・後藤杯〔カデットの部〕予選会", venue:"中央体育館サブ", deadline:"9/25", deadlineDate:"2026-09-25", closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/guide.html"},
+  {date:"2026-11-02", name:"牛乳石鹸レディースシングルス大会", venue:"中央体育館メイン", deadline:"10/2", deadlineDate:"2026-10-02", closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/guide.html"},
+  {date:"2026-11-03", name:"後藤杯卓球選手権大会〔一般・ジュニアの部〕大阪府予選会", venue:"はびきのコロセアム", deadline:"10/16", deadlineDate:"2026-10-16", closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/guide.html"},
+  {date:"2026-11-07", name:"（仮称）バタフライ・ダブルスチームカップ", venue:"西成区スポーツセンター", deadline:"—", deadlineDate:null, closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/guide.html"},
+  {date:"2026-11-14", name:"東京選手権〔カデットの部〕予選会", venue:"西成区スポーツセンター", deadline:"10/30", deadlineDate:"2026-10-30", closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/guide.html"},
+  {date:"2026-11-21", name:"VICTAS少年少女チーム卓球大会（近県オープン）", venue:"千島体育館", deadline:"11/6", deadlineDate:"2026-11-06", closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/guide.html"},
+  {date:"2026-11-22", name:"東京選手権〔一般・ダブルスの部〕予選会", venue:"池田市五月山体育館", deadline:"11/6", deadlineDate:"2026-11-06", closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/guide.html"},
+  {date:"2026-11-29", name:"大阪国際招待卓球選手権大会〔一般・ダブルスの部〕予選会", venue:"大浜体育館", deadline:"11/13", deadlineDate:"2026-11-13", closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/guide.html"},
+  {date:"2026-12-05", name:"東京選手権〔ジュニア男子の部〕予選会", venue:"未定（要項参照）", deadline:"—", deadlineDate:null, closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/guide.html"},
+  {date:"2026-12-06", name:"東京選手権〔ジュニア女子の部／男子残り〕予選会", venue:"未定（要項参照）", deadline:"—", deadlineDate:null, closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/guide.html"},
+  {date:"2026-12-12", name:"全国ホープス選抜卓球大会 大阪府予選会", venue:"長居北練習室", deadline:"11/27", deadlineDate:"2026-11-27", closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/guide.html"},
+  {date:"2026-12-19", name:"東アジアホープス選手権大会 日本代表選考 大阪府予選会", venue:"東淀川体育館", deadline:"12/4", deadlineDate:"2026-12-04", closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/guide.html"},
+  {date:"2027-01-11", name:"大阪中学校選抜卓球大会", venue:"茨木市民体育館", deadline:"—", deadlineDate:null, closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/pdf/Schedule/2026年度事業計画7.2修正.pdf"},
+  {date:"2027-01-22", name:"第40回大阪ガバナーズカップ卓球大会（1/22〜24）", venue:"浪速スポーツセンター", deadline:"11/27", deadlineDate:"2026-11-27", closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/guide.html"},
+  {date:"2027-02-19", name:"第66回大阪国際招待卓球選手権大会（全国オープン・2/19〜21）", venue:"府立体育館①・浪速スポーツセンター", deadline:"—（詳細は要項参照）", deadlineDate:null, closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/guide.html"},
+  {date:"2027-03-20", name:"ヤサカ杯個人リーグ卓球大会", venue:"臨海スポーツセンター", deadline:"3/5", deadlineDate:"2027-03-05", closed:false, source:"c", org:"jtta", pref:"osaka", link:"http://otta-osaka.jp/guide/guide.html"},
 
   // ---- 大阪府卓球協議会（新日本スポーツ連盟大阪卓球協議会） (source: d) ----
-  {date:"2026-08-11", name:"第14回金岡オープン卓球大会", venue:"金岡公園体育館", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", link:"https://shinspo-osakatakkyu.net/download/8-11infosub-2/"},
-  {date:"2026-09-13", name:"第1回千島オープン卓球大会", venue:"千島体育館", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", link:"https://shinspo-osakatakkyu.net/download/9-13info-2/"},
-  {date:"2026-09-22", name:"第15回金岡オープン卓球大会", venue:"金岡公園体育館", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", link:"https://shinspo-osakatakkyu.net/download/9-22infosub/"},
-  {date:"2026-09-26", name:"第40回東大阪オープン卓球大会", venue:"東大阪市立体育館", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", link:"https://shinspo-osakatakkyu.net/download/9-26infosub-2/"},
-  {date:"2026-09-28", name:"第26回東大阪平日卓球大会", venue:"東大阪市立体育館", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", link:"https://shinspo-osakatakkyu.net/download/9-28infosub-2/"},
-  {date:"2026-10-03", name:"第41回東大阪メンバーズ卓球大会", venue:"東大阪市立体育館", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", link:"https://shinspo-osakatakkyu.net/download/10-3infosub/"},
-  {date:"2026-10-10", name:"第8回東淀川オープン卓球大会", venue:"東淀川体育館", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", link:"https://shinspo-osakatakkyu.net/download/10-10infosub/"},
-  {date:"2026-10-20", name:"第1回東淀川平日オープン卓球大会", venue:"東淀川体育館", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", link:"https://shinspo-osakatakkyu.net/download/10-20infosub/"},
-  {date:"2026-11-03", name:"第40回富田林オープン卓球大会", venue:"富田林市（会場は要項参照）", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", link:"https://shinspo-osakatakkyu.net/download/11-3info/"},
-  {date:"2026-11-13", name:"第62回全国卓球選手権大会〔一般の部〕（11/13〜15）", venue:"未定（要項参照）", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", link:"https://shinspo-osakatakkyu.net/download/11-1315info/"},
-  {date:"2026-11-26", name:"第27回東大阪平日卓球大会", venue:"東大阪市立体育館", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", link:"https://shinspo-osakatakkyu.net/download/11-26infosub/"},
-  {date:"2026-12-18", name:"第62回全国卓球選手権大会〔年代別の部〕（12/18〜20）", venue:"未定（要項参照）", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", link:"https://shinspo-osakatakkyu.net/download/12-1820info/"},
+  {date:"2026-08-11", name:"第14回金岡オープン卓球大会", venue:"金岡公園体育館", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", org:"shin", pref:"osaka", link:"https://shinspo-osakatakkyu.net/download/8-11infosub-2/"},
+  {date:"2026-09-13", name:"第1回千島オープン卓球大会", venue:"千島体育館", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", org:"shin", pref:"osaka", link:"https://shinspo-osakatakkyu.net/download/9-13info-2/"},
+  {date:"2026-09-22", name:"第15回金岡オープン卓球大会", venue:"金岡公園体育館", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", org:"shin", pref:"osaka", link:"https://shinspo-osakatakkyu.net/download/9-22infosub/"},
+  {date:"2026-09-26", name:"第40回東大阪オープン卓球大会", venue:"東大阪市立体育館", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", org:"shin", pref:"osaka", link:"https://shinspo-osakatakkyu.net/download/9-26infosub-2/"},
+  {date:"2026-09-28", name:"第26回東大阪平日卓球大会", venue:"東大阪市立体育館", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", org:"shin", pref:"osaka", link:"https://shinspo-osakatakkyu.net/download/9-28infosub-2/"},
+  {date:"2026-10-03", name:"第41回東大阪メンバーズ卓球大会", venue:"東大阪市立体育館", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", org:"shin", pref:"osaka", link:"https://shinspo-osakatakkyu.net/download/10-3infosub/"},
+  {date:"2026-10-10", name:"第8回東淀川オープン卓球大会", venue:"東淀川体育館", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", org:"shin", pref:"osaka", link:"https://shinspo-osakatakkyu.net/download/10-10infosub/"},
+  {date:"2026-10-20", name:"第1回東淀川平日オープン卓球大会", venue:"東淀川体育館", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", org:"shin", pref:"osaka", link:"https://shinspo-osakatakkyu.net/download/10-20infosub/"},
+  {date:"2026-11-03", name:"第40回富田林オープン卓球大会", venue:"富田林市（会場は要項参照）", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", org:"shin", pref:"osaka", link:"https://shinspo-osakatakkyu.net/download/11-3info/"},
+  {date:"2026-11-13", name:"第62回全国卓球選手権大会〔一般の部〕（11/13〜15）", venue:"未定（要項参照）", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", org:"shin", pref:"osaka", link:"https://shinspo-osakatakkyu.net/download/11-1315info/"},
+  {date:"2026-11-26", name:"第27回東大阪平日卓球大会", venue:"東大阪市立体育館", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", org:"shin", pref:"osaka", link:"https://shinspo-osakatakkyu.net/download/11-26infosub/"},
+  {date:"2026-12-18", name:"第62回全国卓球選手権大会〔年代別の部〕（12/18〜20）", venue:"未定（要項参照）", deadline:"要項参照", deadlineDate:null, closed:false, source:"d", org:"shin", pref:"osaka", link:"https://shinspo-osakatakkyu.net/download/12-1820info/"},
+
+  // ---- 奈良県卓球協会 (source: e) ----
+  {date:"2026-08-17", name:"奈良県高校オープン大会", venue:"ロートアリーナ奈良", deadline:"—", deadlineDate:null, closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/kenjhsopen-1/"},
+  {date:"2026-08-18", name:"奈良県中学校卓球選手権大会（全日本卓球選手権カデット県予選）シングルス・ダブルスの部", venue:"ジェイテクトアリーナ奈良（県立橿原公苑体育館）", deadline:"8/6", deadlineDate:"2026-08-06", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/zennihontakkyu-cadet-1/"},
+  {date:"2026-08-18", name:"奈良県高校オープン大会", venue:"ロートアリーナ奈良", deadline:"—", deadlineDate:null, closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/kenjhsopen-2/"},
+  {date:"2026-08-19", name:"奈良県中学校卓球選手権大会（全日本卓球選手権カデット県予選）シングルス・ダブルスの部", venue:"ジェイテクトアリーナ奈良（県立橿原公苑体育館）", deadline:"8/6", deadlineDate:"2026-08-06", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/zennihontakkyu-cadet-2/"},
+  {date:"2026-09-07", name:"第31回なら大仏リーグ", venue:"ロートアリーナ奈良（奈良市中央体育館）", deadline:"—（年度末に次年度参加申込）", deadlineDate:null, closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/naradaibutsuleague3/"},
+  {date:"2026-09-13", name:"東京選手権・大阪国際・後藤杯県予選会〔ホープス以下〕", venue:"未定（要項参照）", deadline:"8/14", deadlineDate:"2026-08-14", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/tokyoosakagotoyosen/"},
+  {date:"2026-09-22", name:"奈良県高校選抜大会", venue:"未定（要項参照）", deadline:"9/10", deadlineDate:"2026-09-10", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/narakenkoukousenbatsu/"},
+  {date:"2026-09-26", name:"全日本卓球選手権大会〔ジュニアの部〕県予選会", venue:"未定（要項参照）", deadline:"9/17", deadlineDate:"2026-09-17", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/zennihontakkyu-j/"},
+  {date:"2026-10-03", name:"秋季卓球大会", venue:"ジェイテクトアリーナ奈良（県立橿原公苑体育館）", deadline:"9/19", deadlineDate:"2026-09-19", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/syuki/"},
+  {date:"2026-10-08", name:"奈良県レディースシングルス大会", venue:"未定（要項参照）", deadline:"9/24", deadlineDate:"2026-09-24", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/naraladies-s/"},
+  {date:"2026-11-03", name:"全日本卓球選手権大会県予選会〔シングルスの部・一般〕", venue:"ロートアリーナ奈良（奈良市中央体育館）", deadline:"10/13", deadlineDate:"2026-10-13", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/singles/"},
+  {date:"2026-11-08", name:"東京選手権大会県予選会", venue:"南部生涯スポーツセンター", deadline:"10/25", deadlineDate:"2026-10-25", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/tokyosensyuken/"},
+  {date:"2026-11-21", name:"ジュニア大阪国際・東京選手権大会県予選会", venue:"ロートアリーナ奈良（奈良市中央体育館）", deadline:"11/12", deadlineDate:"2026-11-12", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/osaka-tokyo-j/"},
+  {date:"2026-11-29", name:"大阪国際選手権大会県予選会", venue:"ロートアリーナ奈良（奈良市中央体育館）", deadline:"11/15", deadlineDate:"2026-11-15", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/osakakokusai/"},
+  {date:"2026-12-20", name:"奈良県スポーツ少年団卓球親善競技大会", venue:"未定（要項参照）", deadline:"9/30", deadlineDate:"2026-09-30", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/sportsyonendan/"},
+  {date:"2026-12-24", name:"中学新人卓球大会 個人戦", venue:"未定（要項参照）", deadline:"12/1", deadlineDate:"2026-12-01", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/chugakushinjin-1/"},
+  {date:"2026-12-25", name:"中学新人卓球大会 団体戦", venue:"未定（要項参照）", deadline:"12/1", deadlineDate:"2026-12-01", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/chugakushinjin-2/"},
+  {date:"2027-01-11", name:"全国高校選抜大会県予選会 代表決定戦〔シングルスの部〕", venue:"未定（要項参照）", deadline:"12/18", deadlineDate:"2026-12-18", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/zenkokukoukousenbatsu-4/"},
+  {date:"2027-01-15", name:"新春レディースダブルスチーム大会", venue:"未定（要項参照）", deadline:"1/1", deadlineDate:"2027-01-01", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/narakenladiesshinsyun/"},
+  {date:"2027-01-16", name:"新春会長杯", venue:"未定（要項参照）", deadline:"12/25", deadlineDate:"2026-12-25", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/shinsyunkaicyohai/"},
+  {date:"2027-01-17", name:"奈良県中学校卓球1年生大会 個人の部", venue:"未定（要項参照）", deadline:"1/7", deadlineDate:"2027-01-07", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/chugaku1nen-1/"},
+  {date:"2027-02-07", name:"奈良県卓球選手権大会〔ジュニアの部〕", venue:"未定（要項参照）", deadline:"1/28", deadlineDate:"2027-01-28", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/kensensyuken-j/"},
+  {date:"2027-02-11", name:"奈良県中学校卓球1年生大会 団体の部", venue:"未定（要項参照）", deadline:"1/30", deadlineDate:"2027-01-30", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/chugaku1nen-2/"},
+  {date:"2027-02-22", name:"第33回なら大仏リーグ", venue:"未定（要項参照）", deadline:"—", deadlineDate:null, closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/naradaibutsuleague5/"},
+  {date:"2027-03-06", name:"奈良県小学生オープン卓球大会", venue:"未定（要項参照）", deadline:"2/12", deadlineDate:"2027-02-12", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/syogakuseiopen/"},
+  {date:"2027-03-07", name:"奈良県卓球選手権大会〔団体の部〕", venue:"未定（要項参照）", deadline:"2/14", deadlineDate:"2027-02-14", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/kensensyuken-t/"},
+  {date:"2027-03-21", name:"奈良県卓球選手権大会〔シングルス・ダブルスの部〕", venue:"未定（要項参照）", deadline:"2/28", deadlineDate:"2027-02-28", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/kensensyuken-sd/"},
+  {date:"2027-03-26", name:"高校強化交流会", venue:"未定（要項参照）", deadline:"2/15", deadlineDate:"2027-02-15", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/koukoukyoukakouryukai-1/"},
+  {date:"2027-03-27", name:"高校強化交流会", venue:"未定（要項参照）", deadline:"2/15", deadlineDate:"2027-02-15", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/koukoukyoukakouryukai-2/"},
 ];
 
 const TBD_EVENTS = [
@@ -460,7 +564,7 @@ function daysUntil(dateStr, today){
 // ---- countdown / next entry deadline ----
 const countdownEl = document.getElementById("countdown");
 const nextEventEl = document.getElementById("next-event");
-const SRC_NAMES = {a:"和歌山県卓球協会", b:"和歌山卓球協議会", c:"大阪卓球協会", d:"大阪府卓球協議会"};
+const SRC_NAMES = {a:"和歌山県卓球協会", b:"和歌山卓球協議会", c:"大阪卓球協会", d:"大阪府卓球協議会", e:"奈良県卓球協会"};
 
 function updateCountdown(){
   const today = todayMidnight();
@@ -500,12 +604,14 @@ scheduleMidnightRefresh();
 // ---- render list ----
 const listEl = document.getElementById("list");
 const countLine = document.getElementById("count-line");
-let activeFilter = "all";
+let activeOrg = "all";
+let activePref = "all";
 let query = "";
 
 function render(){
   const filtered = events.filter(e=>{
-    if(activeFilter!=="all" && e.source!==activeFilter) return false;
+    if(activeOrg!=="all" && e.org!==activeOrg) return false;
+    if(activePref!=="all" && e.pref!==activePref) return false;
     if(query){
       const q = query.toLowerCase();
       if(!(e.name.toLowerCase().includes(q) || e.venue.toLowerCase().includes(q))) return false;
@@ -530,7 +636,7 @@ function render(){
       currentMonth = monthKey;
     }
     const badgeClass = "badge-" + e.source;
-    const badgeLabel = {a:"和歌山県卓球協会", b:"和歌山卓球協議会", c:"大阪卓球協会", d:"大阪府卓球協議会"}[e.source];
+    const badgeLabel = {a:"和歌山県卓球協会", b:"和歌山卓球協議会", c:"大阪卓球協会", d:"大阪府卓球協議会", e:"奈良県卓球協会"}[e.source];
     const deadlineBadge = e.closed
       ? `<span class="badge badge-closed">申込締切: ${e.deadline}</span>`
       : `<span class="badge ${badgeClass}">申込締切: ${e.deadline}</span>`;
@@ -558,11 +664,36 @@ function render(){
   listEl.innerHTML = html;
 }
 
-document.querySelectorAll(".tab").forEach(btn=>{
+// 団体（日本卓球協会系／新体連系）と都道府県、どちらの軸で絞り込んでも良いように連動させる
+const NARA_SHIN_EXISTS = false; // 新体連に奈良県の組織は現時点で確認できていない
+
+function updatePrefAvailability(){
+  document.querySelectorAll(".pref-tab").forEach(btn=>{
+    const pref = btn.dataset.pref;
+    const disable = (activeOrg === "shin" && pref === "nara");
+    btn.disabled = disable;
+    if(disable && activePref === "nara"){
+      activePref = "all";
+      document.querySelectorAll(".pref-tab").forEach(b=>b.setAttribute("aria-pressed", b.dataset.pref==="all"));
+    }
+  });
+}
+
+document.querySelectorAll(".org-tab").forEach(btn=>{
   btn.addEventListener("click", ()=>{
-    document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-pressed","false"));
+    document.querySelectorAll(".org-tab").forEach(b=>b.setAttribute("aria-pressed","false"));
     btn.setAttribute("aria-pressed","true");
-    activeFilter = btn.dataset.filter;
+    activeOrg = btn.dataset.org;
+    updatePrefAvailability();
+    render();
+  });
+});
+document.querySelectorAll(".pref-tab").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    if(btn.disabled) return;
+    document.querySelectorAll(".pref-tab").forEach(b=>b.setAttribute("aria-pressed","false"));
+    btn.setAttribute("aria-pressed","true");
+    activePref = btn.dataset.pref;
     render();
   });
 });
@@ -577,7 +708,7 @@ render();
 if(TBD_EVENTS.length){
   const tbdSection = document.getElementById("tbd-section");
   const tbdList = document.getElementById("tbd-list");
-  const SRC_NAMES2 = {a:"和歌山県卓球協会", b:"和歌山卓球協議会", c:"大阪卓球協会", d:"大阪府卓球協議会"};
+  const SRC_NAMES2 = {a:"和歌山県卓球協会", b:"和歌山卓球協議会", c:"大阪卓球協会", d:"大阪府卓球協議会", e:"奈良県卓球協会"};
   tbdList.innerHTML = TBD_EVENTS.map(e=>
     `<li><b>${e.name}</b>（${SRC_NAMES2[e.source]}・${e.venue}・申込締切${e.deadline}）— ${e.note}</li>`
   ).join("");
