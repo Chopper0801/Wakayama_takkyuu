@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta name="google-site-verification" content="HWpEJgcIO4uygjvXuAvP2lubcctuG6_FiPfLEu9xDIE" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>近畿卓球大会カレンダー（和歌山・大阪・奈良）</title>
@@ -30,6 +29,12 @@
     --purple-2:#623d80;
     --teal:#1e8a7a;
     --teal-2:#166b5f;
+    --rose:#c2477a;
+    --rose-2:#9c3a63;
+    --amber2:#b8860b;
+    --amber2-2:#8f6608;
+    --slate:#5a6b8c;
+    --slate-2:#455270;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
@@ -206,6 +211,9 @@
   .card.src-c{border-left-color:var(--blue);}
   .card.src-d{border-left-color:var(--purple);}
   .card.src-e{border-left-color:var(--teal);}
+  .card.src-f{border-left-color:var(--rose);}
+  .card.src-h{border-left-color:var(--amber2);}
+  .card.src-j{border-left-color:var(--slate);}
   .date-block{
     font-family:'JetBrains Mono', monospace;
     text-align:center;
@@ -243,6 +251,9 @@
   .badge-c{background:#dce6f2; color:var(--blue-2);}
   .badge-d{background:#e9e0f0; color:var(--purple-2);}
   .badge-e{background:#d9efe9; color:var(--teal-2);}
+  .badge-f{background:#f5dce8; color:var(--rose-2);}
+  .badge-h{background:#f2e8c9; color:var(--amber2-2);}
+  .badge-j{background:#e0e3ec; color:var(--slate-2);}
   .badge-closed{background:#eee; color:#888;}
   .badge-tbd{background:#fff3cd; color:#8a6400;}
   .card-links{display:flex; gap:14px; flex-wrap:wrap;}
@@ -258,6 +269,9 @@
   .src-c .card-links a{color:var(--blue-2);}
   .src-d .card-links a{color:var(--purple-2);}
   .src-e .card-links a{color:var(--teal-2);}
+  .src-f .card-links a{color:var(--rose-2);}
+  .src-h .card-links a{color:var(--amber2-2);}
+  .src-j .card-links a{color:var(--slate-2);}
 
   /* ---------- HIERARCHICAL FILTER (org -> pref) ---------- */
   .filter-group{margin-bottom:14px;}
@@ -314,6 +328,44 @@
     opacity:.35;
     cursor:not-allowed;
     text-decoration:line-through;
+  }
+
+  /* ---------- KINKI MAP ---------- */
+  .map-and-tabs{display:flex; flex-direction:column; gap:14px;}
+  .kinki-map{
+    width:100%;
+    max-width:280px;
+    height:auto;
+    margin:0 auto;
+    display:block;
+  }
+  .pref-shape{
+    fill:var(--paper-2);
+    stroke:var(--court);
+    stroke-width:2;
+    stroke-linejoin:round;
+    cursor:pointer;
+    transition:fill .15s ease, transform .15s ease;
+    transform-origin:center;
+  }
+  .pref-shape:hover{fill:#d8e3d3;}
+  .pref-shape.active{fill:var(--ember); stroke:var(--ember-2);}
+  .pref-shape.dimmed{opacity:.35;}
+  .pref-label{
+    font-family:'Noto Sans JP', sans-serif;
+    font-size:15px;
+    font-weight:700;
+    fill:var(--ink);
+    text-anchor:middle;
+    pointer-events:none;
+    paint-order:stroke;
+    stroke:var(--paper);
+    stroke-width:3px;
+  }
+  @media(min-width:640px){
+    .map-and-tabs{flex-direction:row; align-items:center;}
+    .kinki-map{max-width:220px; flex-shrink:0;}
+    .pref-tabs{flex:1;}
   }
   .tbd-section{
     max-width:920px;
@@ -412,11 +464,30 @@
   </div>
   <div class="filter-group">
     <div class="filter-group-label" id="t-step2">Step 2 — 都道府県を選ぶ</div>
-    <div class="pref-tabs" id="pref-tabs">
-      <button class="pref-tab" data-pref="all" aria-pressed="true"><span data-t="prefAll">すべて</span></button>
-      <button class="pref-tab" data-pref="wakayama" aria-pressed="false"><span data-t="prefWakayama">和歌山</span></button>
-      <button class="pref-tab" data-pref="osaka" aria-pressed="false"><span data-t="prefOsaka">大阪</span></button>
-      <button class="pref-tab" data-pref="nara" aria-pressed="false"><span data-t="prefNara">奈良</span></button>
+    <div class="map-and-tabs">
+      <svg class="kinki-map" id="kinki-map" viewBox="0 0 480 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="近畿地方の地図">
+        <path class="pref-shape" data-pref="hyogo" d="M40,50 L180,40 L200,120 L190,220 L160,300 L100,330 L50,280 L20,180 L25,100 Z"><title>兵庫</title></path>
+        <path class="pref-shape" data-pref="kyoto" d="M190,40 L280,30 L300,140 L270,240 L220,250 L195,160 L185,90 Z"><title>京都</title></path>
+        <path class="pref-shape" data-pref="shiga" d="M300,110 L370,100 L390,190 L370,260 L310,270 L285,200 L290,150 Z"><title>滋賀</title></path>
+        <path class="pref-shape" data-pref="osaka" d="M195,250 L270,245 L285,290 L260,330 L210,335 L185,300 Z"><title>大阪</title></path>
+        <path class="pref-shape" data-pref="nara" d="M270,250 L340,255 L360,380 L320,420 L270,400 L255,320 Z"><title>奈良</title></path>
+        <path class="pref-shape" data-pref="wakayama" d="M150,300 L255,320 L270,400 L240,460 L160,470 L110,410 L115,340 Z"><title>和歌山</title></path>
+        <text class="pref-label" x="95" y="180">兵庫</text>
+        <text class="pref-label" x="238" y="140">京都</text>
+        <text class="pref-label" x="335" y="185">滋賀</text>
+        <text class="pref-label" x="232" y="290">大阪</text>
+        <text class="pref-label" x="305" y="335">奈良</text>
+        <text class="pref-label" x="190" y="395">和歌山</text>
+      </svg>
+      <div class="pref-tabs" id="pref-tabs">
+        <button class="pref-tab" data-pref="all" aria-pressed="true"><span data-t="prefAll">すべて</span></button>
+        <button class="pref-tab" data-pref="wakayama" aria-pressed="false"><span data-t="prefWakayama">和歌山</span></button>
+        <button class="pref-tab" data-pref="osaka" aria-pressed="false"><span data-t="prefOsaka">大阪</span></button>
+        <button class="pref-tab" data-pref="nara" aria-pressed="false"><span data-t="prefNara">奈良</span></button>
+        <button class="pref-tab" data-pref="hyogo" aria-pressed="false"><span data-t="prefHyogo">兵庫</span></button>
+        <button class="pref-tab" data-pref="kyoto" aria-pressed="false"><span data-t="prefKyoto">京都</span></button>
+        <button class="pref-tab" data-pref="shiga" aria-pressed="false"><span data-t="prefShiga">滋賀</span></button>
+      </div>
     </div>
   </div>
   <div class="count-line" id="count-line"></div>
@@ -439,7 +510,11 @@
     <li>🔵 <a href="http://otta-osaka.jp/calendar/calendar.html" target="_blank" rel="noopener"><span id="t-src-name-c">NPO法人大阪卓球協会「事業計画表」</span></a> — otta-osaka.jp <span style="color:#8a988c" data-t="srcTagC">（日本卓球協会系・大阪）</span></li>
     <li>🟣 <a href="https://shinspo-osakatakkyu.net/info-sub/" target="_blank" rel="noopener"><span id="t-src-name-d">大阪府卓球協議会（新日本スポーツ連盟）「大会案内・申込用紙」</span></a> — shinspo-osakatakkyu.net <span style="color:#8a988c" data-t="srcTagD">（新体連系・大阪）</span></li>
     <li>🟦 <a href="https://nara-ktta.com/games/" target="_blank" rel="noopener"><span id="t-src-name-e">一般社団法人奈良県卓球協会「GAMES 試合情報」</span></a> — nara-ktta.com <span style="color:#8a988c" data-t="srcTagE">（日本卓球協会系・奈良）</span></li>
+    <li>🌸 <a href="https://www.htta-official.com/" target="_blank" rel="noopener"><span id="t-src-name-f">兵庫県卓球協会「大会一覧」</span></a> — htta-official.com <span style="color:#8a988c" data-t="srcTagF">（日本卓球協会系・兵庫）</span></li>
+    <li>🟡 <a href="https://www.kyototta.org/" target="_blank" rel="noopener"><span id="t-src-name-h">一般社団法人京都府卓球協会</span></a> — kyototta.org <span style="color:#8a988c" data-t="srcTagH">（日本卓球協会系・京都）</span></li>
+    <li>⚪ <a href="http://www.shiga-tta.net/" target="_blank" rel="noopener"><span id="t-src-name-j">一般社団法人滋賀県卓球協会</span></a> — shiga-tta.net <span style="color:#8a988c" data-t="srcTagJ">（日本卓球協会系・滋賀）</span></li>
   </ul>
+  <p style="font-size:12px; color:#8a988c; margin-top:10px;" id="t-shin-note">兵庫・京都・滋賀にも新体連（新日本スポーツ連盟）の組織（兵庫県卓球協議会・京都卓球連盟・滋賀卓球連盟）は存在を確認できましたが、大会情報を安定して読み取れる形では取得できなかったため、今回は大会の掲載を見送っています。</p>
 </section>
 
 <p class="note" id="t-note">※ このページは 2026年8月1日時点の各サイト掲載情報をもとにした一覧です。大会の延期・中止・変更が発生する場合があるため、参加前には必ず各大会名・詳細リンクから公式の最新要項をご確認ください。大阪卓球協会の一部の大会（内部リーグ戦「大卓リーグ」等）は掲載を省略しています。<br>※ 新日本スポーツ連盟（新体連）の奈良県卓球協議会・県連盟は、全国組織の公式サイト上で都道府県一覧に掲載が確認できなかったため、本ページには含めていません。存在が確認でき次第、追加します。</p>
@@ -546,6 +621,39 @@ const events = [
   {date:"2027-03-21", name:"奈良県卓球選手権大会〔シングルス・ダブルスの部〕", nameEn:"Nara Prefecture Championship [Singles & Doubles Division]", venue:"未定（要項参照）", venueEn:"TBD (see official guide)", deadline:"2/28", deadlineDate:"2027-02-28", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/kensensyuken-sd/"},
   {date:"2027-03-26", name:"高校強化交流会", nameEn:"High School Strengthening Exchange Meet", venue:"未定（要項参照）", venueEn:"TBD (see official guide)", deadline:"2/15", deadlineDate:"2027-02-15", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/koukoukyoukakouryukai-1/"},
   {date:"2027-03-27", name:"高校強化交流会", nameEn:"High School Strengthening Exchange Meet", venue:"未定（要項参照）", venueEn:"TBD (see official guide)", deadline:"2/15", deadlineDate:"2027-02-15", closed:false, source:"e", org:"jtta", pref:"nara", link:"https://nara-ktta.com/games/koukoukyoukakouryukai-2/"},
+
+  // ---- 兵庫県卓球協会 (source: f) ----
+  {date:"2026-08-30", name:"2026年度全国ラージボール卓球大会兵庫県予選会（シングルス）", nameEn:"2026 National Large-Ball Championship Hyogo Qualifier (Singles)", venue:"神戸市立王子スポーツセンター", venueEn:"Kobe Oji Sports Center", deadline:"7/25", deadlineDate:"2026-07-25", closed:false, source:"f", org:"jtta", pref:"hyogo", link:"https://jjkfcjxomoglgrbwagvd.supabase.co/storage/v1/object/public/media/uploads/1781514878518_fd3g1lga_23_r8_8_30.pdf", entry:"https://three-star-llc.com/products/htta-20260830-3"},
+  {date:"2026-08-30", name:"2026年度全日本ラージボール卓球選手権大会兵庫県予選会（シングルス・ダブルス）", nameEn:"2026 All Japan Large-Ball Championship Hyogo Qualifier (Singles & Doubles)", venue:"神戸市立王子スポーツセンター", venueEn:"Kobe Oji Sports Center", deadline:"7/25", deadlineDate:"2026-07-25", closed:false, source:"f", org:"jtta", pref:"hyogo", link:"https://jjkfcjxomoglgrbwagvd.supabase.co/storage/v1/object/public/media/uploads/1781514878518_fd3g1lga_23_r8_8_30.pdf", entry:"https://three-star-llc.com/products/htta-20260830-1"},
+  {date:"2026-09-01", name:"第3回のじぎくレディースリーグ大会（チーム戦）", nameEn:"3rd Nojigiku Ladies League Tournament (Team)", venue:"神戸市立中央体育館", venueEn:"Kobe City Central Gymnasium", deadline:"8/1", deadlineDate:"2026-08-01", closed:false, source:"f", org:"jtta", pref:"hyogo", link:"https://jjkfcjxomoglgrbwagvd.supabase.co/storage/v1/object/public/media/uploads/1778926733858_441dbpbi_24-_3_r8_9_1.pdf"},
+  {date:"2026-09-12", name:"2026年度全日本卓球選手権大会（一般の部）兵庫県予選会（シングルス・ダブルス）", nameEn:"2026 All Japan Championship [Open Division] Hyogo Qualifier (Singles & Doubles)", venue:"宝塚市総合体育館", venueEn:"Takarazuka City Sports Center", deadline:"8/7", deadlineDate:"2026-08-07", closed:false, source:"f", org:"jtta", pref:"hyogo", link:"https://jjkfcjxomoglgrbwagvd.supabase.co/storage/v1/object/public/media/uploads/1778926734164_43dv580b_25-_r8_9_12_13.pdf", entry:"https://three-star-llc.com/products/htta-20260912"},
+  {date:"2026-09-26", name:"2026年度東アジアホープス日本代表選考会兵庫県予選会", nameEn:"2026 East Asia Hopes Japan Team Selection Hyogo Qualifier", venue:"高砂市総合体育館", venueEn:"Takasago City Sports Center", deadline:"8/21", deadlineDate:"2026-08-21", closed:false, source:"f", org:"jtta", pref:"hyogo", link:"https://jjkfcjxomoglgrbwagvd.supabase.co/storage/v1/object/public/media/uploads/1785161267980_01ojue1w_27-_r8_9_26.pdf", entry:"https://three-star-llc.com/products/htta-20260926-02"},
+  {date:"2026-09-26", name:"2026年度後藤杯卓球選手権大会（名古屋オープン ホープス・カブ）兵庫県予選会", nameEn:"2026 Goto Cup Championship (Nagoya Open) [Hopes / Cub Division] Hyogo Qualifier", venue:"高砂市総合体育館", venueEn:"Takasago City Sports Center", deadline:"8/21", deadlineDate:"2026-08-21", closed:false, source:"f", org:"jtta", pref:"hyogo", link:"https://jjkfcjxomoglgrbwagvd.supabase.co/storage/v1/object/public/media/uploads/1778926734328_va9lo408_26-_r8_9_26.pdf", entry:"https://three-star-llc.com/products/htta-20260926-01"},
+  {date:"2026-10-09", name:"第6回ニッタク杯・全国オープン神戸ラージボールフェスティバル", nameEn:"6th Nittaku Cup National Open Kobe Large-Ball Festival", venue:"グリーンアリーナ神戸", venueEn:"Green Arena Kobe", deadline:"8/28", deadlineDate:"2026-08-28", closed:false, source:"f", org:"jtta", pref:"hyogo", link:"https://jjkfcjxomoglgrbwagvd.supabase.co/storage/v1/object/public/media/uploads/1780098598883_u13qwpkn_web.pdf", entry:"https://three-star-llc.com/products/hyogo-kobefestival-20261009"},
+  {date:"2026-10-11", name:"2026年度大阪卓球選手権（ホープス）兵庫県予選会", nameEn:"2026 Osaka Championship [Hopes Division] Hyogo Qualifier", venue:"西宮市中央体育館", venueEn:"Nishinomiya City Central Gymnasium", deadline:"9/6", deadlineDate:"2026-09-06", closed:false, source:"f", org:"jtta", pref:"hyogo", link:"https://jjkfcjxomoglgrbwagvd.supabase.co/storage/v1/object/public/media/uploads/1778926734868_wql6pjit_29-_r8_10_11.pdf"},
+  {date:"2026-10-24", name:"2026年度兵庫県ラージボール卓球選手権大会", nameEn:"2026 Hyogo Prefecture Large-Ball Championship", venue:"伊丹市立緑ヶ丘体育館", venueEn:"Itami City Midorigaoka Gymnasium", deadline:"9/19", deadlineDate:"2026-09-19", closed:false, source:"f", org:"jtta", pref:"hyogo", link:"https://jjkfcjxomoglgrbwagvd.supabase.co/storage/v1/object/public/media/uploads/1778926778627_g7m535hm_30-_r8_10_24.pdf"},
+  {date:"2026-11-03", name:"2026年度大阪卓球選手権大会（一般の部）兵庫県予選会", nameEn:"2026 Osaka Championship [Open Division] Hyogo Qualifier", venue:"神戸市立王子スポーツセンター", venueEn:"Kobe Oji Sports Center", deadline:"9/8", deadlineDate:"2026-09-08", closed:false, source:"f", org:"jtta", pref:"hyogo", link:"https://jjkfcjxomoglgrbwagvd.supabase.co/storage/v1/object/public/media/uploads/1781514878687_zngormav_31-_r8_11_3.pdf"},
+  {date:"2026-11-03", name:"2026年度東京卓球選手権大会 年令別（サーティ以上）兵庫県予選会", nameEn:"2026 Tokyo Championship [Age-Group, 30+ Division] Hyogo Qualifier", venue:"神戸市立王子スポーツセンター", venueEn:"Kobe Oji Sports Center", deadline:"9/28", deadlineDate:"2026-09-28", closed:false, source:"f", org:"jtta", pref:"hyogo", link:"https://jjkfcjxomoglgrbwagvd.supabase.co/storage/v1/object/public/media/uploads/1778926779174_uqqu93su_32-_r8_11_3.pdf"},
+  {date:"2026-11-09", name:"第4回のじぎくレディースリーグ大会（チーム戦）", nameEn:"4th Nojigiku Ladies League Tournament (Team)", venue:"神戸市立中央体育館", venueEn:"Kobe City Central Gymnasium", deadline:"10/9", deadlineDate:"2026-10-09", closed:false, source:"f", org:"jtta", pref:"hyogo", link:"https://jjkfcjxomoglgrbwagvd.supabase.co/storage/v1/object/public/media/uploads/1778926779330_ago91xyv_33-_4_r8_11_9.pdf"},
+  {date:"2026-11-14", name:"ふれあいスポーツイベント2026 ふれあい卓球大会（オープン大会）", nameEn:"Fureai Sports Event 2026 Fureai Table Tennis Tournament (Open)", venue:"豊岡市立総合体育館", venueEn:"Toyooka City Sports Center", deadline:"11/9", deadlineDate:"2026-11-09", closed:false, source:"f", org:"jtta", pref:"hyogo", link:"https://jjkfcjxomoglgrbwagvd.supabase.co/storage/v1/object/public/media/uploads/1778926779492_l3p4h6p9_34-_r8_11_14.pdf"},
+  {date:"2026-11-23", name:"2026年度東京・大阪選手権（カデットの部）兵庫県予選会", nameEn:"2026 Tokyo / Osaka Championship [Cadet Division] Hyogo Qualifier", venue:"宝塚市総合体育館", venueEn:"Takarazuka City Sports Center", deadline:"10/18", deadlineDate:"2026-10-18", closed:false, source:"f", org:"jtta", pref:"hyogo", link:"https://jjkfcjxomoglgrbwagvd.supabase.co/storage/v1/object/public/media/uploads/1778926779658_d6i1w66w_35-_r8_11_23.pdf"},
+  {date:"2026-11-28", name:"2026年度東京卓球選手権大会（一般の部）兵庫県予選会", nameEn:"2026 Tokyo Championship [Open Division] Hyogo Qualifier", venue:"神戸常盤アリーナ", venueEn:"Kobe Tokiwa Arena", deadline:"10/23", deadlineDate:"2026-10-23", closed:false, source:"f", org:"jtta", pref:"hyogo", link:"https://jjkfcjxomoglgrbwagvd.supabase.co/storage/v1/object/public/media/uploads/1778926779804_d7x2zbmb_36-_r8_11_28.pdf"},
+  {date:"2026-12-01", name:"2026年度兵庫県知事杯レディース卓球大会（チーム戦）", nameEn:"2026 Hyogo Governor's Cup Ladies Tournament (Team)", venue:"神戸常盤アリーナ", venueEn:"Kobe Tokiwa Arena", deadline:"11/1", deadlineDate:"2026-11-01", closed:false, source:"f", org:"jtta", pref:"hyogo", link:"https://jjkfcjxomoglgrbwagvd.supabase.co/storage/v1/object/public/media/uploads/1778926780044_7i145kpo_37-_r8_12_1.pdf"},
+  {date:"2026-12-20", name:"第21回ひょうご生涯スポーツ大会 兼 2026年度兵庫県社会人卓球選手権大会", nameEn:"21st Hyogo Lifelong Sports Festival / 2026 Hyogo Working Adults' Championship", venue:"神戸常盤アリーナ", venueEn:"Kobe Tokiwa Arena", deadline:"11/15", deadlineDate:"2026-11-15", closed:false, source:"f", org:"jtta", pref:"hyogo", link:"https://jjkfcjxomoglgrbwagvd.supabase.co/storage/v1/object/public/media/uploads/1778926780224_hfso33gj_38-_r8_12_20.pdf"},
+  {date:"2026-12-22", name:"2026年度兵庫県レディース卓球大会（シングルス・ダブルス）", nameEn:"2026 Hyogo Prefecture Ladies Tournament (Singles & Doubles)", venue:"神戸市立中央体育館", venueEn:"Kobe City Central Gymnasium", deadline:"11/17", deadlineDate:"2026-11-17", closed:false, source:"f", org:"jtta", pref:"hyogo", link:"https://jjkfcjxomoglgrbwagvd.supabase.co/storage/v1/object/public/media/uploads/1778926799414_ucas6368_39-_s_d_r8_12_22.pdf"},
+
+  // ---- 京都府卓球協会 (source: h) ----
+  {date:"2026-08-24", name:"近畿ブロックレディース大会京都府予選会", nameEn:"Kinki Block Ladies Tournament Kyoto Qualifier", venue:"京都府立体育館", venueEn:"Kyoto Prefectural Gymnasium", deadline:"7/20〜8/3", deadlineDate:"2026-08-03", closed:false, source:"h", org:"jtta", pref:"kyoto", link:"https://www.kyototta.org/"},
+  {date:"2026-08-30", name:"全日本選手権大会カデットの部京都府予選会", nameEn:"All Japan Championship [Cadet Division] Kyoto Qualifier", venue:"城陽市総合運動公園体育館", venueEn:"Joyo City Sports Park Gymnasium", deadline:"7/29〜8/12", deadlineDate:"2026-08-12", closed:false, source:"h", org:"jtta", pref:"kyoto", link:"https://www.kyototta.org/wp-content/uploads/2026/07/2026大会要項-0830-カデット・中学校②.pdf"},
+  {date:"2026-09-08", name:"レディースベストカップルリーグ大会", nameEn:"Ladies Best Couple League Tournament", venue:"京都府立体育館", venueEn:"Kyoto Prefectural Gymnasium", deadline:"8/4〜8/18", deadlineDate:"2026-08-18", closed:false, source:"h", org:"jtta", pref:"kyoto", link:"https://www.kyototta.org/"},
+  {date:"2026-09-21", name:"第3回社会人リーグ①（スーパー・トップ・レギュラー）", nameEn:"3rd Working Adults League ① (Super / Top / Regular)", venue:"京都府立体育館", venueEn:"Kyoto Prefectural Gymnasium", deadline:"8/12〜8/26", deadlineDate:"2026-08-26", closed:false, source:"h", org:"jtta", pref:"kyoto", link:"https://www.kyototta.org/"},
+  {date:"2026-09-26", name:"京都ジュニア年齢別選手権大会カデットの部（兼全国オープン大会京都府予選会）", nameEn:"Kyoto Junior Age-Group Championship [Cadet Division] (incl. National Open Kyoto Qualifier)", venue:"城陽市総合運動公園体育館", venueEn:"Joyo City Sports Park Gymnasium", deadline:"8/19〜9/2", deadlineDate:"2026-09-02", closed:false, source:"h", org:"jtta", pref:"kyoto", link:"https://www.kyototta.org/"},
+  {date:"2026-10-11", name:"第3回社会人リーグ②（チャレンジ・フレッシュ）", nameEn:"3rd Working Adults League ② (Challenge / Fresh)", venue:"城陽市総合運動公園体育館", venueEn:"Joyo City Sports Park Gymnasium", deadline:"8/12〜8/26", deadlineDate:"2026-08-26", closed:false, source:"h", org:"jtta", pref:"kyoto", link:"https://www.kyototta.org/"},
+
+  // ---- 滋賀県卓球協会 (source: j) ----
+  {date:"2026-08-30", name:"全日本卓球選手権大会予選会（カデットの部・シングルス）滋賀県予選", nameEn:"All Japan Championship Qualifier [Cadet Division, Singles] Shiga", venue:"未定（要項参照）", venueEn:"TBD (see official guide)", deadline:"8/16", deadlineDate:"2026-08-16", closed:false, source:"j", org:"jtta", pref:"shiga", link:"http://www.shiga-tta.net/youko26.pdf"},
+  {date:"2026-09-05", name:"全日本卓球選手権大会予選会（カデットの部・ダブルス）滋賀県予選", nameEn:"All Japan Championship Qualifier [Cadet Division, Doubles] Shiga", venue:"未定（要項参照）", venueEn:"TBD (see official guide)", deadline:"8/22", deadlineDate:"2026-08-22", closed:false, source:"j", org:"jtta", pref:"shiga", link:"http://www.shiga-tta.net/youko27.pdf"},
+  {date:"2026-09-12", name:"全日本卓球選手権大会予選会（ジュニアの部）滋賀県予選", nameEn:"All Japan Championship Qualifier [Junior Division] Shiga", venue:"未定（要項参照）", venueEn:"TBD (see official guide)", deadline:"8/29", deadlineDate:"2026-08-29", closed:false, source:"j", org:"jtta", pref:"shiga", link:"http://www.shiga-tta.net/youko28.pdf"},
 ];
 
 const TBD_EVENTS = [
@@ -582,6 +690,9 @@ const UI_TEXT = {
     prefWakayama: "和歌山",
     prefOsaka: "大阪",
     prefNara: "奈良",
+    prefHyogo: "兵庫",
+    prefKyoto: "京都",
+    prefShiga: "滋賀",
     searchPlaceholder: "大会名・会場で検索（例：ホープス、河南、ラージボール）",
     tbdTitle: "⚠ 日程が未確定・要確認の大会",
     sourcesTitle: "情報の出どころ（卓球協会・新体連 各サイト）",
@@ -590,11 +701,18 @@ const UI_TEXT = {
     srcTagC: "（日本卓球協会系・大阪）",
     srcTagD: "（新体連系・大阪）",
     srcTagE: "（日本卓球協会系・奈良）",
+    srcTagF: "（日本卓球協会系・兵庫）",
+    srcTagH: "（日本卓球協会系・京都）",
+    srcTagJ: "（日本卓球協会系・滋賀）",
     srcNameA: "一般社団法人和歌山県卓球協会「大会・事業」",
     srcNameB: "和歌山卓球協議会「大会案内」",
     srcNameC: "NPO法人大阪卓球協会「事業計画表」",
     srcNameD: "大阪府卓球協議会（新日本スポーツ連盟）「大会案内・申込用紙」",
     srcNameE: "一般社団法人奈良県卓球協会「GAMES 試合情報」",
+    srcNameF: "兵庫県卓球協会「大会一覧」",
+    srcNameH: "一般社団法人京都府卓球協会",
+    srcNameJ: "一般社団法人滋賀県卓球協会",
+    shinNote: "兵庫・京都・滋賀にも新体連（新日本スポーツ連盟）の組織（兵庫県卓球協議会・京都卓球連盟・滋賀卓球連盟）は存在を確認できましたが、大会情報を安定して読み取れる形では取得できなかったため、今回は大会の掲載を見送っています。",
     note: "※ このページは 2026年8月1日時点の各サイト掲載情報をもとにした一覧です。大会の延期・中止・変更が発生する場合があるため、参加前には必ず各大会名・詳細リンクから公式の最新要項をご確認ください。大阪卓球協会の一部の大会（内部リーグ戦「大卓リーグ」等）は掲載を省略しています。<br>※ 新日本スポーツ連盟（新体連）の奈良県卓球協議会・県連盟は、全国組織の公式サイト上で都道府県一覧に掲載が確認できなかったため、本ページには含めていません。存在が確認でき次第、追加します。",
     countLine: (n)=>`${n}件の大会・行事を表示中`,
     empty: "該当する大会が見つかりませんでした。",
@@ -625,6 +743,9 @@ const UI_TEXT = {
     prefWakayama: "Wakayama",
     prefOsaka: "Osaka",
     prefNara: "Nara",
+    prefHyogo: "Hyogo",
+    prefKyoto: "Kyoto",
+    prefShiga: "Shiga",
     searchPlaceholder: "Search by tournament or venue (e.g. Hopes, Kanan, Large-ball)",
     tbdTitle: "⚠ Tournaments with unconfirmed dates",
     sourcesTitle: "Sources (JTTA & Shintairen Associations)",
@@ -633,11 +754,18 @@ const UI_TEXT = {
     srcTagC: "(JTTA-affiliated · Osaka)",
     srcTagD: "(Shintairen · Osaka)",
     srcTagE: "(JTTA-affiliated · Nara)",
+    srcTagF: "(JTTA-affiliated · Hyogo)",
+    srcTagH: "(JTTA-affiliated · Kyoto)",
+    srcTagJ: "(JTTA-affiliated · Shiga)",
     srcNameA: "Wakayama Table Tennis Association — \"Tournaments & Events\"",
     srcNameB: "Wakayama Table Tennis Council — \"Tournament Guide\"",
     srcNameC: "Osaka Table Tennis Association (NPO) — \"Annual Schedule\"",
     srcNameD: "Osaka Table Tennis Council (New Japan Sports Federation) — \"Tournament Guide & Entry Forms\"",
     srcNameE: "Nara Table Tennis Association — \"GAMES: Tournament Info\"",
+    srcNameF: "Hyogo Table Tennis Association — \"Tournament List\"",
+    srcNameH: "Kyoto Table Tennis Association",
+    srcNameJ: "Shiga Table Tennis Association",
+    shinNote: "Shintairen (New Japan Sports Federation) chapters were confirmed to exist for Hyogo, Kyoto, and Shiga as well (Hyogo TT Council, Kyoto TT Federation, Shiga TT Federation), but their tournament listings could not be reliably extracted, so no events from them are included yet.",
     note: "※ This page reflects information published on each organization's site as of August 1, 2026. Tournaments may be postponed, cancelled, or changed, so please check the official guidelines linked from each listing before entering. Some Osaka TTA events (the internal \"Daitaku League\" series) have been omitted.<br>※ No New Japan Sports Federation (Shintairen) chapter for Nara Prefecture could be confirmed on the national organization's site, so it is not included here. It will be added if one is found.",
     countLine: (n)=>`Showing ${n} tournament${n===1?"":"s"}`,
     empty: "No matching tournaments found.",
@@ -744,6 +872,33 @@ const NAME_EN = {
   "高校強化交流会":"High School Strengthening Exchange Meet",
   "大阪国際招待卓球選手権大会〔カデット・ホープスの部〕予選会":"Osaka International Invitational Championships [Cadet & Hopes Division] Qualifier",
   "東京選手権〔年代別の部〕予選会":"Tokyo Championships [Age-Group Division] Qualifier",
+  "2026年度全国ラージボール卓球大会兵庫県予選会（シングルス）":"2026 National Large-Ball Tournament Hyogo Qualifier (Singles)",
+  "2026年度全日本ラージボール卓球選手権大会兵庫県予選会（シングルス・ダブルス）":"2026 All Japan Large-Ball Championships Hyogo Qualifier (Singles & Doubles)",
+  "第3回のじぎくレディースリーグ大会（チーム戦）":"3rd Nojigiku Ladies' League Tournament (Team Event)",
+  "2026年度全日本卓球選手権大会（一般の部）兵庫県予選会（シングルス・ダブルス）":"2026 All Japan Championships [Open Division] Hyogo Qualifier (Singles & Doubles)",
+  "2026年度東アジアホープス日本代表選考会兵庫県予選会":"2026 East Asia Hopes Japan Team Selection Trials – Hyogo Qualifier",
+  "2026年度後藤杯卓球選手権大会（名古屋オープン ホープス・カブ）兵庫県予選会":"2026 Goto Cup Championships (Nagoya Open) [Hopes & Cubs Division] Hyogo Qualifier",
+  "第6回ニッタク杯・全国オープン神戸ラージボールフェスティバル":"6th Nittaku Cup National Open Kobe Large-Ball Festival",
+  "2026年度大阪卓球選手権（ホープス）兵庫県予選会":"2026 Osaka Championships [Hopes Division] Hyogo Qualifier",
+  "2026年度兵庫県ラージボール卓球選手権大会":"2026 Hyogo Prefecture Large-Ball Championships",
+  "2026年度大阪卓球選手権大会（一般の部）兵庫県予選会":"2026 Osaka Championships [Open Division] Hyogo Qualifier",
+  "2026年度東京卓球選手権大会 年令別（サーティ以上）兵庫県予選会":"2026 Tokyo Championships [Age-Group, 30+ Division] Hyogo Qualifier",
+  "第4回のじぎくレディースリーグ大会（チーム戦）":"4th Nojigiku Ladies' League Tournament (Team Event)",
+  "ふれあいスポーツイベント2026 ふれあいスポーツ大会 ふれあい卓球大会（オープン大会）":"Fureai Sports Event 2026 – Fureai Table Tennis Tournament (Open)",
+  "2026年度東京・大阪選手権（カデットの部）兵庫県予選会":"2026 Tokyo / Osaka Championships [Cadet Division] Hyogo Qualifier",
+  "2026年度東京卓球選手権大会（一般の部）兵庫県予選会":"2026 Tokyo Championships [Open Division] Hyogo Qualifier",
+  "2026年度兵庫県知事杯レディース卓球大会（チーム戦）":"2026 Hyogo Governor's Cup Ladies' Tournament (Team Event)",
+  "第21回ひょうご生涯スポーツ大会 兼 2026年度兵庫県社会人卓球選手権大会":"21st Hyogo Lifelong Sports Festival (also the 2026 Hyogo Working Adults' Championships)",
+  "2026年度兵庫県レディース卓球大会（シングルス・ダブルス）":"2026 Hyogo Prefecture Ladies' Tournament (Singles & Doubles)",
+  "近畿ブロックレディース大会京都府予選会":"Kinki Block Ladies' Tournament – Kyoto Qualifier",
+  "全日本選手権大会カデットの部京都府予選会":"All Japan Championships [Cadet Division] – Kyoto Qualifier",
+  "レディースベストカップルリーグ大会":"Ladies' Best Couple League Tournament",
+  "第3回社会人リーグ①（スーパー・トップ・レギュラー）":"3rd Working Adults' League ① (Super / Top / Regular)",
+  "京都ジュニア年齢別選手権大会カデットの部（兼全国オープン大会京都府予選会）":"Kyoto Junior Age-Group Championships [Cadet Division] (also National Open Kyoto Qualifier)",
+  "第3回社会人リーグ②（チャレンジ・フレッシュ）":"3rd Working Adults' League ② (Challenge / Fresh)",
+  "全日本卓球選手権大会予選会（カデットの部・シングルス）滋賀県予選":"All Japan Championships Qualifier [Cadet Division, Singles] – Shiga",
+  "全日本卓球選手権大会予選会（カデットの部・ダブルス）滋賀県予選":"All Japan Championships Qualifier [Cadet Division, Doubles] – Shiga",
+  "全日本卓球選手権大会予選会（ジュニアの部）滋賀県予選":"All Japan Championships Qualifier [Junior Division] – Shiga",
 };
 
 const VENUE_EN = {
@@ -780,6 +935,17 @@ const VENUE_EN = {
   "ロートアリーナ奈良（奈良市中央体育館）":"Rohto Arena Nara (Nara City Central Gymnasium)",
   "ジェイテクトアリーナ奈良（県立橿原公苑体育館）":"JTEKT Arena Nara (Prefectural Kashihara Park Gymnasium)",
   "南部生涯スポーツセンター":"Nanbu Lifelong Sports Center",
+  "神戸市立王子スポーツセンター":"Kobe Oji Sports Center",
+  "神戸市立中央体育館":"Kobe City Central Gymnasium",
+  "宝塚市総合体育館":"Takarazuka City Sports Center",
+  "高砂市総合体育館":"Takasago City Sports Center",
+  "グリーンアリーナ神戸":"Green Arena Kobe",
+  "西宮市中央体育館":"Nishinomiya City Central Gymnasium",
+  "伊丹市立緑ヶ丘体育館":"Itami City Midorigaoka Gymnasium",
+  "神戸常盤アリーナ":"Kobe Tokiwa Arena",
+  "豊岡市立総合体育館":"Toyooka City Sports Center",
+  "京都府立体育館":"Kyoto Prefectural Gymnasium",
+  "城陽市総合運動公園体育館":"Joyo City Sports Park Gymnasium",
 };
 
 function tName(name){ return lang==="en" ? (NAME_EN[name] || name) : name; }
@@ -824,8 +990,8 @@ function daysUntil(dateStr, today){
 const countdownEl = document.getElementById("countdown");
 const nextEventEl = document.getElementById("next-event");
 const SRC_NAMES = {
-  ja: {a:"和歌山県卓球協会", b:"和歌山卓球協議会", c:"大阪卓球協会", d:"大阪府卓球協議会", e:"奈良県卓球協会"},
-  en: {a:"Wakayama Table Tennis Association", b:"Wakayama Table Tennis Council (Shintairen)", c:"Osaka Table Tennis Association", d:"Osaka Table Tennis Council (Shintairen)", e:"Nara Table Tennis Association"}
+  ja: {a:"和歌山県卓球協会", b:"和歌山卓球協議会", c:"大阪卓球協会", d:"大阪府卓球協議会", e:"奈良県卓球協会", f:"兵庫県卓球協会", h:"京都府卓球協会", j:"滋賀県卓球協会"},
+  en: {a:"Wakayama Table Tennis Association", b:"Wakayama Table Tennis Council (Shintairen)", c:"Osaka Table Tennis Association", d:"Osaka Table Tennis Council (Shintairen)", e:"Nara Table Tennis Association", f:"Hyogo Table Tennis Association", h:"Kyoto Table Tennis Association", j:"Shiga Table Tennis Association"}
 };
 
 function updateCountdown(){
@@ -941,9 +1107,29 @@ function updatePrefAvailability(){
     btn.disabled = disable;
     if(disable && activePref === "nara"){
       activePref = "all";
-      document.querySelectorAll(".pref-tab").forEach(b=>b.setAttribute("aria-pressed", b.dataset.pref==="all"));
     }
   });
+  document.querySelectorAll(".pref-shape").forEach(shape=>{
+    const disable = (activeOrg === "shin" && shape.dataset.pref === "nara");
+    shape.classList.toggle("dimmed", disable);
+  });
+  syncPrefUI();
+}
+
+// タブ・地図のどちらを操作しても、両方のハイライト状態を一致させる
+function syncPrefUI(){
+  document.querySelectorAll(".pref-tab").forEach(b=>{
+    b.setAttribute("aria-pressed", String(b.dataset.pref === activePref));
+  });
+  document.querySelectorAll(".pref-shape").forEach(shape=>{
+    shape.classList.toggle("active", shape.dataset.pref === activePref);
+  });
+}
+
+function setPref(pref){
+  activePref = pref;
+  syncPrefUI();
+  render();
 }
 
 document.querySelectorAll(".org-tab").forEach(btn=>{
@@ -958,10 +1144,14 @@ document.querySelectorAll(".org-tab").forEach(btn=>{
 document.querySelectorAll(".pref-tab").forEach(btn=>{
   btn.addEventListener("click", ()=>{
     if(btn.disabled) return;
-    document.querySelectorAll(".pref-tab").forEach(b=>b.setAttribute("aria-pressed","false"));
-    btn.setAttribute("aria-pressed","true");
-    activePref = btn.dataset.pref;
-    render();
+    setPref(btn.dataset.pref);
+  });
+});
+document.querySelectorAll(".pref-shape").forEach(shape=>{
+  shape.addEventListener("click", ()=>{
+    if(shape.classList.contains("dimmed")) return;
+    // すでに選択中の都道府県をもう一度クリックしたら「すべて」に戻す
+    setPref(activePref === shape.dataset.pref ? "all" : shape.dataset.pref);
   });
 });
 document.getElementById("search").addEventListener("input", (e)=>{
@@ -1005,6 +1195,9 @@ function applyStaticText(){
   document.querySelector('[data-t="prefWakayama"]').textContent = t.prefWakayama;
   document.querySelector('[data-t="prefOsaka"]').textContent = t.prefOsaka;
   document.querySelector('[data-t="prefNara"]').textContent = t.prefNara;
+  document.querySelector('[data-t="prefHyogo"]').textContent = t.prefHyogo;
+  document.querySelector('[data-t="prefKyoto"]').textContent = t.prefKyoto;
+  document.querySelector('[data-t="prefShiga"]').textContent = t.prefShiga;
   document.getElementById("search").placeholder = t.searchPlaceholder;
   document.getElementById("t-tbd-title").textContent = t.tbdTitle;
   document.getElementById("t-sources-title").textContent = t.sourcesTitle;
@@ -1013,11 +1206,18 @@ function applyStaticText(){
   document.querySelector('[data-t="srcTagC"]').textContent = t.srcTagC;
   document.querySelector('[data-t="srcTagD"]').textContent = t.srcTagD;
   document.querySelector('[data-t="srcTagE"]').textContent = t.srcTagE;
+  document.querySelector('[data-t="srcTagF"]').textContent = t.srcTagF;
+  document.querySelector('[data-t="srcTagH"]').textContent = t.srcTagH;
+  document.querySelector('[data-t="srcTagJ"]').textContent = t.srcTagJ;
   document.getElementById("t-src-name-a").textContent = t.srcNameA;
   document.getElementById("t-src-name-b").textContent = t.srcNameB;
   document.getElementById("t-src-name-c").textContent = t.srcNameC;
   document.getElementById("t-src-name-d").textContent = t.srcNameD;
   document.getElementById("t-src-name-e").textContent = t.srcNameE;
+  document.getElementById("t-src-name-f").textContent = t.srcNameF;
+  document.getElementById("t-src-name-h").textContent = t.srcNameH;
+  document.getElementById("t-src-name-j").textContent = t.srcNameJ;
+  document.getElementById("t-shin-note").textContent = t.shinNote;
   document.getElementById("t-note").innerHTML = t.note;
   document.documentElement.lang = lang;
 }
@@ -1031,6 +1231,7 @@ document.getElementById("lang-toggle").addEventListener("click", ()=>{
 });
 
 applyStaticText();
+syncPrefUI();
 render();
 renderTBD();
 </script>
