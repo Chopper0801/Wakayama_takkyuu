@@ -1,21 +1,24 @@
 import os
 import tweepy
 
-# GitHub SecretsからAPIキーを取得
+# GitHub Secretsから認証情報を取得
 API_KEY = os.environ.get("X_API_KEY")
 API_SECRET = os.environ.get("X_API_SECRET")
 ACCESS_TOKEN = os.environ.get("X_ACCESS_TOKEN")
 ACCESS_TOKEN_SECRET = os.environ.get("X_ACCESS_TOKEN_SECRET")
 
-# Tweepy (v2 API) のクライアント初期化
-client = tweepy.Client(
-    consumer_key=API_KEY,
-    consumer_secret=API_SECRET,
-    access_token=ACCESS_TOKEN,
-    access_token_secret=ACCESS_TOKEN_SECRET
+# --- OAuth 1.0a 認証設定 ---
+auth = tweepy.OAuth1UserHandler(
+    API_KEY,
+    API_SECRET,
+    ACCESS_TOKEN,
+    ACCESS_TOKEN_SECRET
 )
 
-# 投稿するメッセージ文面
+# API v1.1 インスタンス生成（投稿用）
+api = tweepy.API(auth)
+
+# 投稿メッセージ
 tweet_text = """【自動更新】近畿の卓球大会スケジュールを更新しました！
 
 最新の大会日程・要項はこちらからチェックしてください🏓
@@ -25,7 +28,8 @@ https://chopper0801.github.io/kinki-tabletennis/
 """
 
 try:
-    response = client.create_tweet(text=tweet_text)
-    print("Tweet successfully posted! ID:", response.data['id'])
+    # v1.1 の update_status メソッドでポスト
+    status = api.update_status(status=tweet_text)
+    print("Tweet successfully posted! ID:", status.id)
 except Exception as e:
     print("Error posting tweet:", e)
