@@ -430,10 +430,86 @@
     font-size:12px;
     color:#8a988c;
   }
+
+  /* ---------- TOP VIEW SWITCHER ---------- */
+  .top-view-nav{
+    display:flex;
+    background:var(--court-deep);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .view-nav-btn{
+    flex:1;
+    max-width:280px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    background:transparent;
+    border:none;
+    border-bottom:3px solid transparent;
+    color:#9fb3a5;
+    font-family:'Oswald', sans-serif;
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:.03em;
+    padding:14px 10px;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .view-nav-btn[aria-pressed="true"]{
+    color:var(--white);
+    border-bottom-color:var(--amber);
+  }
+  .view-nav-btn:hover{color:var(--white);}
+  .view-nav-icon{font-size:16px;}
+
+  /* ---------- VENUES VIEW ---------- */
+  .venues-hero{
+    background:
+      radial-gradient(circle at 85% 20%, rgba(255,255,255,0.05), transparent 40%),
+      linear-gradient(180deg, var(--teal-2) 0%, #0c2320 100%);
+  }
+  .venue-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-left:4px solid var(--teal);
+    border-radius:6px;
+    padding:14px 16px;
+    margin-bottom:10px;
+  }
+  .venue-card.type-gym{border-left-color:var(--slate);}
+  .venue-card.type-school{border-left-color:var(--rose);}
+  .venue-title{
+    font-size:15px;
+    font-weight:700;
+    color:var(--ink);
+    margin-bottom:6px;
+  }
+  .venue-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 14px;
+    font-size:12.5px;
+    color:#556357;
+    margin-bottom:6px;
+  }
+  .venue-meta span{display:inline-flex; align-items:center; gap:4px;}
+  .venue-note{font-size:12.5px; color:#7a8a7d;}
 </style>
 </head>
 <body>
 
+<nav class="top-view-nav">
+  <button class="view-nav-btn" id="nav-tournaments" data-view="tournaments" aria-pressed="true">
+    <span class="view-nav-icon">🏆</span><span id="t-nav-tournaments">大会情報</span>
+  </button>
+  <button class="view-nav-btn" id="nav-venues" data-view="venues" aria-pressed="false">
+    <span class="view-nav-icon">📍</span><span id="t-nav-venues">練習場所</span>
+  </button>
+</nav>
+
+<div id="view-tournaments">
 <header class="hero">
   <div class="hero-inner">
     <button id="lang-toggle" type="button" style="position:absolute; top:20px; right:20px; z-index:2; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.05em; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.3); color:var(--white); padding:7px 14px; border-radius:20px; cursor:pointer;">English</button>
@@ -526,6 +602,45 @@
 </section>
 
 <p class="note" id="t-note">※ このページは 2026年8月1日時点の各サイト掲載情報をもとにした一覧です。大会の延期・中止・変更が発生する場合があるため、参加前には必ず各大会名・詳細リンクから公式の最新要項をご確認ください。大阪卓球協会の一部の大会（内部リーグ戦「大卓リーグ」等）は掲載を省略しています。<br>※ 新日本スポーツ連盟（新体連）の奈良県卓球協議会・県連盟は、全国組織の公式サイト上で都道府県一覧に掲載が確認できなかったため、本ページには含めていません。存在が確認でき次第、追加します。</p>
+</div><!-- /view-tournaments -->
+
+<div id="view-venues" style="display:none;">
+<header class="hero venues-hero">
+  <div class="hero-inner">
+    <div class="eyebrow" id="t-v-eyebrow">Kinki Table Tennis · 練習場所ガイド</div>
+    <h1 id="t-v-h1">卓球ができる<br>場所を探す</h1>
+    <p class="sub" id="t-v-sub">和歌山県・奈良県内で卓球ができる体育館・卓球場・卓球教室をまとめました。大会情報とは別の一覧です。台数や営業時間は変更されている場合があるため、訪問前に各施設へご確認ください。</p>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="search-row">
+    <input id="v-search" type="text" placeholder="施設名・地域名で検索（例：奈良市、体育館、生駒）">
+  </div>
+  <div class="filter-group">
+    <div class="filter-group-label" id="t-v-step1">都道府県を選ぶ</div>
+    <div class="pref-tabs" id="v-pref-tabs">
+      <button class="pref-tab" data-vpref="all" aria-pressed="true"><span data-t="prefAll">すべて</span></button>
+      <button class="pref-tab" data-vpref="wakayama" aria-pressed="false"><span data-t="prefWakayama">和歌山</span></button>
+      <button class="pref-tab" data-vpref="nara" aria-pressed="false"><span data-t="prefNara">奈良</span></button>
+    </div>
+  </div>
+  <div class="filter-group">
+    <div class="filter-group-label" id="t-v-step2">種類で絞り込む</div>
+    <div class="pref-tabs" id="v-type-tabs">
+      <button class="pref-tab" data-vtype="all" aria-pressed="true"><span id="t-vtype-all">すべて</span></button>
+      <button class="pref-tab" data-vtype="gym"><span id="t-vtype-gym">体育館</span></button>
+      <button class="pref-tab" data-vtype="club"><span id="t-vtype-club">卓球場・クラブ</span></button>
+      <button class="pref-tab" data-vtype="school"><span id="t-vtype-school">卓球教室</span></button>
+    </div>
+  </div>
+  <div class="count-line" id="v-count-line"></div>
+</div>
+
+<main class="list" id="v-list"></main>
+
+<p class="note" id="t-v-note">※ 台数・営業時間・料金は各施設のサイトや電話でご確認のうえお出かけください。掲載情報は変更されている場合があります。学校体育館などは、地域の卓球協会・卓球連盟を通じた団体利用が中心の施設も含まれます。</p>
+</div><!-- /view-venues -->
 
 <script>
 const events = [
@@ -1233,10 +1348,174 @@ function applyStaticText(){
 document.getElementById("lang-toggle").addEventListener("click", ()=>{
   lang = (lang === "ja") ? "en" : "ja";
   applyStaticText();
+  applyVenueStaticText();
   updateCountdown();
   render();
   renderTBD();
+  renderVenues();
 });
+
+// ============================================================
+// 練習場所（大会情報とは別データ・別ウィンドウ）
+// ============================================================
+const VENUES = [
+  // ---- 和歌山県 ----
+  {pref:"wakayama", type:"club", name:"ラブオール", nameEn:"Love All", address:"和歌山県和歌山市新在家66-3", addressEn:"66-3 Shinzaike, Wakayama City, Wakayama", access:"紀伊中ノ島駅から徒歩約11分", accessEn:"Approx. 11-min walk from Kii-Nakanoshima Station", hours:"10:00〜19:00", tel:"073-472-8567", note:"卓球台7台。卓球ショップ併設。", noteEn:"7 tables. Pro shop on site.", link:"https://rallys.online/place/archives/9810"},
+  {pref:"wakayama", type:"club", name:"本町卓球クラブ", nameEn:"Honmachi Table Tennis Club", address:"和歌山県和歌山市本町6-17", addressEn:"6-17 Honmachi, Wakayama City, Wakayama", access:"紀和駅から徒歩約9分", accessEn:"Approx. 9-min walk from Kiwa Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"073-431-2623", note:"会員制。台貸し・レッスンあり。", noteEn:"Membership club. Table rental & lessons available.", link:"https://rallys.online/place/archives/1398"},
+  {pref:"wakayama", type:"gym", name:"東公園体育館", nameEn:"Higashi Park Gymnasium", address:"和歌山県和歌山市北出島133", addressEn:"133 Kitadejima, Wakayama City, Wakayama", access:"宮前駅から徒歩約30分", accessEn:"Approx. 30-min walk from Miyamae Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"073-474-3331", note:"和歌山市立の公共体育館。卓球大会でも使用される会場。", noteEn:"Wakayama City public gymnasium; also used for tournaments.", link:"http://www.city.wakayama.wakayama.jp/shisetsu/kouen_sp_shisetsu/1006086/1000980.html"},
+  {pref:"wakayama", type:"gym", name:"スポーツベース・和歌山県立体育館", nameEn:"Sports Base Wakayama Prefectural Gymnasium", address:"和歌山県和歌山市中之島2238", addressEn:"2238 Nakanoshima, Wakayama City, Wakayama", access:"要問合せ", accessEn:"Call to confirm", hours:"9:00〜21:00", tel:"073-422-4108", note:"県立の総合体育館。県予選など大会会場としても使用。", noteEn:"Prefectural sports complex; also used as a tournament venue.", link:"http://www.shiga-tta.net/"},
+  {pref:"wakayama", type:"school", name:"田辺IHY卓球スクール", nameEn:"Tanabe IHY Table Tennis School", address:"和歌山県田辺市上の山1-14-15", addressEn:"1-14-15 Uenoyama, Tanabe City, Wakayama", access:"芳養駅から徒歩約19分", accessEn:"Approx. 19-min walk from Haya Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"0739-34-2936", note:"卓球教室・卓球場。", noteEn:"Table tennis school & practice courts.", link:"https://rallys.online/place/archives/1392"},
+  {pref:"wakayama", type:"school", name:"ジムナス", nameEn:"Gymnas", address:"和歌山県紀の川市東国分286-a", addressEn:"286-a Higashikokubu, Kinokawa City, Wakayama", access:"下井阪駅から徒歩約10分", accessEn:"Approx. 10-min walk from Shimoisaka Station", hours:"9:00〜21:00", hoursEn:"9:00 AM–9:00 PM", tel:"要問合せ", note:"定休日：火曜。卓球教室・卓球場。", noteEn:"Closed Tuesdays. Table tennis school & practice courts.", link:"https://rallys.online/place/archives/11358"},
+  {pref:"wakayama", type:"gym", name:"古道ケ丘体育センター", nameEn:"Kodogaoka Sports Center", address:"和歌山県田辺市（古道ケ丘）", addressEn:"Kodogaoka, Tanabe City, Wakayama", access:"要問合せ", accessEn:"Call to confirm", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"バドミントン・バレーボール・卓球・剣道などができる地域の体育館。", noteEn:"Community gymnasium for badminton, volleyball, table tennis, kendo, etc.", link:"https://iko-yo.net/facilities?prefecture_ids%5B%5D=30&tags%5B%5D=%E5%8D%93%E7%90%83"},
+  {pref:"wakayama", type:"gym", name:"白浜町立体育センター", nameEn:"Shirahama Town Sports Center", address:"和歌山県西牟婁郡白浜町", addressEn:"Shirahama, Nishimuro District, Wakayama", access:"要問合せ", accessEn:"Call to confirm", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"バスケ・バレー・バドミントンコートと卓球台3台。", noteEn:"Basketball & volleyball courts, badminton court, and 3 table tennis tables.", link:"https://iko-yo.net/facilities?prefecture_ids%5B%5D=30&tags%5B%5D=%E5%8D%93%E7%90%83"},
+
+  // ---- 奈良県 ----
+  {pref:"nara", type:"club", name:"KOTO卓球スタジオ 生駒店", nameEn:"KOTO Table Tennis Studio Ikoma", address:"奈良県生駒市小平尾町1412-1", addressEn:"1412-1 Kohirao-cho, Ikoma City, Nara", access:"萩の台駅から徒歩約8分", accessEn:"Approx. 8-min walk from Haginodai Station", hours:"10:00〜20:30（曜日により変動）", hoursEn:"10:00 AM–8:30 PM (varies by day)", tel:"要問合せ", note:"卓球場・教室・ショップ併設。", noteEn:"Practice courts, lessons, and pro shop.", link:"https://rallys.online/place/archives/1376"},
+  {pref:"nara", type:"club", name:"KOTO卓球スタジオ 奈良駅前店", nameEn:"KOTO Table Tennis Studio Nara Ekimae", address:"奈良県奈良市三条町606-56 2階", addressEn:"606-56 Sanjo-cho, 2F, Nara City, Nara", access:"JR奈良駅から徒歩約5分", accessEn:"Approx. 5-min walk from JR Nara Station", hours:"10:00〜21:00（曜日により変動）", hoursEn:"10:00 AM–9:00 PM (varies by day)", tel:"要問合せ", note:"卓球場・教室・ショップ併設。", noteEn:"Practice courts, lessons, and pro shop.", link:"https://rallys.online/place/archives/6692"},
+  {pref:"nara", type:"club", name:"KOTO卓球スタジオ 橿原店", nameEn:"KOTO Table Tennis Studio Kashihara", address:"奈良県橿原市四条町795-1", addressEn:"795-1 Shijo-cho, Kashihara City, Nara", access:"八木西口駅から徒歩約10分", accessEn:"Approx. 10-min walk from Yagi-Nishiguchi Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"卓球教室・ショップ併設。", noteEn:"Lessons and pro shop.", link:"https://rallys.online/place/archives/16850"},
+  {pref:"nara", type:"club", name:"イシダ卓球場 ＆ ワンステップ葛城店", nameEn:"Ishida Table Tennis Court & One Step Katsuragi", address:"奈良県葛城市南今市75-4", addressEn:"75-4 Minami-Imaichi, Katsuragi City, Nara", access:"磐城駅から徒歩約8分", accessEn:"Approx. 8-min walk from Iwaki Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"卓球場・教室。", noteEn:"Practice courts & lessons.", link:"https://rallys.online/place/archives/15633"},
+  {pref:"nara", type:"club", name:"ワンステップ（橿原）", nameEn:"One Step Kashihara", address:"奈良県橿原市内膳町4-4-5", addressEn:"4-4-5 Naizen-cho, Kashihara City, Nara", access:"大和八木駅から徒歩約3分", accessEn:"Approx. 3-min walk from Yamato-Yagi Station", hours:"10:30〜20:00", hoursEn:"10:30 AM–8:00 PM", tel:"要問合せ", note:"定休日：月曜。卓球ショップ。", noteEn:"Closed Mondays. Table tennis shop.", link:"https://rallys.online/place/archives/9135"},
+  {pref:"nara", type:"club", name:"ピンポンの広場 PPK", nameEn:"Ping Pong Plaza PPK", address:"奈良県奈良市三条本町1-83-7", addressEn:"1-83-7 Sanjo-honmachi, Nara City, Nara", access:"JR奈良駅西口から徒歩約3分", accessEn:"Approx. 3-min walk from JR Nara Station West Exit", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"卓球場・教室。", noteEn:"Practice courts & lessons.", link:"https://rallys.online/place/archives/1380"},
+  {pref:"nara", type:"club", name:"あいば卓球館", nameEn:"Aiba Table Tennis Hall", address:"奈良県奈良市大宮町2-5-17 大宮ビル1F", addressEn:"2-5-17 Omiya-cho, 1F Omiya Bldg, Nara City, Nara", access:"奈良駅から徒歩約6分", accessEn:"Approx. 6-min walk from Nara Station", hours:"10:00〜19:30", hoursEn:"10:00 AM–7:30 PM", tel:"要問合せ", note:"定休日：水曜。卓球場・教室・ショップ併設。", noteEn:"Closed Wednesdays. Practice courts, lessons, and pro shop.", link:"https://rallys.online/place/archives/1383"},
+  {pref:"nara", type:"club", name:"エクセレントわかくさ", nameEn:"Excellent Wakakusa", address:"奈良県奈良市三条添川町1-4", addressEn:"1-4 Sanjo-soekawa-cho, Nara City, Nara", access:"奈良駅から徒歩約7分", accessEn:"Approx. 7-min walk from Nara Station", hours:"10:30〜21:00", hoursEn:"10:30 AM–9:00 PM", tel:"要問合せ", note:"定休日：火曜。卓球場・教室・ショップ併設。", noteEn:"Closed Tuesdays. Practice courts, lessons, and pro shop.", link:"https://rallys.online/place/archives/1386"},
+  {pref:"nara", type:"club", name:"小瀬クラブ", nameEn:"Ose Club", address:"奈良県生駒市小瀬町309", addressEn:"309 Ose-cho, Ikoma City, Nara", access:"南生駒駅から徒歩約11分", accessEn:"Approx. 11-min walk from Minami-Ikoma Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"0743-76-5335", note:"卓球場・教室。", noteEn:"Practice courts & lessons.", link:"https://rallys.online/place/archives/1389"},
+  {pref:"nara", type:"school", name:"コナミスポーツクラブ 学園前", nameEn:"Konami Sports Club Gakuenmae", address:"奈良県奈良市学園朝日元町2-689-1", addressEn:"2-689-1 Gakuen-asahimoto-cho, Nara City, Nara", access:"学園前駅からバス約4分", accessEn:"Approx. 4-min bus ride from Gakuenmae Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"会員制スポーツクラブ内の卓球教室。", noteEn:"Table tennis lessons within a members' sports club.", link:"https://rallys.online/place/archives/6775"},
+  {pref:"nara", type:"school", name:"FreePlanet T.T.C", nameEn:"Free Planet T.T.C", address:"奈良県北葛城郡上牧町服部台4-1-1 岡西ビル3階", addressEn:"4-1-1 Hattoridai, 3F Okanishi Bldg, Kamimaki, Kitakatsuragi District, Nara", access:"王寺駅南口からバス約11分", accessEn:"Approx. 11-min bus ride from Oji Station South Exit", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"卓球教室。", noteEn:"Table tennis lessons.", link:"https://rallys.online/place/archives/16838"},
+  {pref:"nara", type:"gym", name:"奈良市中央体育館 ならでんアリーナ", nameEn:"Nara City Central Gymnasium (Naraden Arena)", address:"奈良県奈良市法蓮佐保山4-1-3", addressEn:"4-1-3 Horen-sahoyama, Nara City, Nara", access:"近鉄・JR奈良駅から要問合せ", accessEn:"Access from Kintetsu/JR Nara Station — call to confirm", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"奈良市立の総合体育館。卓球大会でも使用される会場。", noteEn:"Nara City sports complex; also used for tournaments.", link:"https://rallys.online/place/archives/4043"},
+  {pref:"nara", type:"gym", name:"大和郡山市総合公園多目的体育館（金魚スクエア）", nameEn:"Yamatokoriyama City Sports Park Multipurpose Gym (Kingyo Square)", address:"奈良県大和郡山市矢田山町2", addressEn:"2 Yatayama-cho, Yamatokoriyama City, Nara", access:"郡山駅から要問合せ", accessEn:"Access from Koriyama Station — call to confirm", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"市立の総合体育館。", noteEn:"City-run sports complex.", link:"https://rallys.online/place/archives/4046"},
+  {pref:"nara", type:"gym", name:"大和高田市立総合体育館", nameEn:"Yamatotakada City Sports Center", address:"奈良県大和高田市幸町11-14", addressEn:"11-14 Saiwai-cho, Yamatotakada City, Nara", access:"高田駅から徒歩約5分", accessEn:"Approx. 5-min walk from Takada Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"市立の総合体育館。", noteEn:"City-run sports complex.", link:"https://rallys.online/place/archives/4055"},
+  {pref:"nara", type:"gym", name:"生駒市市民体育館", nameEn:"Ikoma City Civic Gymnasium", address:"奈良県生駒市門前町9-20", addressEn:"9-20 Monzen-cho, Ikoma City, Nara", access:"宝山寺駅から徒歩約8分", accessEn:"Approx. 8-min walk from Hozanji Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"市立の体育館。", noteEn:"City-run gymnasium.", link:"https://rallys.online/place/archives/4049"},
+  {pref:"nara", type:"gym", name:"橿原市中央体育館", nameEn:"Kashihara City Central Gymnasium", address:"奈良県橿原市小房町11-1", addressEn:"11-1 Obusa-cho, Kashihara City, Nara", access:"畝傍御陵前駅から徒歩約11分", accessEn:"Approx. 11-min walk from Unebigoryomae Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"0744-20-1099", note:"市立の総合体育館。", noteEn:"City-run sports complex.", link:"https://rallys.online/place/archives/4052"},
+];
+
+let activeVPref = "all";
+let activeVType = "all";
+let vQuery = "";
+
+const VTYPE_LABEL = {
+  ja: {gym:"体育館", club:"卓球場・クラブ", school:"卓球教室"},
+  en: {gym:"Gymnasium", club:"Table Tennis Court / Club", school:"Table Tennis School"}
+};
+const VPREF_LABEL = {
+  ja: {wakayama:"和歌山", nara:"奈良"},
+  en: {wakayama:"Wakayama", nara:"Nara"}
+};
+
+function renderVenues(){
+  const listEl = document.getElementById("v-list");
+  const countLine = document.getElementById("v-count-line");
+  const filtered = VENUES.filter(v=>{
+    if(activeVPref!=="all" && v.pref!==activeVPref) return false;
+    if(activeVType!=="all" && v.type!==activeVType) return false;
+    if(vQuery){
+      const q = vQuery.toLowerCase();
+      const name = (lang==="en" ? v.nameEn : v.name).toLowerCase();
+      const addr = (lang==="en" ? v.addressEn : v.address).toLowerCase();
+      if(!(name.includes(q) || addr.includes(q))) return false;
+    }
+    return true;
+  });
+
+  const countText = lang==="en" ? `Showing ${filtered.length} location(s)` : `${filtered.length}件の施設を表示中`;
+  countLine.textContent = countText;
+
+  if(filtered.length===0){
+    listEl.innerHTML = `<div class="empty">${lang==="en" ? "No matching locations found." : "該当する施設が見つかりませんでした。"}</div>`;
+    return;
+  }
+
+  let html = "";
+  let currentPref = "";
+  filtered.forEach(v=>{
+    const prefKey = VPREF_LABEL[lang][v.pref];
+    if(prefKey !== currentPref){
+      html += `<div class="month-heading">${prefKey}</div>`;
+      currentPref = prefKey;
+    }
+    const name = lang==="en" ? v.nameEn : v.name;
+    const address = lang==="en" ? v.addressEn : v.address;
+    const access = lang==="en" ? v.accessEn : v.access;
+    const hours = lang==="en" ? (v.hoursEn || v.hours) : v.hours;
+    const note = lang==="en" ? v.noteEn : v.note;
+    const typeLabel = VTYPE_LABEL[lang][v.type];
+    const telLine = (v.tel && v.tel !== "要問合せ") ? v.tel : (lang==="en" ? "Call to confirm" : "要問合せ");
+
+    html += `
+    <div class="venue-card type-${v.type}">
+      <div class="venue-title">${name}</div>
+      <div class="venue-meta">
+        <span class="badge badge-e">${typeLabel}</span>
+        <span>📍 ${address}</span>
+        <span>🚉 ${access}</span>
+        <span>🕒 ${hours}</span>
+        <span>☎ ${telLine}</span>
+      </div>
+      <div class="venue-note">${note}</div>
+      <div class="card-links" style="margin-top:8px;">
+        <a href="${v.link}" target="_blank" rel="noopener">${lang==="en" ? "More info ↗" : "詳細を見る ↗"}</a>
+      </div>
+    </div>`;
+  });
+  listEl.innerHTML = html;
+}
+
+function applyVenueStaticText(){
+  const T = {
+    ja: {navT:"大会情報", navV:"練習場所", eyebrow:"Kinki Table Tennis · 練習場所ガイド", h1:"卓球ができる<br>場所を探す", sub:"和歌山県・奈良県内で卓球ができる体育館・卓球場・卓球教室をまとめました。大会情報とは別の一覧です。台数や営業時間は変更されている場合があるため、訪問前に各施設へご確認ください。", step1:"都道府県を選ぶ", step2:"種類で絞り込む", vAll:"すべて", vGym:"体育館", vClub:"卓球場・クラブ", vSchool:"卓球教室", note:"※ 台数・営業時間・料金は各施設のサイトや電話でご確認のうえお出かけください。掲載情報は変更されている場合があります。学校体育館などは、地域の卓球協会・卓球連盟を通じた団体利用が中心の施設も含まれます。"},
+    en: {navT:"Tournaments", navV:"Practice Venues", eyebrow:"Kinki Table Tennis · Practice Venue Guide", h1:"Find a Place<br>to Play Table Tennis", sub:"A list of gymnasiums, table tennis clubs, and schools in Wakayama and Nara Prefectures. This is a separate list from the tournament information. Table counts and hours may have changed, so please confirm with each venue before visiting.", step1:"Choose a Prefecture", step2:"Filter by Type", vAll:"All", vGym:"Gymnasium", vClub:"Court / Club", vSchool:"School", note:"※ Please confirm table counts, hours, and fees directly with each venue before visiting, as listed details may have changed. Some school gymnasiums are mainly available for group use through local table tennis associations."}
+  };
+  const t = T[lang];
+  document.getElementById("t-nav-tournaments").textContent = t.navT;
+  document.getElementById("t-nav-venues").textContent = t.navV;
+  document.getElementById("t-v-eyebrow").textContent = t.eyebrow;
+  document.getElementById("t-v-h1").innerHTML = t.h1;
+  document.getElementById("t-v-sub").textContent = t.sub;
+  document.getElementById("t-v-step1").textContent = t.step1;
+  document.getElementById("t-v-step2").textContent = t.step2;
+  document.getElementById("t-vtype-all").textContent = t.vAll;
+  document.getElementById("t-vtype-gym").textContent = t.vGym;
+  document.getElementById("t-vtype-club").textContent = t.vClub;
+  document.getElementById("t-vtype-school").textContent = t.vSchool;
+  document.getElementById("t-v-note").textContent = t.note;
+  document.getElementById("v-search").placeholder = lang==="en"
+    ? "Search by facility or area name (e.g. Nara City, gymnasium, Ikoma)"
+    : "施設名・地域名で検索（例：奈良市、体育館、生駒）";
+}
+
+document.querySelectorAll("#v-pref-tabs .pref-tab").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll("#v-pref-tabs .pref-tab").forEach(b=>b.setAttribute("aria-pressed","false"));
+    btn.setAttribute("aria-pressed","true");
+    activeVPref = btn.dataset.vpref;
+    renderVenues();
+  });
+});
+document.querySelectorAll("#v-type-tabs .pref-tab").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll("#v-type-tabs .pref-tab").forEach(b=>b.setAttribute("aria-pressed","false"));
+    btn.setAttribute("aria-pressed","true");
+    activeVType = btn.dataset.vtype;
+    renderVenues();
+  });
+});
+document.getElementById("v-search").addEventListener("input", (e)=>{
+  vQuery = e.target.value.trim();
+  renderVenues();
+});
+
+// ---- トップの「大会情報／練習場所」切り替え ----
+document.querySelectorAll(".view-nav-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".view-nav-btn").forEach(b=>b.setAttribute("aria-pressed","false"));
+    btn.setAttribute("aria-pressed","true");
+    const view = btn.dataset.view;
+    document.getElementById("view-tournaments").style.display = (view==="tournaments") ? "" : "none";
+    document.getElementById("view-venues").style.display = (view==="venues") ? "" : "none";
+  });
+});
+
+applyVenueStaticText();
+renderVenues();
 
 applyStaticText();
 syncPrefUI();
