@@ -342,7 +342,7 @@
   .map-and-tabs{display:flex; flex-direction:column; gap:14px;}
   .kinki-map{
     width:100%;
-    max-width:280px;
+    max-width:320px;
     height:auto;
     margin:0 auto;
     display:block;
@@ -350,29 +350,44 @@
   .pref-shape{
     fill:var(--paper-2);
     stroke:var(--court);
-    stroke-width:2;
+    stroke-width:0.7;
     stroke-linejoin:round;
     cursor:pointer;
-    transition:fill .15s ease, transform .15s ease;
-    transform-origin:center;
+    transition:fill .15s ease;
   }
   .pref-shape:hover{fill:#d8e3d3;}
   .pref-shape.active{fill:var(--ember); stroke:var(--ember-2);}
   .pref-shape.dimmed{opacity:.35;}
+  .pref-shape-v{
+    fill:var(--paper-2);
+    stroke:var(--teal-2);
+    stroke-width:0.7;
+    stroke-linejoin:round;
+    cursor:pointer;
+    transition:fill .15s ease;
+  }
+  .pref-shape-v:hover{fill:#cdeae4;}
+  .pref-shape-v.active{fill:var(--teal); stroke:var(--teal-2);}
+  .pref-shape-v.unavailable{
+    fill:#e9e9e4;
+    stroke:#b8b8b0;
+    cursor:not-allowed;
+  }
+  .pref-shape-v.unavailable:hover{fill:#e9e9e4;}
   .pref-label{
     font-family:'Noto Sans JP', sans-serif;
-    font-size:15px;
+    font-size:5.2px;
     font-weight:700;
     fill:var(--ink);
     text-anchor:middle;
     pointer-events:none;
     paint-order:stroke;
     stroke:var(--paper);
-    stroke-width:3px;
+    stroke-width:1.2px;
   }
   @media(min-width:640px){
     .map-and-tabs{flex-direction:row; align-items:center;}
-    .kinki-map{max-width:220px; flex-shrink:0;}
+    .kinki-map{max-width:260px; flex-shrink:0;}
     .pref-tabs{flex:1;}
   }
   .tbd-section{
@@ -549,19 +564,19 @@
   <div class="filter-group">
     <div class="filter-group-label" id="t-step2">Step 2 — 都道府県を選ぶ</div>
     <div class="map-and-tabs">
-      <svg class="kinki-map" id="kinki-map" viewBox="0 0 480 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="近畿地方の地図">
-        <path class="pref-shape" data-pref="hyogo" d="M40,50 L180,40 L200,120 L190,220 L160,300 L100,330 L50,280 L20,180 L25,100 Z"><title>兵庫</title></path>
-        <path class="pref-shape" data-pref="kyoto" d="M190,40 L280,30 L300,140 L270,240 L220,250 L195,160 L185,90 Z"><title>京都</title></path>
-        <path class="pref-shape" data-pref="shiga" d="M300,110 L370,100 L390,190 L370,260 L310,270 L285,200 L290,150 Z"><title>滋賀</title></path>
-        <path class="pref-shape" data-pref="osaka" d="M195,250 L270,245 L285,290 L260,330 L210,335 L185,300 Z"><title>大阪</title></path>
-        <path class="pref-shape" data-pref="nara" d="M270,250 L340,255 L360,380 L320,420 L270,400 L255,320 Z"><title>奈良</title></path>
-        <path class="pref-shape" data-pref="wakayama" d="M150,300 L255,320 L270,400 L240,460 L160,470 L110,410 L115,340 Z"><title>和歌山</title></path>
-        <text class="pref-label" x="95" y="180">兵庫</text>
-        <text class="pref-label" x="238" y="140">京都</text>
-        <text class="pref-label" x="335" y="185">滋賀</text>
-        <text class="pref-label" x="232" y="290">大阪</text>
-        <text class="pref-label" x="305" y="335">奈良</text>
-        <text class="pref-label" x="190" y="395">和歌山</text>
+      <svg class="kinki-map" id="kinki-map" viewBox="333 637 137 171" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="近畿地方の地図">
+        <g class="pref-shape" data-pref="hyogo" transform="translate(345.000000, 655.000000)"><title>兵庫</title><path fill="inherit" stroke="inherit" d="M31,90 L23,93 L23,88 L20,89 L20,86 L38,67 L39,69 L32,79 L35,88 L31,90 Z M3,59 L4,56 L0,50 L2,47 L1,40 L9,32 L8,26 L14,24 L14,20 L7,3 L16,0 L33,1 L32,5 L36,10 L41,9 L42,11 L42,17 L36,17 L35,23 L42,28 L47,26 L49,33 L59,35 L58,40 L55,41 L56,45 L62,48 L60,49 L62,60 L59,62 L53,60 L40,66 L25,56 L11,57 L11,53 L8,58 L5,56 L3,59 Z"/></g>
+        <g class="pref-shape" data-pref="kyoto" transform="translate(377.000000, 649.000000)"><title>京都</title><polygon fill="inherit" stroke="inherit" points="44 63 41 55 37 54 38 51 34 54 26 46 27 41 17 39 15 32 10 34 3 29 4 23 10 23 10 17 9 15 4 16 0 11 1 7 3 10 2 8 19 0 23 7 15 14 18 15 20 11 20 15 24 17 23 21 25 18 27 19 25 14 31 11 32 14 31 20 34 25 46 27 51 32 48 46 51 56 55 56 59 62 60 66 58 68 54 65 50 68"/></g>
+        <g class="pref-shape" data-pref="shiga" transform="translate(423.000000, 655.000000)"><title>滋賀</title><path fill="inherit" stroke="inherit" d="M20,0 L27,3 L28,9 L31,9 L34,16 L35,19 L31,29 L33,30 L34,40 L30,50 L24,53 L17,50 L16,55 L13,56 L9,50 L5,50 L2,40 L5,26 L0,21 L3,17 L6,18 L9,11 L12,13 L18,10 L18,7 L21,8 L20,0 Z M20,13 L20,16 L18,13 L14,16 L16,24 L8,32 L8,36 L5,42 L7,45 L9,36 L15,35 L16,31 L25,25 L26,21 L20,13 Z"/></g>
+        <g class="pref-shape" data-pref="osaka" transform="translate(387.000000, 695.000000)"><title>大阪</title><polygon fill="inherit" stroke="inherit" points="16 0 24 8 28 5 27 8 31 9 34 17 29 28 31 37 29 42 3 48 0 45 7 44 14 37 17 28 19 30 17 22 20 20 18 9 20 8 14 5 13 1"/></g>
+        <g class="pref-shape" data-pref="nara" transform="translate(410.000000, 712.000000)"><title>奈良</title><polygon fill="inherit" stroke="inherit" points="24 48 19 51 19 54 17 54 17 57 16 57 3 55 5 49 0 42 6 35 10 34 6 25 8 20 6 11 11 0 17 5 21 2 25 5 27 3 29 7 26 8 28 9 27 13 36 18 28 24 31 29 29 30 31 33 29 37 30 44 29 47"/></g>
+        <g class="pref-shape" data-pref="wakayama" transform="translate(385.000000, 737.000000)"><title>和歌山</title><path fill="inherit" stroke="inherit" d="M41,32 L44,38 L49,41 L45,46 L46,50 L38,55 L37,59 L35,59 L36,56 L19,51 L14,44 L17,41 L9,37 L4,30 L0,30 L3,25 L0,24 L6,21 L1,18 L5,16 L4,14 L8,14 L0,6 L2,3 L5,6 L31,0 L35,9 L31,10 L25,17 L30,24 L28,30 L41,32 Z M49,23 L49,26 L44,29 L44,26 L49,23 Z"/></g>
+        <text class="pref-label" x="373" y="695">兵庫</text>
+        <text class="pref-label" x="404" y="675">京都</text>
+        <text class="pref-label" x="443" y="683">滋賀</text>
+        <text class="pref-label" x="403" y="722">大阪</text>
+        <text class="pref-label" x="432" y="746">奈良</text>
+        <text class="pref-label" x="410" y="770">和歌山</text>
       </svg>
       <div class="pref-tabs" id="pref-tabs">
         <button class="pref-tab" data-pref="all" aria-pressed="true"><span data-t="prefAll">すべて</span></button>
@@ -619,10 +634,28 @@
   </div>
   <div class="filter-group">
     <div class="filter-group-label" id="t-v-step1">都道府県を選ぶ</div>
-    <div class="pref-tabs" id="v-pref-tabs">
-      <button class="pref-tab" data-vpref="all" aria-pressed="true"><span data-t="prefAll">すべて</span></button>
-      <button class="pref-tab" data-vpref="wakayama" aria-pressed="false"><span data-t="prefWakayama">和歌山</span></button>
-      <button class="pref-tab" data-vpref="nara" aria-pressed="false"><span data-t="prefNara">奈良</span></button>
+    <div class="map-and-tabs">
+      <svg class="kinki-map" id="kinki-map-v" viewBox="333 637 137 171" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="近畿地方の地図（練習場所）">
+        <g class="pref-shape-v" data-vpref="hyogo" transform="translate(345.000000, 655.000000)"><title>兵庫</title><path fill="inherit" stroke="inherit" d="M31,90 L23,93 L23,88 L20,89 L20,86 L38,67 L39,69 L32,79 L35,88 L31,90 Z M3,59 L4,56 L0,50 L2,47 L1,40 L9,32 L8,26 L14,24 L14,20 L7,3 L16,0 L33,1 L32,5 L36,10 L41,9 L42,11 L42,17 L36,17 L35,23 L42,28 L47,26 L49,33 L59,35 L58,40 L55,41 L56,45 L62,48 L60,49 L62,60 L59,62 L53,60 L40,66 L25,56 L11,57 L11,53 L8,58 L5,56 L3,59 Z"/></g>
+        <g class="pref-shape-v" data-vpref="kyoto" transform="translate(377.000000, 649.000000)"><title>京都（未対応）</title><polygon fill="inherit" stroke="inherit" points="44 63 41 55 37 54 38 51 34 54 26 46 27 41 17 39 15 32 10 34 3 29 4 23 10 23 10 17 9 15 4 16 0 11 1 7 3 10 2 8 19 0 23 7 15 14 18 15 20 11 20 15 24 17 23 21 25 18 27 19 25 14 31 11 32 14 31 20 34 25 46 27 51 32 48 46 51 56 55 56 59 62 60 66 58 68 54 65 50 68"/></g>
+        <g class="pref-shape-v" data-vpref="shiga" transform="translate(423.000000, 655.000000)"><title>滋賀（未対応）</title><path fill="inherit" stroke="inherit" d="M20,0 L27,3 L28,9 L31,9 L34,16 L35,19 L31,29 L33,30 L34,40 L30,50 L24,53 L17,50 L16,55 L13,56 L9,50 L5,50 L2,40 L5,26 L0,21 L3,17 L6,18 L9,11 L12,13 L18,10 L18,7 L21,8 L20,0 Z M20,13 L20,16 L18,13 L14,16 L16,24 L8,32 L8,36 L5,42 L7,45 L9,36 L15,35 L16,31 L25,25 L26,21 L20,13 Z"/></g>
+        <g class="pref-shape-v" data-vpref="osaka" transform="translate(387.000000, 695.000000)"><title>大阪</title><polygon fill="inherit" stroke="inherit" points="16 0 24 8 28 5 27 8 31 9 34 17 29 28 31 37 29 42 3 48 0 45 7 44 14 37 17 28 19 30 17 22 20 20 18 9 20 8 14 5 13 1"/></g>
+        <g class="pref-shape-v" data-vpref="nara" transform="translate(410.000000, 712.000000)"><title>奈良</title><polygon fill="inherit" stroke="inherit" points="24 48 19 51 19 54 17 54 17 57 16 57 3 55 5 49 0 42 6 35 10 34 6 25 8 20 6 11 11 0 17 5 21 2 25 5 27 3 29 7 26 8 28 9 27 13 36 18 28 24 31 29 29 30 31 33 29 37 30 44 29 47"/></g>
+        <g class="pref-shape-v" data-vpref="wakayama" transform="translate(385.000000, 737.000000)"><title>和歌山</title><path fill="inherit" stroke="inherit" d="M41,32 L44,38 L49,41 L45,46 L46,50 L38,55 L37,59 L35,59 L36,56 L19,51 L14,44 L17,41 L9,37 L4,30 L0,30 L3,25 L0,24 L6,21 L1,18 L5,16 L4,14 L8,14 L0,6 L2,3 L5,6 L31,0 L35,9 L31,10 L25,17 L30,24 L28,30 L41,32 Z M49,23 L49,26 L44,29 L44,26 L49,23 Z"/></g>
+        <text class="pref-label" x="373" y="695">兵庫</text>
+        <text class="pref-label" x="404" y="675">京都</text>
+        <text class="pref-label" x="443" y="683">滋賀</text>
+        <text class="pref-label" x="403" y="722">大阪</text>
+        <text class="pref-label" x="432" y="746">奈良</text>
+        <text class="pref-label" x="410" y="770">和歌山</text>
+      </svg>
+      <div class="pref-tabs" id="v-pref-tabs">
+        <button class="pref-tab" data-vpref="all" aria-pressed="true"><span data-t="prefAll">すべて</span></button>
+        <button class="pref-tab" data-vpref="wakayama" aria-pressed="false"><span data-t="prefWakayama">和歌山</span></button>
+        <button class="pref-tab" data-vpref="osaka" aria-pressed="false"><span data-t="prefOsaka">大阪</span></button>
+        <button class="pref-tab" data-vpref="nara" aria-pressed="false"><span data-t="prefNara">奈良</span></button>
+        <button class="pref-tab" data-vpref="hyogo" aria-pressed="false"><span data-t="prefHyogo">兵庫</span></button>
+      </div>
     </div>
   </div>
   <div class="filter-group">
@@ -1386,6 +1419,39 @@ const VENUES = [
   {pref:"nara", type:"gym", name:"大和高田市立総合体育館", nameEn:"Yamatotakada City Sports Center", address:"奈良県大和高田市幸町11-14", addressEn:"11-14 Saiwai-cho, Yamatotakada City, Nara", access:"高田駅から徒歩約5分", accessEn:"Approx. 5-min walk from Takada Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"市立の総合体育館。", noteEn:"City-run sports complex.", link:"https://rallys.online/place/archives/4055"},
   {pref:"nara", type:"gym", name:"生駒市市民体育館", nameEn:"Ikoma City Civic Gymnasium", address:"奈良県生駒市門前町9-20", addressEn:"9-20 Monzen-cho, Ikoma City, Nara", access:"宝山寺駅から徒歩約8分", accessEn:"Approx. 8-min walk from Hozanji Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"市立の体育館。", noteEn:"City-run gymnasium.", link:"https://rallys.online/place/archives/4049"},
   {pref:"nara", type:"gym", name:"橿原市中央体育館", nameEn:"Kashihara City Central Gymnasium", address:"奈良県橿原市小房町11-1", addressEn:"11-1 Obusa-cho, Kashihara City, Nara", access:"畝傍御陵前駅から徒歩約11分", accessEn:"Approx. 11-min walk from Unebigoryomae Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"0744-20-1099", note:"市立の総合体育館。", noteEn:"City-run sports complex.", link:"https://rallys.online/place/archives/4052"},
+
+  // ---- 大阪府 ----
+  {pref:"osaka", type:"gym", name:"大阪府立体育会館（エディオンアリーナ大阪）", nameEn:"Osaka Prefectural Gymnasium (EDION Arena Osaka)", address:"大阪府大阪市浪速区難波中3-4-36", addressEn:"3-4-36 Namba-naka, Naniwa Ward, Osaka City, Osaka", access:"なんば駅から要問合せ", accessEn:"Access from Namba Station — call to confirm", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"府立の総合体育館。全国規模の卓球大会でも使用される会場。", noteEn:"Osaka Prefectural sports complex; also used for national-level tournaments.", link:"https://rallys.online/place/archives/2448"},
+  {pref:"osaka", type:"gym", name:"大阪市中央体育館", nameEn:"Osaka City Central Gymnasium", address:"大阪府大阪市港区田中3-1-40", addressEn:"3-1-40 Tanaka, Minato Ward, Osaka City, Osaka", access:"朝潮橋駅から要問合せ", accessEn:"Access from Asashiobashi Station — call to confirm", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"市立の総合体育館。", noteEn:"City-run sports complex.", link:"https://rallys.online/place/archives/2445"},
+  {pref:"osaka", type:"gym", name:"大阪市立東淀川体育館", nameEn:"Osaka City Higashiyodogawa Gymnasium", address:"大阪府大阪市東淀川区東中島4-4-4", addressEn:"4-4-4 Higashinakajima, Higashiyodogawa Ward, Osaka City, Osaka", access:"新大阪駅から要問合せ", accessEn:"Access from Shin-Osaka Station — call to confirm", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"市立の体育館。", noteEn:"City-run gymnasium.", link:"https://rallys.online/place/archives/2439"},
+  {pref:"osaka", type:"gym", name:"大阪市立北スポーツセンター", nameEn:"Osaka City Kita Sports Center", address:"大阪府大阪市北区中津3-4-27", addressEn:"3-4-27 Nakatsu, Kita Ward, Osaka City, Osaka", access:"中津駅から徒歩約1分", accessEn:"Approx. 1-min walk from Nakatsu Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"06-6359-1521", note:"市立の体育館。", noteEn:"City-run gymnasium.", link:"https://rallys.online/place/archives/2442"},
+  {pref:"osaka", type:"gym", name:"大阪府立臨海スポーツセンター", nameEn:"Osaka Prefectural Rinkai Sports Center", address:"大阪府高石市高師浜丁6-1", addressEn:"6-1 Takashinohama-cho, Takaishi City, Osaka", access:"高師浜駅から要問合せ", accessEn:"Access from Takashinohama Station — call to confirm", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"府立の総合スポーツセンター。", noteEn:"Osaka Prefectural sports center.", link:"https://rallys.online/place/archives/2466"},
+  {pref:"osaka", type:"gym", name:"枚方市立総合体育館", nameEn:"Hirakata City Sports Center", address:"大阪府枚方市中宮大池4-10-1", addressEn:"4-10-1 Nakamiya-oike, Hirakata City, Osaka", access:"藤阪駅から要問合せ", accessEn:"Access from Fujisaka Station — call to confirm", hours:"要問合せ", hoursEn:"Call to confirm", tel:"072-848-4800", note:"市立の総合体育館。", noteEn:"City-run sports complex.", link:"https://rallys.online/place/archives/2485"},
+  {pref:"osaka", type:"gym", name:"高槻市総合スポーツセンター", nameEn:"Takatsuki City Sports Center", address:"大阪府高槻市芝生町4-1-1", addressEn:"4-1-1 Shibofu-cho, Takatsuki City, Osaka", access:"JR高槻駅・阪急高槻駅からバス", accessEn:"Bus from JR Takatsuki / Hankyu Takatsuki Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"市立の総合スポーツセンター。", noteEn:"City-run sports center.", link:"https://rallys.online/place/archives/2479"},
+  {pref:"osaka", type:"gym", name:"羽曳野市立総合スポーツセンター（はびきのコロセアム）", nameEn:"Habikino City Sports Center (Habikino Coliseum)", address:"大阪府羽曳野市南恵我之荘4-237-4", addressEn:"4-237-4 Minami-egano-sho, Habikino City, Osaka", access:"恵我ノ荘駅から要問合せ", accessEn:"Access from Eganosho Station — call to confirm", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"市立の総合スポーツセンター。大会会場としても使用される。", noteEn:"City-run sports center; also used as a tournament venue.", link:"https://rallys.online/place/archives/2494"},
+  {pref:"osaka", type:"gym", name:"柏原市立体育館（柏原オーエンスアリーナ）", nameEn:"Kashiwara City Gymnasium (Kashiwara Owns Arena)", address:"大阪府柏原市玉手町25-80", addressEn:"25-80 Tamate-cho, Kashiwara City, Osaka", access:"河内国分駅から要問合せ", accessEn:"Access from Kawachi-Kokubu Station — call to confirm", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"市立の体育館。", noteEn:"City-run gymnasium.", link:"https://rallys.online/place/archives/2501"},
+  {pref:"osaka", type:"club", name:"吹田卓球センター", nameEn:"Suita Table Tennis Center", address:"大阪府吹田市朝日町14-2 大松ビル3階", addressEn:"14-2 Asahi-cho, 3F Daimatsu Bldg, Suita City, Osaka", access:"JR吹田駅から徒歩約3分", accessEn:"Approx. 3-min walk from JR Suita Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"個人・団体レッスン、多球練習あり。", noteEn:"Private and group lessons, multi-ball training available.", link:"https://rallys.online/place/archives/6184"},
+  {pref:"osaka", type:"club", name:"豊中卓球センター", nameEn:"Toyonaka Table Tennis Center", address:"大阪府豊中市本町3-1-45 アンジャンティ植山1階", addressEn:"3-1-45 Honmachi, 1F, Toyonaka City, Osaka", access:"阪急豊中駅から徒歩約5分", accessEn:"Approx. 5-min walk from Hankyu Toyonaka Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"卓球場・教室。", noteEn:"Practice courts & lessons.", link:"https://rallys.online/place/archives/9800"},
+  {pref:"osaka", type:"club", name:"本町卓球センター", nameEn:"Honmachi Table Tennis Center", address:"大阪府大阪市西区西本町1-9-19 名光通信社ビル3F", addressEn:"1-9-19 Nishihonmachi, 3F, Nishi Ward, Osaka City, Osaka", access:"地下鉄本町駅から要問合せ", accessEn:"Access from Honmachi Station — call to confirm", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"卓球場・教室・ショップ併設。", noteEn:"Practice courts, lessons, and pro shop.", link:"https://rallys.online/place/archives/1247"},
+  {pref:"osaka", type:"club", name:"すみよし長居卓球センター", nameEn:"Sumiyoshi Nagai Table Tennis Center", address:"大阪府大阪市住吉区長居東3-5-6 2F", addressEn:"3-5-6 Nagai-higashi, 2F, Sumiyoshi Ward, Osaka City, Osaka", access:"地下鉄長居駅4番出口すぐ", accessEn:"Right by Nagai Station Exit 4", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"卓球場・教室。", noteEn:"Practice courts & lessons.", link:"https://rallys.online/place/archives/1254"},
+  {pref:"osaka", type:"club", name:"コンパスクラブ", nameEn:"Compass Club", address:"大阪府東大阪市日下町4-2-20", addressEn:"4-2-20 Kusaka-cho, Higashiosaka City, Osaka", access:"近鉄新石切駅からバス", accessEn:"Bus from Kintetsu Shin-Ishikiri Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"卓球場・教室・ショップ併設。", noteEn:"Practice courts, lessons, and pro shop.", link:"https://rallys.online/place/archives/1264"},
+  {pref:"osaka", type:"club", name:"ひらかた卓球場", nameEn:"Hirakata Table Tennis Court", address:"大阪府枚方市田口5-2-1", addressEn:"5-2-1 Taguchi, Hirakata City, Osaka", access:"出屋敷バス停より徒歩約3分", accessEn:"Approx. 3-min walk from Deyashiki bus stop", hours:"9:30〜22:00", hoursEn:"9:30 AM–10:00 PM", tel:"要問合せ", note:"卓球場・教室・ショップ併設。", noteEn:"Practice courts, lessons, and pro shop.", link:"https://rallys.online/place/archives/1194"},
+  {pref:"osaka", type:"club", name:"VICTAS卓球場", nameEn:"VICTAS Table Tennis Court", address:"大阪府大阪市浪速区難波中3-6-3 T4BUILDING OSAKA 4階", addressEn:"3-6-3 Namba-naka, 4F T4 Building Osaka, Naniwa Ward, Osaka City, Osaka", access:"南海なんば駅から徒歩約5分", accessEn:"Approx. 5-min walk from Nankai Namba Station", hours:"9:30〜（要問合せ）", hoursEn:"From 9:30 AM (call to confirm closing time)", tel:"要問合せ", note:"卓球用品メーカー直営の卓球場。", noteEn:"Practice courts run directly by the table tennis equipment maker VICTAS.", link:"https://rallys.online/place/archives/16674"},
+  {pref:"osaka", type:"school", name:"北摂卓球カレッジ", nameEn:"Hokusetsu Table Tennis College", address:"大阪府箕面市船場東3-3-11 コムザ箕面402", addressEn:"3-3-11 Senba-higashi, Rm 402, Minoh City, Osaka", access:"千里中央駅から徒歩約13分", accessEn:"Approx. 13-min walk from Senri-Chuo Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"卓球教室。", noteEn:"Table tennis lessons.", link:"https://rallys.online/place/archives/6906"},
+
+  // ---- 兵庫県 ----
+  {pref:"hyogo", type:"gym", name:"兵庫県立総合体育館", nameEn:"Hyogo Prefectural Sports Center", address:"兵庫県西宮市鳴尾浜1-16-8", addressEn:"1-16-8 Naruohama, Nishinomiya City, Hyogo", access:"阪神「甲子園」駅からバス約15分", accessEn:"Approx. 15-min bus ride from Hanshin Koshien Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"県立の総合体育館。県予選など大会会場としても使用。", noteEn:"Hyogo Prefectural sports complex; also used as a tournament venue.", link:"https://rallys.online/place/archives/4211"},
+  {pref:"hyogo", type:"gym", name:"姫路市立総合スポーツ会館", nameEn:"Himeji City Sports Hall", address:"兵庫県姫路市中地453", addressEn:"453 Nakaji, Himeji City, Hyogo", access:"山陽電鉄 手柄駅から徒歩約17分", accessEn:"Approx. 17-min walk from Sanyo Dentetsu Tegara Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"079-293-1321", note:"市立の総合スポーツ会館。", noteEn:"City-run sports hall.", link:"https://rallys.online/place/archives/category/kansai/hyogo/himeji"},
+  {pref:"hyogo", type:"club", name:"メトロ卓球場", nameEn:"Metro Table Tennis Court", address:"兵庫県神戸市中央区中町通4-2-23", addressEn:"4-2-23 Nakamachi-dori, Chuo Ward, Kobe City, Hyogo", access:"高速神戸駅から徒歩約3分", accessEn:"Approx. 3-min walk from Kosoku-Kobe Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"卓球場。", noteEn:"Practice courts.", link:"https://rallys.online/place/archives/introduce/pingpong-practice-list"},
+  {pref:"hyogo", type:"club", name:"こうべ卓球スタジオ", nameEn:"Kobe Table Tennis Studio", address:"兵庫県神戸市長田区真野町1-13", addressEn:"1-13 Mano-cho, Nagata Ward, Kobe City, Hyogo", access:"神戸市海岸線 苅藻駅から徒歩約11分", accessEn:"Approx. 11-min walk from Kobe Kaigan Line Karumo Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"078-381-7188", note:"卓球場・教室。", noteEn:"Practice courts & lessons.", link:"https://rallys.online/place/archives/category/hyogo"},
+  {pref:"hyogo", type:"club", name:"TTSタカハシ 神戸TTスタジオ", nameEn:"TTS Takahashi Kobe TT Studio", address:"兵庫県神戸市兵庫区西橘通1-1-1 ファラン神戸ビル5F", addressEn:"1-1-1 Nishitachibana-dori, 5F, Hyogo Ward, Kobe City, Hyogo", access:"メトロこうべ駅から要問合せ", accessEn:"Access from Metro Kobe Station — call to confirm", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"卓球場・教室・ショップ併設。", noteEn:"Practice courts, lessons, and pro shop.", link:"https://rallys.online/place/archives/category/hyogo"},
+  {pref:"hyogo", type:"club", name:"尼崎卓球場", nameEn:"Amagasaki Table Tennis Court", address:"兵庫県尼崎市西川2-34-5", addressEn:"2-34-5 Nishikawa, Amagasaki City, Hyogo", access:"尼崎駅から徒歩約4分", accessEn:"Approx. 4-min walk from Amagasaki Station", hours:"10:00〜21:00", hoursEn:"10:00 AM–9:00 PM", tel:"要問合せ", note:"定休日：第5週目の日曜。卓球場。", noteEn:"Closed on 5th Sundays of the month. Practice courts.", link:"https://rallys.online/place/archives/category/hyogo"},
+  {pref:"hyogo", type:"club", name:"OKATAKU", nameEn:"OKATAKU", address:"兵庫県三田市中央町5-19", addressEn:"5-19 Chuo-cho, Sanda City, Hyogo", access:"JR・神戸電鉄 三田駅から徒歩約3分", accessEn:"Approx. 3-min walk from JR/Kobe Electric Railway Sanda Station", hours:"9:30〜21:30", hoursEn:"9:30 AM–9:30 PM", tel:"要問合せ", note:"卓球場。", noteEn:"Practice courts.", link:"https://rallys.online/place/archives/category/hyogo"},
+  {pref:"hyogo", type:"club", name:"卓球専門店 佐々木", nameEn:"Table Tennis Shop Sasaki", address:"兵庫県西宮市戸田町4-19", addressEn:"4-19 Toda-cho, Nishinomiya City, Hyogo", access:"阪神本線 西宮駅から徒歩約4分", accessEn:"Approx. 4-min walk from Hanshin Main Line Nishinomiya Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"0798-22-1002", note:"卓球専門店・台貸しあり。", noteEn:"Table tennis shop with table rental.", link:"https://rallys.online/place/archives/category/hyogo"},
+  {pref:"hyogo", type:"school", name:"立松卓球スクール", nameEn:"Tatematsu Table Tennis School", address:"兵庫県西宮市甲子園町28-20", addressEn:"28-20 Koshien-cho, Nishinomiya City, Hyogo", access:"阪神本線 甲子園駅から徒歩約13分", accessEn:"Approx. 13-min walk from Hanshin Main Line Koshien Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"050-3554-5733", note:"卓球教室。", noteEn:"Table tennis lessons.", link:"https://rallys.online/place/archives/category/hyogo"},
+  {pref:"hyogo", type:"club", name:"TTSタカハシ 姫路店", nameEn:"TTS Takahashi Himeji", address:"兵庫県姫路市北条宮の町92", addressEn:"92 Hojo-miyanocho, Himeji City, Hyogo", access:"姫路駅南口から姫路市営バス", accessEn:"Himeji City bus from Himeji Station South Exit", hours:"10:00〜21:00 日祝〜19:00", hoursEn:"10:00 AM–9:00 PM (Sun/hol. until 7:00 PM)", tel:"要問合せ", note:"卓球ショップ併設。", noteEn:"Pro shop on site.", link:"https://rallys.online/place/archives/category/kansai/hyogo/himeji"},
+  {pref:"hyogo", type:"club", name:"ふじもりTTC卓球場", nameEn:"Fujimori TTC Table Tennis Court", address:"兵庫県姫路市西庄乙126 おさるアリーナ2F", addressEn:"126 Nishinosho-otsu, 2F Osaru Arena, Himeji City, Hyogo", access:"西庄北口バス停より徒歩約5分", accessEn:"Approx. 5-min walk from Nishinosho-kitaguchi bus stop", hours:"要問合せ", hoursEn:"Call to confirm", tel:"090-5041-6251", note:"卓球場。", noteEn:"Practice courts.", link:"https://rallys.online/place/archives/category/kansai/hyogo/himeji"},
+  {pref:"hyogo", type:"club", name:"三村スポーツ", nameEn:"Mimura Sports", address:"兵庫県加古郡稲美町国安874", addressEn:"874 Kuniyasu, Inami Town, Kako District, Hyogo", access:"JR神戸線 東加古川駅から要問合せ", accessEn:"Access from JR Kobe Line Higashi-Kakogawa Station — call to confirm", hours:"要問合せ", hoursEn:"Call to confirm", tel:"0794-92-2429", note:"卓球ショップ・台貸し。", noteEn:"Table tennis shop with table rental.", link:"https://rallys.online/place/archives/category/hyogo"},
 ];
 
 let activeVPref = "all";
@@ -1397,8 +1463,8 @@ const VTYPE_LABEL = {
   en: {gym:"Gymnasium", club:"Table Tennis Court / Club", school:"Table Tennis School"}
 };
 const VPREF_LABEL = {
-  ja: {wakayama:"和歌山", nara:"奈良"},
-  en: {wakayama:"Wakayama", nara:"Nara"}
+  ja: {wakayama:"和歌山", nara:"奈良", osaka:"大阪", hyogo:"兵庫"},
+  en: {wakayama:"Wakayama", nara:"Nara", osaka:"Osaka", hyogo:"Hyogo"}
 };
 
 function renderVenues(){
@@ -1482,12 +1548,36 @@ function applyVenueStaticText(){
     : "施設名・地域名で検索（例：奈良市、体育館、生駒）";
 }
 
+const VPREF_AVAILABLE = ["wakayama", "osaka", "nara", "hyogo"]; // 練習場所データがある都道府県
+
+function syncVPrefUI(){
+  document.querySelectorAll("#v-pref-tabs .pref-tab").forEach(b=>{
+    b.setAttribute("aria-pressed", String(b.dataset.vpref === activeVPref));
+  });
+  document.querySelectorAll(".pref-shape-v").forEach(shape=>{
+    const pref = shape.dataset.vpref;
+    shape.classList.toggle("active", pref === activeVPref);
+    shape.classList.toggle("unavailable", !VPREF_AVAILABLE.includes(pref));
+  });
+}
+
+function setVPref(pref){
+  if(!VPREF_AVAILABLE.includes(pref) && pref !== "all") return;
+  activeVPref = pref;
+  syncVPrefUI();
+  renderVenues();
+}
+
 document.querySelectorAll("#v-pref-tabs .pref-tab").forEach(btn=>{
   btn.addEventListener("click", ()=>{
-    document.querySelectorAll("#v-pref-tabs .pref-tab").forEach(b=>b.setAttribute("aria-pressed","false"));
-    btn.setAttribute("aria-pressed","true");
-    activeVPref = btn.dataset.vpref;
-    renderVenues();
+    setVPref(btn.dataset.vpref);
+  });
+});
+document.querySelectorAll(".pref-shape-v").forEach(shape=>{
+  shape.addEventListener("click", ()=>{
+    const pref = shape.dataset.vpref;
+    if(!VPREF_AVAILABLE.includes(pref)) return;
+    setVPref(activeVPref === pref ? "all" : pref);
   });
 });
 document.querySelectorAll("#v-type-tabs .pref-tab").forEach(btn=>{
@@ -1502,6 +1592,8 @@ document.getElementById("v-search").addEventListener("input", (e)=>{
   vQuery = e.target.value.trim();
   renderVenues();
 });
+
+syncVPrefUI();
 
 // ---- トップの「大会情報／練習場所」切り替え ----
 document.querySelectorAll(".view-nav-btn").forEach(btn=>{
