@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>近畿卓球ナビ｜大会情報＆練習場所検索</title>
+<title>アトラス｜近畿の卓球大会・練習場所検索</title>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "近畿卓球ナビ",
+    "name": "アトラス",
     "url": "https://chopper0801.github.io/kinki-tabletennis/"
   }
   </script>
-<meta name="description" content="近畿地方（和歌山・大阪・奈良）の卓球大会情報と、卓球ができる体育館・卓球場・卓球教室の情報をまとめて検索できるサイトです。日本卓球協会系（和歌山県卓球協会・大阪卓球協会・奈良県卓球協会）と新体連（新日本スポーツ連盟）系（和歌山卓球協議会・大阪府卓球協議会）の大会案内・申込締切・要項PDF、さらに練習場所を都道府県別に検索できます。">
-<meta name="keywords" content="卓球,大会,練習場所,体育館,卓球場,和歌山,大阪,奈良,兵庫,近畿,京都,滋賀,新体連,新日本スポーツ連盟,日本卓球協会,卓球協会,卓球協議会,大会要項,申込締切">
-<meta property="og:title" content="近畿卓球ナビ｜大会情報＆練習場所検索">
-<meta property="og:description" content="近畿地方の卓球大会情報と、卓球ができる体育館・卓球場をまとめて検索できるサイトです。">
+<meta name="description" content="「アトラス」は、近畿地方（和歌山・大阪・奈良・兵庫・京都・滋賀）の卓球大会情報と、卓球ができる体育館・卓球場・卓球教室の情報をまとめて検索できるサイトです。日本卓球協会系（和歌山県卓球協会・大阪卓球協会・奈良県卓球協会）と新体連（新日本スポーツ連盟）系（和歌山卓球協議会・大阪府卓球協議会）の大会案内・申込締切・要項PDF、さらに練習場所を都道府県別に検索できます。">
+<meta name="keywords" content="卓球,大会,練習場所,体育館,卓球場,和歌山,大阪,奈良,兵庫,近畿,京都,滋賀,新体連,新日本スポーツ連盟,日本卓球協会,卓球協会,卓球協議会,大会要項,申込締切,アトラス">
+<meta property="og:title" content="アトラス｜近畿の卓球大会・練習場所検索">
+<meta property="og:description" content="近畿地方の卓球大会情報と、卓球ができる体育館・卓球場をまとめて検索できるサイト「アトラス」です。">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
@@ -449,8 +449,31 @@
   /* ---------- TOP VIEW SWITCHER ---------- */
   .top-view-nav{
     display:flex;
+    align-items:center;
     background:var(--court-deep);
     border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .site-brand{
+    font-family:'Oswald', sans-serif;
+    font-weight:700;
+    font-size:16px;
+    letter-spacing:.08em;
+    color:var(--amber);
+    padding:0 16px;
+    white-space:nowrap;
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+  }
+  .site-brand-jp{
+    font-family:'Noto Sans JP', sans-serif;
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:0;
+    color:#c9d8cd;
+  }
+  @media(max-width:480px){
+    .site-brand-jp{display:none;}
   }
   .view-nav-btn{
     flex:1;
@@ -516,6 +539,7 @@
 <body>
 
 <nav class="top-view-nav">
+  <div class="site-brand">ATLAS<span class="site-brand-jp">アトラス</span></div>
   <button class="view-nav-btn" id="nav-tournaments" data-view="tournaments" aria-pressed="true">
     <span class="view-nav-icon">🏆</span><span id="t-nav-tournaments">大会情報</span>
   </button>
@@ -637,7 +661,7 @@
     <div class="map-and-tabs">
       <svg class="kinki-map" id="kinki-map-v" viewBox="333 637 137 171" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="近畿地方の地図（練習場所）">
         <g class="pref-shape-v" data-vpref="hyogo" transform="translate(345.000000, 655.000000)"><title>兵庫</title><path fill="inherit" stroke="inherit" d="M31,90 L23,93 L23,88 L20,89 L20,86 L38,67 L39,69 L32,79 L35,88 L31,90 Z M3,59 L4,56 L0,50 L2,47 L1,40 L9,32 L8,26 L14,24 L14,20 L7,3 L16,0 L33,1 L32,5 L36,10 L41,9 L42,11 L42,17 L36,17 L35,23 L42,28 L47,26 L49,33 L59,35 L58,40 L55,41 L56,45 L62,48 L60,49 L62,60 L59,62 L53,60 L40,66 L25,56 L11,57 L11,53 L8,58 L5,56 L3,59 Z"/></g>
-        <g class="pref-shape-v" data-vpref="kyoto" transform="translate(377.000000, 649.000000)"><title>京都（未対応）</title><polygon fill="inherit" stroke="inherit" points="44 63 41 55 37 54 38 51 34 54 26 46 27 41 17 39 15 32 10 34 3 29 4 23 10 23 10 17 9 15 4 16 0 11 1 7 3 10 2 8 19 0 23 7 15 14 18 15 20 11 20 15 24 17 23 21 25 18 27 19 25 14 31 11 32 14 31 20 34 25 46 27 51 32 48 46 51 56 55 56 59 62 60 66 58 68 54 65 50 68"/></g>
+        <g class="pref-shape-v" data-vpref="kyoto" transform="translate(377.000000, 649.000000)"><title>京都</title><polygon fill="inherit" stroke="inherit" points="44 63 41 55 37 54 38 51 34 54 26 46 27 41 17 39 15 32 10 34 3 29 4 23 10 23 10 17 9 15 4 16 0 11 1 7 3 10 2 8 19 0 23 7 15 14 18 15 20 11 20 15 24 17 23 21 25 18 27 19 25 14 31 11 32 14 31 20 34 25 46 27 51 32 48 46 51 56 55 56 59 62 60 66 58 68 54 65 50 68"/></g>
         <g class="pref-shape-v" data-vpref="shiga" transform="translate(423.000000, 655.000000)"><title>滋賀</title><path fill="inherit" stroke="inherit" d="M20,0 L27,3 L28,9 L31,9 L34,16 L35,19 L31,29 L33,30 L34,40 L30,50 L24,53 L17,50 L16,55 L13,56 L9,50 L5,50 L2,40 L5,26 L0,21 L3,17 L6,18 L9,11 L12,13 L18,10 L18,7 L21,8 L20,0 Z M20,13 L20,16 L18,13 L14,16 L16,24 L8,32 L8,36 L5,42 L7,45 L9,36 L15,35 L16,31 L25,25 L26,21 L20,13 Z"/></g>
         <g class="pref-shape-v" data-vpref="osaka" transform="translate(387.000000, 695.000000)"><title>大阪</title><polygon fill="inherit" stroke="inherit" points="16 0 24 8 28 5 27 8 31 9 34 17 29 28 31 37 29 42 3 48 0 45 7 44 14 37 17 28 19 30 17 22 20 20 18 9 20 8 14 5 13 1"/></g>
         <g class="pref-shape-v" data-vpref="nara" transform="translate(410.000000, 712.000000)"><title>奈良</title><polygon fill="inherit" stroke="inherit" points="24 48 19 51 19 54 17 54 17 57 16 57 3 55 5 49 0 42 6 35 10 34 6 25 8 20 6 11 11 0 17 5 21 2 25 5 27 3 29 7 26 8 28 9 27 13 36 18 28 24 31 29 29 30 31 33 29 37 30 44 29 47"/></g>
@@ -655,6 +679,7 @@
         <button class="pref-tab" data-vpref="osaka" aria-pressed="false"><span data-t="prefOsaka">大阪</span></button>
         <button class="pref-tab" data-vpref="nara" aria-pressed="false"><span data-t="prefNara">奈良</span></button>
         <button class="pref-tab" data-vpref="hyogo" aria-pressed="false"><span data-t="prefHyogo">兵庫</span></button>
+        <button class="pref-tab" data-vpref="kyoto" aria-pressed="false"><span data-t="prefKyoto">京都</span></button>
         <button class="pref-tab" data-vpref="shiga" aria-pressed="false"><span data-t="prefShiga">滋賀</span></button>
       </div>
     </div>
@@ -831,8 +856,8 @@ let lang = "ja";
 const UI_TEXT = {
   ja: {
     toggleBtn: "English",
-    eyebrow: "Kinki Table Tennis · 大会情報＆練習場所ナビ",
-    h1: "近畿卓球ナビ",
+    eyebrow: "ATLAS · 近畿卓球大会・練習場所ナビ",
+    h1: "アトラス",
     sub: "関西地方の卓球大会情報をまとめました。<b>日本卓球協会系</b>と<b>新体連（新日本スポーツ連盟）系</b>を切り替えて、都道府県別に大会を探せます。",
     sbLabel: "Next Entry Deadline In",
     sbDays: "DAYS",
@@ -884,8 +909,8 @@ const UI_TEXT = {
   },
   en: {
     toggleBtn: "日本語",
-    eyebrow: "Kinki Table Tennis · Tournaments & Practice Venues",
-    h1: "Kinki Table Tennis Navi",
+    eyebrow: "ATLAS · Kinki Table Tennis Tournaments & Venues",
+    h1: "ATLAS",
     sub: "A guide to table tennis tournaments across the Kansai region. Switch between <b>JTTA-affiliated associations</b> and <b>Shintairen (New Japan Sports Federation)</b> groups, then browse by prefecture.",
     sbLabel: "Next Entry Deadline In",
     sbDays: "DAYS",
@@ -1464,6 +1489,25 @@ const VENUES = [
   {pref:"shiga", type:"school", name:"卓球スクール・卓球用品店アドバンス", nameEn:"Table Tennis School & Shop Advance", address:"滋賀県守山市勝部1-3-12 DSビル1F", addressEn:"1-3-12 Katsube, 1F DS Bldg, Moriyama City, Shiga", access:"JR琵琶湖線 守山駅から徒歩約3分", accessEn:"Approx. 3-min walk from JR Biwako Line Moriyama Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"077-598-1834", note:"卓球台3台。卓球教室・ショップ併設。", noteEn:"3 tables. Lessons and pro shop.", link:"https://t-advance.jp/"},
   {pref:"shiga", type:"club", name:"瀬田西卓球センター", nameEn:"Seta-nishi Table Tennis Center", address:"滋賀県大津市瀬田3-25-2", addressEn:"3-25-2 Seta, Otsu City, Shiga", access:"京阪石山坂本線 唐橋前駅から徒歩約15分", accessEn:"Approx. 15-min walk from Keihan Ishiyama-Sakamoto Line Karahashi-mae Station", hours:"9:00〜23:00", hoursEn:"9:00 AM–11:00 PM", tel:"077-543-1088", note:"卓球場・ショップ併設。", noteEn:"Practice courts and pro shop.", link:"http://seta-nishi-takkyuu.net/"},
   {pref:"shiga", type:"school", name:"平卓球教室", nameEn:"Taira Table Tennis School", address:"滋賀県大津市際川4-8-35", addressEn:"4-8-35 Kiwagawa, Otsu City, Shiga", access:"JR湖西線 唐崎駅から徒歩約8分", accessEn:"Approx. 8-min walk from JR Kosei Line Karasaki Station", hours:"月〜金 10:00〜21:00／日 10:00〜19:00", hoursEn:"Mon–Fri 10:00 AM–9:00 PM / Sun 10:00 AM–7:00 PM", tel:"077-572-9360", note:"卓球教室。", noteEn:"Table tennis lessons.", link:"https://tairatts.com/"},
+
+  // ---- 京都府 ----
+  {pref:"kyoto", type:"gym", name:"京都府立体育館（島津アリーナ京都）", nameEn:"Kyoto Prefectural Gymnasium (Shimadzu Arena Kyoto)", address:"京都府京都市北区大将軍鷹司町", addressEn:"Taishogun-takatsukasa-cho, Kita Ward, Kyoto City, Kyoto", access:"JR嵯峨野線 円町駅から徒歩約8分", accessEn:"Approx. 8-min walk from JR Sagano Line Enmachi Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"075-462-9191", note:"府立の総合体育館。卓球20〜36面確保可能。", noteEn:"Kyoto Prefectural sports complex; can accommodate 20–36 table tennis tables.", link:"http://kyoto-furitutaiikukan.jp/"},
+  {pref:"kyoto", type:"gym", name:"西宇治体育館", nameEn:"Nishi-Uji Gymnasium", address:"京都府宇治市小倉町蓮池20-1", addressEn:"20-1 Ogura-cho Hasuike, Uji City, Kyoto", access:"近鉄京都線 大久保駅から京阪宇治交通バス", accessEn:"Keihan Uji Kotsu bus from Kintetsu Kyoto Line Okubo Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"0774-39-9251", note:"宇治市公園公社が運営。卓球は最大28面。", noteEn:"Operated by the Uji City Park Corporation; up to 28 table tennis tables.", link:"https://uji-citypark.jp/pages/58/"},
+  {pref:"kyoto", type:"gym", name:"伏見港公園体育館", nameEn:"Fushimi Port Park Gymnasium", address:"京都府京都市伏見区葭島金井戸町", addressEn:"Yoshijima-kanaido-cho, Fushimi Ward, Kyoto City, Kyoto", access:"京阪「中書島」駅南改札口から徒歩約10分", accessEn:"Approx. 10-min walk from Keihan Chushojima Station South Gate", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"府立の総合体育館。卓球台約24台。", noteEn:"Kyoto Prefectural sports complex; approx. 24 table tennis tables.", link:"https://fushimi-port-park.jp/"},
+  {pref:"kyoto", type:"club", name:"田阪卓球会館", nameEn:"Tasaka Table Tennis Hall", address:"京都府京都市伏見区竹田北三ツ杭町73", addressEn:"73 Takeda-kita-mitsukui-cho, Fushimi Ward, Kyoto City, Kyoto", access:"近鉄京都線 竹田駅から徒歩約5分", accessEn:"Approx. 5-min walk from Kintetsu Kyoto Line Takeda Station", hours:"10:00〜21:30", hoursEn:"10:00 AM–9:30 PM", tel:"075-642-9558", note:"定休日：不定休。卓球場・教室・ショップ併設。", noteEn:"Closed irregularly. Practice courts, lessons, and pro shop.", link:"http://www.tasakatakken.com/"},
+  {pref:"kyoto", type:"club", name:"山科勧修卓球センター", nameEn:"Yamashina Kanshuji Table Tennis Center", address:"京都府京都市山科区勧修寺西金ケ崎232", addressEn:"232 Kanshuji-nishikanegasaki, Yamashina Ward, Kyoto City, Kyoto", access:"JR京都駅八条口からバス約15分", accessEn:"Approx. 15-min bus ride from JR Kyoto Station Hachijo Exit", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"卓球場・教室・ショップ併設。", noteEn:"Practice courts, lessons, and pro shop.", link:"http://www5b.biglobe.ne.jp/~kantaku/"},
+  {pref:"kyoto", type:"club", name:"丹波口卓球プラザ YHGアスリートクラブ", nameEn:"Tambaguchi Table Tennis Plaza YHG Athlete Club", address:"京都府京都市下京区中堂寺壬生町8-6 ひじりビル2F", addressEn:"8-6 Chudoji-mibu-cho, 2F Hijiri Bldg, Shimogyo Ward, Kyoto City, Kyoto", access:"JR丹波口駅から徒歩約3分", accessEn:"Approx. 3-min walk from JR Tambaguchi Station", hours:"10:00〜22:00（日曜〜18:00）", hoursEn:"10:00 AM–10:00 PM (Sun until 6:00 PM)", tel:"075-343-9217", note:"卓球台7台。卓球場・教室併設。", noteEn:"7 tables. Practice courts and lessons.", link:"http://yhg-kyoto.jp/"},
+  {pref:"kyoto", type:"school", name:"天王山卓球スクール北山店", nameEn:"Tennozan Table Tennis School Kitayama", address:"京都府京都市北区紫竹東桃ノ本町8 細井ビル2F", addressEn:"8 Shichiku-higashi-momonomoto-cho, 2F Hosoi Bldg, Kita Ward, Kyoto City, Kyoto", access:"地下鉄烏丸線 北大路駅から徒歩約12分", accessEn:"Approx. 12-min walk from Karasuma Subway Line Kitaoji Station", hours:"10:00〜21:00", hoursEn:"10:00 AM–9:00 PM", tel:"075-366-8334", note:"定休日：日曜。天王山卓球場（大山崎町）の2号店。", noteEn:"Closed Sundays. Second branch of Tennozan Table Tennis Court in Oyamazaki.", link:"http://www.tennozan-k-tt.com/"},
+  {pref:"kyoto", type:"club", name:"壱球卓球センター", nameEn:"Ikkyu Table Tennis Center", address:"京都府京都市山科区大宅神納町138", addressEn:"138 Ooyake-kannou-cho, Yamashina Ward, Kyoto City, Kyoto", access:"地下鉄東西線 小野駅から徒歩約10分", accessEn:"Approx. 10-min walk from Tozai Subway Line Ono Station", hours:"10:00〜22:00", hoursEn:"10:00 AM–10:00 PM", tel:"要問合せ", note:"卓球台10台以上。卓球場・教室。", noteEn:"10+ tables. Practice courts & lessons.", link:"https://www.google.com/maps/search/?api=1&query=%E5%A3%B1%E7%90%83%E5%8D%93%E7%90%83%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%20%E4%BA%AC%E9%83%BD%E5%BA%9C%E4%BA%AC%E9%83%BD%E5%B8%82%E5%B1%B1%E7%A7%91%E5%8C%BA%E5%A4%A7%E5%AE%85%E7%A5%9E%E7%B4%8D%E7%94%BA138"},
+  {pref:"kyoto", type:"club", name:"シェイクハンド", nameEn:"Shakehand", address:"京都府京田辺市草内一ノ坪6-1", addressEn:"6-1 Kusauchi-ichinotsubo, Kyotanabe City, Kyoto", access:"草内口バス停より徒歩約1分", accessEn:"Approx. 1-min walk from Kusauchiguchi bus stop", hours:"9:00〜22:00", hoursEn:"9:00 AM–10:00 PM", tel:"0774-63-7510", note:"定休日：日曜午前。卓球場・教室・ショップ併設。", noteEn:"Closed Sunday mornings. Practice courts, lessons, and pro shop.", link:"https://www.google.com/maps/search/?api=1&query=%E3%82%B7%E3%82%A7%E3%82%A4%E3%82%AF%E3%83%8F%E3%83%B3%E3%83%89%20%E4%BA%AC%E9%83%BD%E5%BA%9C%E4%BA%AC%E7%94%B0%E8%BE%BA%E5%B8%82%E8%8D%89%E5%86%85%E4%B8%80%E3%83%8E%E5%9D%AA6-1"},
+  {pref:"kyoto", type:"club", name:"卓球道場わからん", nameEn:"Table Tennis Dojo Wakaran", address:"京都府京都市南区久世上久世町530-41", addressEn:"530-41 Kuze-kamikuze-cho, Minami Ward, Kyoto City, Kyoto", access:"JR桂川駅東出口から徒歩約9分", accessEn:"Approx. 9-min walk from JR Katsuragawa Station East Exit", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"卓球場。", noteEn:"Practice courts.", link:"https://www.google.com/maps/search/?api=1&query=%E5%8D%93%E7%90%83%E9%81%93%E5%A0%B4%E3%82%8F%E3%81%8B%E3%82%89%E3%82%93%20%E4%BA%AC%E9%83%BD%E5%BA%9C%E4%BA%AC%E9%83%BD%E5%B8%82%E5%8D%97%E5%8C%BA%E4%B9%85%E4%B8%96%E4%B8%8A%E4%B9%85%E4%B8%96%E7%94%BA530-41"},
+  {pref:"kyoto", type:"club", name:"平野卓球場", nameEn:"Hirano Table Tennis Court", address:"京都府京都市北区衣笠大祓町4", addressEn:"4 Kinugasa-oharai-cho, Kita Ward, Kyoto City, Kyoto", access:"京福北野線 北野白梅町駅から徒歩約10分", accessEn:"Approx. 10-min walk from Keifuku Kitano Line Kitano-hakubaicho Station", hours:"10:00〜22:00", hoursEn:"10:00 AM–10:00 PM", tel:"要問合せ", note:"定休日：火曜。卓球台5台。", noteEn:"Closed Tuesdays. 5 tables.", link:"https://www.google.com/maps/search/?api=1&query=%E5%B9%B3%E9%87%8E%E5%8D%93%E7%90%83%E5%A0%B4%20%E4%BA%AC%E9%83%BD%E5%BA%9C%E4%BA%AC%E9%83%BD%E5%B8%82%E5%8C%97%E5%8C%BA%E8%A1%A3%E7%AC%A0%E5%A4%A7%E7%A5%93%E7%94%BA4"},
+  {pref:"kyoto", type:"club", name:"嵯峨野卓球場", nameEn:"Sagano Table Tennis Court", address:"京都府京都市右京区太秦西蜂岡町29", addressEn:"29 Uzumasa-nishi-hachioka-cho, Ukyo Ward, Kyoto City, Kyoto", access:"京福北野線 撮影所前駅から徒歩約3分", accessEn:"Approx. 3-min walk from Keifuku Kitano Line Satsueijomae Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"075-861-3027", note:"卓球場。", noteEn:"Practice courts.", link:"https://www.google.com/maps/search/?api=1&query=%E5%B5%AF%E5%B3%A8%E9%87%8E%E5%8D%93%E7%90%83%E5%A0%B4%20%E4%BA%AC%E9%83%BD%E5%BA%9C%E4%BA%AC%E9%83%BD%E5%B8%82%E5%8F%B3%E4%BA%AC%E5%8C%BA%E5%A4%AA%E7%A7%A6%E8%A5%BF%E8%9C%82%E5%B2%A1%E7%94%BA29"},
+  {pref:"kyoto", type:"club", name:"まんちゃんの卓球場", nameEn:"Man-chan's Table Tennis Court", address:"京都府木津川市州見台8-5-14", addressEn:"8-5-14 Sumidai, Kizugawa City, Kyoto", access:"JR大和路線 平城山駅から徒歩約13分", accessEn:"Approx. 13-min walk from JR Yamatoji Line Narayama Station", hours:"10:00〜", hoursEn:"From 10:00 AM (closing time varies)", tel:"0774-71-0390", note:"卓球場。", noteEn:"Practice courts.", link:"https://www.google.com/maps/search/?api=1&query=%E3%81%BE%E3%82%93%E3%81%A1%E3%82%83%E3%82%93%E3%81%AE%E5%8D%93%E7%90%83%E5%A0%B4%20%E4%BA%AC%E9%83%BD%E5%BA%9C%E6%9C%A8%E6%B4%A5%E5%B7%9D%E5%B8%82%E5%B7%9E%E8%A6%8B%E5%8F%B08-5-14"},
+  {pref:"kyoto", type:"school", name:"久御山明伸館", nameEn:"Kumiyama Meishinkan", address:"京都府久世郡久御山町市田新珠城1", addressEn:"1 Ichida-shinjuki, Kumiyama Town, Kuse District, Kyoto", access:"要問合せ", accessEn:"Call to confirm", hours:"要問合せ", hoursEn:"Call to confirm", tel:"0774-21-3380", note:"卓球教室。", noteEn:"Table tennis lessons.", link:"https://www.google.com/maps/search/?api=1&query=%E4%B9%85%E5%BE%A1%E5%B1%B1%E6%98%8E%E4%BC%B8%E9%A4%A8%20%E4%BA%AC%E9%83%BD%E5%BA%9C%E4%B9%85%E4%B8%96%E9%83%A1%E4%B9%85%E5%BE%A1%E5%B1%B1%E7%94%BA%E5%B8%82%E7%94%B0%E6%96%B0%E7%8F%A0%E5%9F%8E1"},
+  {pref:"kyoto", type:"club", name:"一条卓球研究所", nameEn:"Ichijo Table Tennis Institute", address:"京都府舞鶴市字北吸1045", addressEn:"1045 Kitasui, Maizuru City, Kyoto", access:"東舞鶴駅から徒歩約8分", accessEn:"Approx. 8-min walk from Higashi-Maizuru Station", hours:"10:00〜20:00", hoursEn:"10:00 AM–8:00 PM", tel:"0773-63-4740", note:"定休日：火曜。卓球専門店・卓球場。", noteEn:"Closed Tuesdays. Table tennis shop and practice courts.", link:"https://www.google.com/maps/search/?api=1&query=%E4%B8%80%E6%9D%A1%E5%8D%93%E7%90%83%E7%A0%94%E7%A9%B6%E6%89%80%20%E4%BA%AC%E9%83%BD%E5%BA%9C%E8%88%9E%E9%B6%B4%E5%B8%82%E5%AD%97%E5%8C%97%E5%90%B81045"},
+  {pref:"kyoto", type:"club", name:"今西卓球センター", nameEn:"Imanishi Table Tennis Center", address:"京都府京都市右京区梅津上田町4", addressEn:"4 Umezu-ueda-cho, Ukyo Ward, Kyoto City, Kyoto", access:"四条通り有栖川上ル200m東側", accessEn:"200m east of Shijo-dori & Arisugawa intersection", hours:"10:00〜22:00", hoursEn:"10:00 AM–10:00 PM", tel:"075-882-4899", note:"卓球場・教室。", noteEn:"Practice courts & lessons.", link:"https://www.google.com/maps/search/?api=1&query=%E4%BB%8A%E8%A5%BF%E5%8D%93%E7%90%83%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%20%E4%BA%AC%E9%83%BD%E5%BA%9C%E4%BA%AC%E9%83%BD%E5%B8%82%E5%8F%B3%E4%BA%AC%E5%8C%BA%E6%A2%85%E6%B4%A5%E4%B8%8A%E7%94%B0%E7%94%BA4"},
+  {pref:"kyoto", type:"club", name:"卓球センター優", nameEn:"Table Tennis Center Yu", address:"京都府京都市下京区西七条東反田3-2-2", addressEn:"3-2-2 Nishishichijo-higashitanda, Shimogyo Ward, Kyoto City, Kyoto", access:"JR嵯峨野線 丹波口駅から徒歩約15分", accessEn:"Approx. 15-min walk from JR Sagano Line Tambaguchi Station", hours:"要問合せ", hoursEn:"Call to confirm", tel:"要問合せ", note:"卓球場・教室。", noteEn:"Practice courts & lessons.", link:"https://www.google.com/maps/search/?api=1&query=%E5%8D%93%E7%90%83%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%E5%84%AA%20%E4%BA%AC%E9%83%BD%E5%BA%9C%E4%BA%AC%E9%83%BD%E5%B8%82%E4%B8%8B%E4%BA%AC%E5%8C%BA%E8%A5%BF%E4%B8%83%E6%9D%A1%E6%9D%B1%E5%8F%8D%E7%94%B03-2-2"},
 ];
 
 let activeVPref = "all";
@@ -1475,8 +1519,8 @@ const VTYPE_LABEL = {
   en: {gym:"Gymnasium", club:"Table Tennis Court / Club", school:"Table Tennis School"}
 };
 const VPREF_LABEL = {
-  ja: {wakayama:"和歌山", nara:"奈良", osaka:"大阪", hyogo:"兵庫", shiga:"滋賀"},
-  en: {wakayama:"Wakayama", nara:"Nara", osaka:"Osaka", hyogo:"Hyogo", shiga:"Shiga"}
+  ja: {wakayama:"和歌山", nara:"奈良", osaka:"大阪", hyogo:"兵庫", shiga:"滋賀", kyoto:"京都"},
+  en: {wakayama:"Wakayama", nara:"Nara", osaka:"Osaka", hyogo:"Hyogo", shiga:"Shiga", kyoto:"Kyoto"}
 };
 
 function renderVenues(){
@@ -1539,8 +1583,8 @@ function renderVenues(){
 
 function applyVenueStaticText(){
   const T = {
-    ja: {navT:"大会情報", navV:"練習場所", eyebrow:"Kinki Table Tennis · 練習場所ガイド", h1:"卓球ができる<br>場所を探す", sub:"近畿地方で卓球ができる体育館・卓球場・卓球教室をまとめました。台数や営業時間は変更されている場合があるため、訪問前に各施設へご確認ください。", step1:"都道府県を選ぶ", step2:"種類で絞り込む", vAll:"すべて", vGym:"体育館", vClub:"卓球場・クラブ", vSchool:"卓球教室", note:"※ 台数・営業時間・料金は各施設のサイトや電話でご確認のうえお出かけください。掲載情報は変更されている場合があります。学校体育館などは、地域の卓球協会・卓球連盟を通じた団体利用が中心の施設も含まれます。"},
-    en: {navT:"Tournaments", navV:"Practice Venues", eyebrow:"Kinki Table Tennis · Practice Venue Guide", h1:"Find a Place<br>to Play Table Tennis", sub:"A list of gymnasiums, table tennis clubs, and schools across the Kansai region. Table counts and hours may have changed, so please confirm with each venue before visiting.", step1:"Choose a Prefecture", step2:"Filter by Type", vAll:"All", vGym:"Gymnasium", vClub:"Court / Club", vSchool:"School", note:"※ Please confirm table counts, hours, and fees directly with each venue before visiting, as listed details may have changed. Some school gymnasiums are mainly available for group use through local table tennis associations."}
+    ja: {navT:"大会情報", navV:"練習場所", eyebrow:"ATLAS · 練習場所ガイド", h1:"卓球ができる<br>場所を探す", sub:"近畿地方で卓球ができる体育館・卓球場・卓球教室をまとめました。台数や営業時間は変更されている場合があるため、訪問前に各施設へご確認ください。", step1:"都道府県を選ぶ", step2:"種類で絞り込む", vAll:"すべて", vGym:"体育館", vClub:"卓球場・クラブ", vSchool:"卓球教室", note:"※ 台数・営業時間・料金は各施設のサイトや電話でご確認のうえお出かけください。掲載情報は変更されている場合があります。学校体育館などは、地域の卓球協会・卓球連盟を通じた団体利用が中心の施設も含まれます。"},
+    en: {navT:"Tournaments", navV:"Practice Venues", eyebrow:"ATLAS · Practice Venue Guide", h1:"Find a Place<br>to Play Table Tennis", sub:"A list of gymnasiums, table tennis clubs, and schools across the Kansai region. Table counts and hours may have changed, so please confirm with each venue before visiting.", step1:"Choose a Prefecture", step2:"Filter by Type", vAll:"All", vGym:"Gymnasium", vClub:"Court / Club", vSchool:"School", note:"※ Please confirm table counts, hours, and fees directly with each venue before visiting, as listed details may have changed. Some school gymnasiums are mainly available for group use through local table tennis associations."}
   };
   const t = T[lang];
   document.getElementById("t-nav-tournaments").textContent = t.navT;
@@ -1560,7 +1604,7 @@ function applyVenueStaticText(){
     : "施設名・地域名で検索（例：奈良市、体育館、生駒）";
 }
 
-const VPREF_AVAILABLE = ["wakayama", "osaka", "nara", "hyogo", "shiga"]; // 練習場所データがある都道府県
+const VPREF_AVAILABLE = ["wakayama", "osaka", "nara", "hyogo", "shiga", "kyoto"]; // 練習場所データがある都道府県
 
 function syncVPrefUI(){
   document.querySelectorAll("#v-pref-tabs .pref-tab").forEach(b=>{
